@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
-<title>셀-프 리듬게임 ver2.11.2</title>
+<title>셀-프 리듬게임 진행사항3</title>
 <style>
   :root{
     --bg:#07070c;
@@ -148,9 +148,13 @@
     border:1px solid rgba(255,255,255,.08);
   }
   .songProgressInner{
-    width:0%;height:100%;background:linear-gradient(90deg,#56e39f,#6cc8ff,#ff5f9e);
-    transition:.08s linear width;
+    width:0%;height:100%;background:rgba(255,255,255,.96);
+    transition:.08s linear width, .18s filter, .18s box-shadow;
   }
+  .songProgressInner.combo-low{background:linear-gradient(90deg,#ffffff,#f4f4ff);box-shadow:0 0 12px rgba(255,255,255,.52)}
+  .songProgressInner.combo-mid{background:linear-gradient(90deg,#56e39f,#6cc8ff,#ff5f9e);box-shadow:0 0 16px rgba(108,200,255,.45)}
+  .songProgressInner.combo-high{background:linear-gradient(90deg,#ff3030,#ff9f1c,#ffe600,#66ff33,#1fe7ff,#3b5bff,#c13bff,#ff4fb3);background-size:320% 100%;animation:rainbowFlash .38s linear infinite;box-shadow:0 0 24px rgba(255,255,255,.9),0 0 42px rgba(255,95,230,.55)}
+  @keyframes rainbowFlash{0%{background-position:0% 50%;filter:brightness(1)}50%{background-position:100% 50%;filter:brightness(1.85)}100%{background-position:0% 50%;filter:brightness(1)}}
   .songProgressText{font-size:13px;color:rgba(255,255,255,.86);font-weight:900;min-width:42px;text-align:right}
   .miniExitBtn{
     width:28px;height:28px;border-radius:999px;padding:0;
@@ -160,7 +164,7 @@
   }
   .laneWrap{
     position:absolute;left:50%;top:108px;bottom:128px;transform:translateX(-50%);
-    width:min(96vw,620px);display:grid;grid-template-columns:repeat(4,1fr);gap:8px;
+    width:min(96vw,720px);display:grid;grid-template-columns:repeat(4,1fr);gap:8px;
   }
   .lane{
     position:relative;border-radius:22px;background:rgba(255,255,255,.045);
@@ -168,43 +172,40 @@
   }
   .hitLine{
     position:absolute;left:50%;bottom:112px;transform:translateX(-50%);
-    width:min(96vw,620px);height:6px;background:rgba(255,255,255,.88);
+    width:min(96vw,720px);height:6px;background:rgba(255,255,255,.88);
     border-radius:99px;box-shadow:0 0 24px rgba(255,255,255,.62);z-index:15;
   }
   .note{
     position:absolute;left:50%;transform:translateX(-50%);
-    width:82%;height:26px;border-radius:999px;
+    width:82%;height:32px;border-radius:999px;
     display:flex;align-items:center;justify-content:center;
     font-size:0;font-weight:900;
     background:rgba(255,255,255,.16);
     border:3px solid rgba(255,255,255,.35);
     box-shadow:0 8px 20px rgba(0,0,0,.35);
-    z-index:10;
-    overflow:hidden;
+    z-index:10;overflow:visible;
   }
-  
-.note[data-lane="0"]{border-color:#ff4d4d;background:rgba(255,77,77,.2)}
-.note[data-lane="1"]{border-color:#ffa64d;background:rgba(255,166,77,.2)}
-.note[data-lane="2"]{border-color:#4dff88;background:rgba(77,255,136,.2)}
-.note[data-lane="3"]{border-color:#4da6ff;background:rgba(77,166,255,.2)}
-.note::after{
+  .note[data-lane="0"],.pad[data-lane="0"]{--lane-color:#ff2b2b;--lane-rgb:255,43,43}
+  .note[data-lane="1"],.pad[data-lane="1"]{--lane-color:#ff9f1c;--lane-rgb:255,159,28}
+  .note[data-lane="2"],.pad[data-lane="2"]{--lane-color:#ffe21f;--lane-rgb:255,226,31}
+  .note[data-lane="3"],.pad[data-lane="3"]{--lane-color:#64ff2e;--lane-rgb:100,255,46}
+  .note[data-lane="4"],.pad[data-lane="4"]{--lane-color:#2c57ff;--lane-rgb:44,87,255}
+  .note[data-lane="5"],.pad[data-lane="5"]{--lane-color:#be2bff;--lane-rgb:190,43,255}
+  #game.keys4 .note[data-lane="2"],#game.keys4 .pad[data-lane="2"]{--lane-color:#64ff2e;--lane-rgb:100,255,46}
+  #game.keys4 .note[data-lane="3"],#game.keys4 .pad[data-lane="3"]{--lane-color:#2c57ff;--lane-rgb:44,87,255}
+  .note{border-color:var(--lane-color);background:rgba(var(--lane-rgb),.18);box-shadow:0 0 24px rgba(var(--lane-rgb),.32),0 8px 20px rgba(0,0,0,.35)}
+  .note::after{content:"";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:88%;height:8px;border-radius:999px;background:rgba(255,255,255,.98);box-shadow:0 0 16px rgba(255,255,255,.95)}
+  .heartIcon{--heart-color:#ff2b2b;width:38px;height:34px;display:block;position:relative;background:var(--heart-color);clip-path:polygon(18% 0,36% 0,36% 10%,50% 10%,50% 0,68% 0,68% 10%,84% 10%,84% 28%,94% 28%,94% 50%,82% 50%,82% 66%,68% 66%,68% 80%,50% 80%,50% 94%,32% 80%,32% 66%,18% 66%,18% 50%,6% 50%,6% 28%,18% 28%);filter:drop-shadow(0 0 8px var(--heart-color)) drop-shadow(0 0 18px var(--heart-color))}
+  .note .heartIcon{width:44px;height:40px;z-index:2}
+  .pad .heartIcon{width:36px;height:32px;margin-bottom:3px;filter:drop-shadow(0 0 7px var(--heart-color))}
+  .note .heartIcon::after,.pad .heartIcon::after{content:"";position:absolute;inset:3px;background:rgba(255,255,255,.95);clip-path:polygon(16% 0,34% 0,34% 12%,50% 12%,50% 0,70% 0,70% 12%,86% 12%,86% 30%,96% 30%,96% 50%,82% 50%,82% 64%,68% 64%,68% 78%,50% 78%,50% 92%,32% 78%,32% 64%,18% 64%,18% 50%,4% 50%,4% 30%,16% 30%);opacity:.18}
 
-    content:"";
-    position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
-    width:76%;height:5px;border-radius:999px;
-    background:rgba(255,255,255,.96);
-    box-shadow:0 0 14px rgba(255,255,255,.9);
-  }
-  
-  
-  
-  
   .controls{
     position:absolute;left:50%;bottom:16px;transform:translateX(-50%);
-    width:min(96vw,620px);display:grid;grid-template-columns:repeat(4,1fr);gap:8px;z-index:30;
+    width:min(96vw,720px);display:grid;grid-template-columns:repeat(4,1fr);gap:8px;z-index:30;
   }
   .pad{
-    position:relative;height:84px;border-radius:24px;font-size:35px;background:rgba(255,255,255,.13);
+    position:relative;height:84px;border-radius:24px;font-size:35px;background:rgba(var(--lane-rgb),.12);
     border:1px solid rgba(255,255,255,.18);
     display:flex;align-items:center;justify-content:center;flex-direction:column;gap:2px;
   }
@@ -279,7 +280,7 @@
 
   .judgementZone{
     position:absolute;left:50%;bottom:92px;transform:translateX(-50%);
-    width:min(96vw,620px);height:46px;border-radius:18px;z-index:14;
+    width:min(96vw,720px);height:46px;border-radius:18px;z-index:14;
     background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.13),rgba(255,255,255,.02));
     border-top:1px solid rgba(255,255,255,.16);
     border-bottom:1px solid rgba(255,255,255,.16);
@@ -290,6 +291,12 @@
   .lane:nth-child(2){background:linear-gradient(180deg,rgba(255,166,77,.045),rgba(255,255,255,.035))}
   .lane:nth-child(3){background:linear-gradient(180deg,rgba(77,255,136,.045),rgba(255,255,255,.035))}
   .lane:nth-child(4){background:linear-gradient(180deg,rgba(77,166,255,.045),rgba(255,255,255,.035))}
+  .lane[data-lane="0"]{background:linear-gradient(180deg,rgba(255,43,43,.055),rgba(255,255,255,.035))}
+  .lane[data-lane="1"]{background:linear-gradient(180deg,rgba(255,159,28,.055),rgba(255,255,255,.035))}
+  .lane[data-lane="2"]{background:linear-gradient(180deg,rgba(255,226,31,.055),rgba(255,255,255,.035))}
+  .lane[data-lane="3"]{background:linear-gradient(180deg,rgba(100,255,46,.055),rgba(255,255,255,.035))}
+  .lane[data-lane="4"]{background:linear-gradient(180deg,rgba(44,87,255,.055),rgba(255,255,255,.035))}
+  .lane[data-lane="5"]{background:linear-gradient(180deg,rgba(190,43,255,.055),rgba(255,255,255,.035))}
   .laneGlow{
     position:absolute;left:0;right:0;bottom:0;height:120px;opacity:.22;
     background:linear-gradient(transparent,rgba(255,255,255,.18));pointer-events:none;
@@ -343,7 +350,7 @@
 </style>
 </head>
 <body>
-<div class="version">ver2.11.2</div>
+<div class="version">진행사항3</div>
 
 <section id="home" class="screen active">
   <div class="title">셀-프 리듬게임</div>
@@ -366,25 +373,26 @@
       <input id="mp3Input" type="file" accept=".mp3,.m4a,.wav,.aac,audio/mpeg,audio/mp3,audio/mp4,audio/aac,audio/wav,audio/*" />
     </div>
     <div class="field">
-      <label>난이도 <span style="color:var(--muted);font-size:12px">(3 = 현재 기준, 5 = 최고난도, 6 = 무작위)</span></label>
+      <label>난이도 <span style="color:var(--muted);font-size:12px">(6 = 6키 모드, 7 = 헬모드)</span></label>
       <select id="difficultySelect">
         <option value="1">1 - 쉬움</option>
         <option value="2">2 - 보통</option>
         <option value="3" selected>3 - 현재 기준</option>
         <option value="4">4 - 어려움</option>
         <option value="5">5 - 최고난도</option>
-        <option value="6">6 - 무작위 배열</option>
+        <option value="6">6 - 6키 모드</option>
+        <option value="7">7 - 헬모드</option>
       </select>
     </div>
 <button id="createGame">제작 시작</button>
     <div class="progressOuter"><div class="progressInner" id="progressBar"></div></div>
     <div style="font-size:12px;color:var(--muted);margin-top:8px">오디오는 큰 파일에 더 적합한 IndexedDB 저장 방식을 사용합니다.</div>
     <div class="analyzeStatus" id="analyzeStatus">
-      진행사항 2.11.2: 제작 박스를 완전히 숨긴 뒤 내려오게 하고, 큰 음악 파일 저장을 IndexedDB 방식으로 개선했습니다.</div>
+      진행사항3: 콤보 진행도 바 진화, 6키/헬모드, 픽셀 하트 노트 색상 시스템을 적용했습니다.</div>
     <div class="legend">
-      <div>❤️ 멜로디</div>
-      <div>♦️ 킥</div>
-      <div>♠️ 스네어 · ♣️ 하이햇</div>
+      <div>4키: 빨강 · 주황 · 초록 · 파랑</div>
+      <div>6키: 빨강 · 주황 · 노랑 · 초록 · 파랑 · 보라</div>
+      <div>120콤보 이상: 무지개 진행도 바</div>
     </div>
   </div>
 
@@ -423,12 +431,7 @@
       <button class="miniExitBtn" id="miniExitBtn" type="button">×</button>
     </div>
   </div>
-  <div class="laneWrap" id="laneWrap">
-    <div class="lane" data-lane="0"><div class="laneGlow"></div></div>
-    <div class="lane" data-lane="1"><div class="laneGlow"></div></div>
-    <div class="lane" data-lane="2"><div class="laneGlow"></div></div>
-    <div class="lane" data-lane="3"><div class="laneGlow"></div></div>
-  </div>
+  <div class="laneWrap" id="laneWrap"></div>
   <div class="judgementZone"></div>
   <div class="hitLine"></div>
   <div class="comboPop" id="comboPop"><div class="num" id="comboPopNum">0</div><div class="label">COMBO</div></div>
@@ -446,12 +449,7 @@
     </div>
     <button class="backMenuBtn" id="backMenuBtn">돌아가기</button>
   </div>
-  <div class="controls">
-    <button class="pad" data-lane="0"><span>❤️</span><span class="key">D</span></button>
-    <button class="pad" data-lane="1"><span>♠️</span><span class="key">F</span></button>
-    <button class="pad" data-lane="2"><span>♦️</span><span class="key">J</span></button>
-    <button class="pad" data-lane="3"><span>♣️</span><span class="key">K</span></button>
-  </div>
+  <div class="controls" id="controls"></div>
 </section>
 
 <button class="exitBtn" id="exitBtn">나가기</button>
@@ -474,7 +472,9 @@
 
   const STORAGE_KEY = 'selfRhythmGames_ver2';
   const AUDIO_KEY_PREFIX = 'selfRhythmAudio_';
-  const symbols = ['❤️','♠️','♦️','♣️'];
+  const keySets = {4:['D','F','J','K'], 6:['S','D','F','H','J','K']};
+  const laneColors = ['#ff2b2b','#ff9f1c','#ffe21f','#64ff2e','#2c57ff','#be2bff'];
+  const laneColorNames = ['빨강','주황','노랑','초록','파랑','보라'];
 
   let audioCtx = null;
   let currentAudio = null;
@@ -669,6 +669,7 @@ function saveSettings(){
       setStatus(`진행사항 2 분석 중: 난이도 ${selectedDifficulty}로 분석 중...`, 22);
       await waitFrame();
 
+      const laneCount = getLaneCount(selectedDifficulty);
       const notes = analyzeMusic(audioBuffer, selectedDifficulty, (msg,p)=>setStatus(msg,p));
 
       setStatus('오디오 저장 중... 큰 파일을 위해 IndexedDB에 저장합니다.', 88);
@@ -708,6 +709,7 @@ function saveSettings(){
   }
 
   function analyzeMusic(buffer, difficulty, progress){
+    const laneCount = getLaneCount(difficulty);
     const sampleRate = buffer.sampleRate;
     const raw = mixToMono(buffer);
 
@@ -839,19 +841,19 @@ function saveSettings(){
 
     const kickCandidates = detectPeaks(frames, 'kickFlux', percentile(frames.map(f=>f.kickFlux), diff.kickPct), cfg.kickGap)
       .filter(p => frames[p.index].total > energyGate * .6)
-      .map(p => ({...p, lane:2, type:'kick', symbol:'♦️', weight:p.value * 1.25}));
+      .map(p => ({...p, lane: laneCount === 6 ? 2 : 2, type:'kick', weight:p.value * 1.25}));
 
     const snareCandidates = detectPeaks(frames, 'snareFlux', percentile(frames.map(f=>f.snareFlux), diff.snarePct), cfg.snareGap)
       .filter(p => frames[p.index].total > energyGate * .55)
-      .map(p => ({...p, lane:1, type:'snare', symbol:'♠️', weight:p.value * 1.10}));
+      .map(p => ({...p, lane:1, type:'snare', weight:p.value * 1.10}));
 
     const melodyCandidates = detectPeaks(frames, 'melodyFlux', percentile(frames.map(f=>f.melodyFlux), diff.melodyPct), cfg.melodyGap)
       .filter(p => frames[p.index].total > energyGate * .48)
-      .map((p,i) => ({...p, lane: chooseMelodyLane(i), type:'melody', symbol:null, weight:p.value}));
+      .map((p,i) => ({...p, lane: chooseMelodyLane(i, laneCount), type:'melody', weight:p.value}));
 
     const hatCandidates = detectPeaks(frames, 'hatFlux', percentile(frames.map(f=>f.hatFlux), diff.hatPct), cfg.hatGap)
       .filter(p => frames[p.index].total > energyGate * .42)
-      .map(p => ({...p, lane:3, type:'hat', symbol:'♣️', weight:p.value * .88}));
+      .map(p => ({...p, lane: laneCount === 6 ? 5 : 3, type:'hat', weight:p.value * .88}));
 
     progress(`후보: 킥 ${kickCandidates.length}, 스네어 ${snareCandidates.length}, 멜로디 ${melodyCandidates.length}, 하이햇 ${hatCandidates.length}`, 68);
 
@@ -891,9 +893,9 @@ function saveSettings(){
     notes = refinePlayablePattern(notes, cfg);
 
     if(diff.randomLane){
-      notes = randomizeLanes(notes);
+      notes = notes;
     }else{
-      notes = rebalanceRepeatedLanes(notes, cfg);
+      notes = rebalanceRepeatedLanes(notes, cfg, laneCount);
     }
 
     notes = notes
@@ -905,7 +907,7 @@ function saveSettings(){
           type:n.type,
           long:false,
           duration:0,
-          symbol:symbols[n.lane],
+          color: laneColors[n.lane],
           'data-lane': n.lane,
           hit:false,
           missed:false
@@ -916,51 +918,19 @@ function saveSettings(){
     return notes;
   }
 
+  function getLaneCount(level){
+    return Number(level) >= 6 ? 6 : 4;
+  }
+
   function getDifficultyConfig(level){
     const table = {
-      1: {
-        densityMin:1.65, densityMax:2.25,
-        minGap:.22, sameLaneGap:.22,
-        kickGap:.28, snareGap:.30, melodyGap:.30, hatGap:.24,
-        kickPct:72, snarePct:72, melodyPct:70, hatPct:76,
-        kickQ:.25, snareQ:.24, melodyQ:.36, hatQ:.15
-      },
-      2: {
-        densityMin:2.45, densityMax:3.20,
-        minGap:.155, sameLaneGap:.18,
-        kickGap:.21, snareGap:.22, melodyGap:.22, hatGap:.16,
-        kickPct:66, snarePct:65, melodyPct:60, hatPct:66,
-        kickQ:.21, snareQ:.21, melodyQ:.40, hatQ:.18
-      },
-      3: {
-        densityMin:3.50, densityMax:4.55,
-        minGap:.105, sameLaneGap:.135,
-        kickGap:.15, snareGap:.17, melodyGap:.16, hatGap:.095,
-        kickPct:64, snarePct:60, melodyPct:48, hatPct:58,
-        kickQ:.17, snareQ:.19, melodyQ:.42, hatQ:.22
-      },
-      4: {
-        densityMin:4.70, densityMax:5.90,
-        minGap:.075, sameLaneGap:.105,
-        kickGap:.12, snareGap:.13, melodyGap:.105, hatGap:.075,
-        kickPct:58, snarePct:55, melodyPct:36, hatPct:48,
-        kickQ:.14, snareQ:.17, melodyQ:.50, hatQ:.19
-      },
-      5: {
-        densityMin:6.10, densityMax:7.40,
-        minGap:.052, sameLaneGap:.085,
-        kickGap:.09, snareGap:.10, melodyGap:.065, hatGap:.055,
-        kickPct:52, snarePct:48, melodyPct:24, hatPct:40,
-        kickQ:.10, snareQ:.14, melodyQ:.62, hatQ:.14
-      },
-      6: {
-        densityMin:6.10, densityMax:7.40,
-        minGap:.052, sameLaneGap:.050,
-        kickGap:.09, snareGap:.10, melodyGap:.065, hatGap:.055,
-        kickPct:52, snarePct:48, melodyPct:24, hatPct:40,
-        kickQ:.10, snareQ:.14, melodyQ:.62, hatQ:.14,
-        randomLane:true
-      }
+      1:{densityMin:1.65,densityMax:2.25,minGap:.22,sameLaneGap:.22,kickGap:.28,snareGap:.30,melodyGap:.30,hatGap:.24,kickPct:72,snarePct:72,melodyPct:70,hatPct:76,kickQ:.25,snareQ:.24,melodyQ:.36,hatQ:.15},
+      2:{densityMin:2.45,densityMax:3.20,minGap:.155,sameLaneGap:.18,kickGap:.21,snareGap:.22,melodyGap:.22,hatGap:.16,kickPct:66,snarePct:65,melodyPct:60,hatPct:66,kickQ:.21,snareQ:.21,melodyQ:.40,hatQ:.18},
+      3:{densityMin:3.50,densityMax:4.55,minGap:.105,sameLaneGap:.135,kickGap:.15,snareGap:.17,melodyGap:.16,hatGap:.095,kickPct:64,snarePct:60,melodyPct:48,hatPct:58,kickQ:.17,snareQ:.19,melodyQ:.42,hatQ:.22},
+      4:{densityMin:4.70,densityMax:5.90,minGap:.075,sameLaneGap:.105,kickGap:.12,snareGap:.13,melodyGap:.105,hatGap:.075,kickPct:58,snarePct:55,melodyPct:36,hatPct:48,kickQ:.14,snareQ:.17,melodyQ:.50,hatQ:.19},
+      5:{densityMin:6.10,densityMax:7.40,minGap:.052,sameLaneGap:.085,kickGap:.09,snareGap:.10,melodyGap:.065,hatGap:.055,kickPct:52,snarePct:48,melodyPct:24,hatPct:40,kickQ:.10,snareQ:.14,melodyQ:.62,hatQ:.14},
+      6:{densityMin:6.10,densityMax:7.40,minGap:.052,sameLaneGap:.078,kickGap:.09,snareGap:.10,melodyGap:.065,hatGap:.055,kickPct:52,snarePct:48,melodyPct:24,hatPct:40,kickQ:.10,snareQ:.14,melodyQ:.62,hatQ:.14},
+      7:{densityMin:7.80,densityMax:9.40,minGap:.040,sameLaneGap:.060,kickGap:.072,snareGap:.078,melodyGap:.048,hatGap:.042,kickPct:46,snarePct:42,melodyPct:18,hatPct:32,kickQ:.09,snareQ:.13,melodyQ:.65,hatQ:.13}
     };
     return table[level] || table[3];
   }
@@ -1047,22 +1017,22 @@ function saveSettings(){
     return picked.sort((a,b)=>a.t-b.t);
   }
 
-  function chooseMelodyLane(i){
-    // 멜로디는 하트가 중심이지만, 같은 키 반복을 줄이기 위해 4라인에 섞어 배치
-    const pattern = [0,1,0,2,0,3,1,0,2,0,3,0];
+  function chooseMelodyLane(i, laneCount){
+    if(laneCount === 6){
+      const pattern = [0,1,2,3,4,5,1,3,2,4,0,5];
+      return pattern[i % pattern.length];
+    }
+    const pattern = [0,1,3,2,0,3,1,2,0,1,3,2];
     return pattern[i % pattern.length];
   }
 
-  function randomizeLanes(notes){
+  function randomizeLanes(notes, laneCount){
     const out = [...notes].sort((a,b)=>a.time-b.time);
-    for(const n of out){
-      n.lane = Math.floor(Math.random() * 4);
-      n.symbol = symbols[n.lane];
-    }
+    for(const n of out){ n.lane = Math.floor(Math.random() * laneCount); }
     return out;
   }
 
-  function rebalanceRepeatedLanes(notes, cfg){
+  function rebalanceRepeatedLanes(notes, cfg, laneCount){
     const sorted = [...notes].sort((a,b)=>a.time-b.time);
     let streakLane = -1;
     let streak = 0;
@@ -1083,8 +1053,7 @@ function saveSettings(){
 
       if(tooCloseSame || tooLongStreak){
         const recent = sorted.slice(Math.max(0, i-4), i).map(x=>x.lane);
-        n.lane = chooseLeastRecentLane(recent, n.type, i);
-        n.symbol = symbols[n.lane];
+        n.lane = chooseLeastRecentLane(recent, n.type, i, laneCount);
         streakLane = n.lane;
         streak = 1;
       }
@@ -1092,11 +1061,12 @@ function saveSettings(){
     return sorted;
   }
 
-  function chooseLeastRecentLane(recent, type, i){
-    const preferred = type === 'kick' ? [2,0,1,3] :
-                      type === 'snare' ? [1,3,0,2] :
-                      type === 'hat' ? [3,1,2,0] :
-                      [0,1,2,3];
+  function chooseLeastRecentLane(recent, type, i, laneCount){
+    const all = Array.from({length:laneCount}, (_,x)=>x);
+    const preferred = type === 'kick' ? (laneCount === 6 ? [2,3,1,4,0,5] : [2,0,1,3]) :
+                      type === 'snare' ? (laneCount === 6 ? [1,4,3,0,5,2] : [1,3,0,2]) :
+                      type === 'hat' ? (laneCount === 6 ? [5,4,3,2,1,0] : [3,1,2,0]) :
+                      all;
     let best = preferred[0];
     let bestScore = 999;
     for(const lane of preferred){
@@ -1123,7 +1093,7 @@ function saveSettings(){
       type:c.type,
       long:false,
       duration:0,
-      symbol:c.symbol || symbols[lane],
+      color: laneColors[lane],
       power:c.weight || c.value || 0,
       hit:false,
       missed:false
@@ -1191,7 +1161,7 @@ function saveSettings(){
       item.innerHTML = `
         <div>
           <div class="name">${escapeHtml(g.title)}</div>
-          <div class="meta">${g.noteCount||0} notes · ${Math.round(g.duration||0)}초 · 난이도 ${g.difficulty || 3}${g.difficulty == 6 ? ' 무작위' : ''}</div>
+          <div class="meta">${g.noteCount||0} notes · ${Math.round(g.duration||0)}초 · ${g.laneCount === 6 || g.difficulty >= 6 ? '6키' : '4키'} · 난이도 ${g.difficulty || 3}${g.difficulty == 7 ? ' 헬모드' : g.difficulty == 6 ? ' 6키' : ''}</div>
         </div>
         <div class="actions">
           <button data-play="${g.id}">플레이</button>
@@ -1234,8 +1204,9 @@ function escapeHtml(str){
       return;
     }
     stopGame();
-
     currentGame = JSON.parse(JSON.stringify(game));
+    currentGame.laneCount = currentGame.laneCount || getLaneCount(currentGame.difficulty || 3);
+    renderGameLayout(currentGame.laneCount);
     activeNotes = currentGame.notes.map((n,idx)=>({...n, idx, el:null, hit:false, missed:false}));
     score = 0; combo = 0;
     judgeCounts = {perfect:0, good:0, ok:0, miss:0};
@@ -1244,9 +1215,10 @@ function escapeHtml(str){
     updateScore();
     $('#songProgressBar').style.width = '0%';
     $('#songProgressText').textContent = '0%';
+    updateComboProgressEffect();
 
     $('#playTitle').textContent = currentGame.title;
-    $('#playInfo').textContent = `난이도 ${currentGame.difficulty || 3}${currentGame.difficulty == 6 ? ' 무작위' : ''} · 킥/스네어/멜로디/하이햇 · ${currentGame.noteCount} notes`;
+    $('#playInfo').textContent = `${currentGame.laneCount === 6 ? '6키' : '4키'} · 난이도 ${currentGame.difficulty || 3}${currentGame.difficulty == 7 ? ' 헬모드' : currentGame.difficulty == 6 ? ' 6키' : ''} · ${currentGame.noteCount} notes`;
 
     home.classList.remove('active');
     gameScreen.classList.add('active');
@@ -1279,12 +1251,45 @@ function escapeHtml(str){
       const el = document.createElement('div');
       el.className = `note ${n.long?'long':''} ${n.type}`;
       el.dataset.lane = String(n.lane);
-      el.textContent = n.symbol;
-      if(n.long){
-        el.style.height = Math.max(80, 58 + n.duration * 120) + 'px';
-      }
-      lanes[n.lane].appendChild(el);
+      el.appendChild(makeHeartIcon(n.lane));
+      if(n.long){ el.style.height = Math.max(84, 62 + n.duration * 120) + 'px'; }
+      lanes[n.lane]?.appendChild(el);
       n.el = el;
+    }
+  }
+
+  function makeHeartIcon(lane){
+    const span = document.createElement('span');
+    span.className = 'heartIcon';
+    span.style.setProperty('--heart-color', laneColors[lane] || laneColors[0]);
+    return span;
+  }
+
+  function renderGameLayout(laneCount=4){
+    const laneWrap = $('#laneWrap');
+    const controls = $('#controls');
+    gameScreen.classList.toggle('keys4', laneCount === 4);
+    gameScreen.classList.toggle('keys6', laneCount === 6);
+    laneWrap.style.gridTemplateColumns = `repeat(${laneCount},1fr)`;
+    controls.style.gridTemplateColumns = `repeat(${laneCount},1fr)`;
+    laneWrap.innerHTML = '';
+    controls.innerHTML = '';
+    const keys = keySets[laneCount] || keySets[4];
+    for(let i=0;i<laneCount;i++){
+      const lane = document.createElement('div');
+      lane.className = 'lane';
+      lane.dataset.lane = String(i);
+      lane.innerHTML = '<div class="laneGlow"></div>';
+      laneWrap.appendChild(lane);
+      const pad = document.createElement('button');
+      pad.className = 'pad';
+      pad.dataset.lane = String(i);
+      pad.appendChild(makeHeartIcon(i));
+      const key = document.createElement('span');
+      key.className = 'key';
+      key.textContent = keys[i];
+      pad.appendChild(key);
+      controls.appendChild(pad);
     }
   }
 
@@ -1463,9 +1468,9 @@ function escapeHtml(str){
     b.className = 'hitBurst';
     b.style.left = x + 'px';
     b.style.top = y + 'px';
-    if(judge === 'PERFECT') b.style.borderColor = 'rgba(86,227,159,.98)';
-    if(judge === 'GOOD') b.style.borderColor = 'rgba(108,200,255,.98)';
-    if(judge === 'OK') b.style.borderColor = 'rgba(255,166,77,.98)';
+    const c = laneColors[lane] || '#ffffff';
+    b.style.borderColor = c;
+    b.style.boxShadow = `0 0 28px ${c}, inset 0 0 22px rgba(255,255,255,.35)`;
     wrap.appendChild(b);
     setTimeout(()=>b.remove(), 360);
   }
@@ -1507,6 +1512,16 @@ function escapeHtml(str){
   function updateScore(){
     $('#scoreText').textContent = String(score);
     $('#comboText').textContent = 'COMBO ' + combo;
+    updateComboProgressEffect();
+  }
+
+  function updateComboProgressEffect(){
+    const bar = $('#songProgressBar');
+    if(!bar) return;
+    bar.classList.remove('combo-low','combo-mid','combo-high');
+    if(combo >= 120) bar.classList.add('combo-high');
+    else if(combo >= 50) bar.classList.add('combo-mid');
+    else bar.classList.add('combo-low');
   }
 
   let judgeTimer = null;
@@ -1518,16 +1533,17 @@ function escapeHtml(str){
     judgeTimer = setTimeout(()=>j.classList.remove('show'), 250);
   }
 
-  $$('.pad').forEach(p=>{
-    p.addEventListener('pointerdown', e=>{
-      e.preventDefault();
-      hitLane(Number(p.dataset.lane));
-    });
+  $('#controls').addEventListener('pointerdown', e=>{
+    const p = e.target.closest('.pad');
+    if(!p) return;
+    e.preventDefault();
+    hitLane(Number(p.dataset.lane));
   });
 
   window.addEventListener('keydown', e=>{
     const key = e.key.length === 1 ? e.key.toLowerCase() : e.key;
-    const map = {'d':0,'f':1,'j':2,'k':3,'ArrowLeft':0,'ArrowDown':1,'ArrowUp':2,'ArrowRight':3};
+    const laneCount = currentGame?.laneCount || 4;
+    const map = laneCount === 6 ? {'s':0,'d':1,'f':2,'h':3,'j':4,'k':5,'ArrowLeft':0,'ArrowDown':1,'ArrowUp':4,'ArrowRight':5} : {'d':0,'f':1,'j':2,'k':3,'ArrowLeft':0,'ArrowDown':1,'ArrowUp':2,'ArrowRight':3};
     if(map[key] != null){
       e.preventDefault();
       hitLane(map[key]);
@@ -1541,7 +1557,7 @@ function escapeHtml(str){
     const notes = [];
     for(let t=1, i=0;t<duration-1;t+=.5,i++){
       const lane = i%4;
-      notes.push({time:round(t,3), lane, type:i%4===0?'kick':'event', long:false, duration:0, symbol:symbols[lane], hit:false, missed:false});
+      notes.push({time:round(t,3), lane, type:i%4===0?'kick':'event', long:false, duration:0, color:laneColors[lane], hit:false, missed:false});
     }
     notes.push({time:3.2,lane:0,type:'vocal',long:true,duration:1.4,symbol:'❤️',hit:false,missed:false});
     notes.push({time:8.1,lane:0,type:'vocal',long:true,duration:1.8,symbol:'❤️',hit:false,missed:false});
@@ -1590,7 +1606,7 @@ function escapeHtml(str){
   function writeStr(view, offset, str){
     for(let i=0;i<str.length;i++) view.setUint8(offset+i,str.charCodeAt(i));
   }
-
+  renderGameLayout(4);
   createExampleGame();
   renderList();
 })();
