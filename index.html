@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<title>셀-프 리듬게임 ver.4.4.1</title>
+<title>셀-프 리듬게임 ver.4.4.1.1.1</title>
 <style>
 :root{
   --bg:#050712;
@@ -490,7 +490,7 @@ button{cursor:pointer;border:0;color:white}
 }
 
 
-/* ver.4.4 모바일 최적화 */
+/* ver.4.4.1 모바일 최적화 */
 @media(max-width:850px){
   body{overscroll-behavior:none}
   .version{top:8px;right:10px;font-size:11px;padding:4px 8px;background:rgba(0,0,0,.28);border-radius:999px}
@@ -629,7 +629,7 @@ html,body{
 }
 
 
-/* ver.4.4 롱노트 */
+/* ver.4.4.1 롱노트 */
 .note.longNote{
   border-radius:14px !important;
 }
@@ -670,7 +670,7 @@ html,body{
 </head>
 <body>
 <div class="bg"></div>
-<div class="version">ver.4.4</div>
+<div class="version">ver.4.4.1</div>
 <div class="credit">made by. <button id="adminEgg" class="adminEgg" type="button">SIONINZION</button></div>
 <div class="toast" id="toast"></div><div class="adminBadge" id="adminBadge"></div>
 <button class="exit" id="exitBtn">나가기</button>
@@ -694,7 +694,7 @@ html,body{
       <div class="field"><span>게임 제목</span><input id="gameName" placeholder="예: 연습곡 1" /></div>
       <div class="field"><span>MP3 파일</span><input id="mp3File" type="file" accept=".mp3,.m4a,.wav,.aac,audio/mpeg,audio/mp3,audio/mp4,audio/aac,audio/wav,audio/*" /></div>
       <div class="field"><span>난이도</span><div class="row difficulty" id="difficultyBtns"></div></div>
-      <button class="primary" id="makeGame">제작 시작</button><div class="progressOuter"><div class="progressInner"></div></div><div class="analyzeStatus">ver.4.4: 멜로디 기반 롱노트 제작 모드 추가</div>
+      <button class="primary" id="makeGame">제작 시작</button><div class="progressOuter"><div class="progressInner"></div></div><div class="analyzeStatus">ver.4.4.1: 멜로디 기반 롱노트 제작 모드 추가</div>
     </div>
 
     <div class="list" id="list">
@@ -1032,44 +1032,78 @@ function rebalanceRepeatedLanes(notes,cfg,laneCount){
 }
 
 function addLongNotes(notes, laneCount, difficulty){
-  // 멜로디 노트가 짧은 간격으로 이어질 때 일부를 롱노트로 변환
+  // ver.4.4.1: 장노트가 너무 적게 나오는 문제 수정
+  // 같은 레인 멜로디만 연결하지 않고, 멜로디/중역 후보 중 일부를 독립 롱노트로도 변환한다.
   const sorted = [...notes].sort((a,b)=>a.time-b.time);
   const out = [];
   const used = new Set();
-  const minDuration = difficulty >= 5 ? 0.32 : 0.38;
-  const maxGap = difficulty >= 5 ? 0.34 : 0.30;
-  const maxDuration = difficulty >= 5 ? 1.35 : 1.05;
+
+  const longEvery = difficulty >= 6 ? 5 : difficulty >= 4 ? 6 : 7;
+  const minDuration = difficulty >= 5 ? 0.42 : 0.50;
+  const maxDuration = difficulty >= 6 ? 1.55 : 1.28;
+  const connectGap = difficulty >= 5 ? 0.55 : 0.48;
 
   for(let i=0;i<sorted.length;i++){
     if(used.has(i)) continue;
     const n = sorted[i];
 
-    // 멜로디 위주 + 너무 초반/너무 가까운 노트는 제외
-    if(n.type === 'melody' && i % 5 === 0){
-      let end = n.time;
+    const melodyLike = n.type === 'melody' || (n.type === 'hat' && difficulty >= 5);
+    const shouldTryLong = melodyLike && (i % longEvery === 0 || (n.power || 0) > 0);
+
+    if(shouldTryLong){
+      let end = n.time + minDuration + ((i % 3) * 0.16);
       let lastIndex = i;
+
       for(let j=i+1;j<sorted.length;j++){
         const next = sorted[j];
         if(used.has(j)) continue;
-        const gap = next.time - end;
-        if(gap > maxGap) break;
-        if(next.type === 'melody' && next.lane === n.lane){
-          end = next.time;
+        if(next.time - n.time > maxDuration) break;
+
+        const gap = next.time - sorted[lastIndex].time;
+        const compatible = next.type === 'melody' || next.type === 'hat';
+        if(gap <= connectGap && compatible){
+          end = Math.max(end, next.time + 0.18);
           lastIndex = j;
         }
-        if(end - n.time >= maxDuration) break;
       }
 
+      end = Math.min(n.time + maxDuration, end);
       const duration = end - n.time;
+
+      // 너무 가까운 다음 노트와 충돌하면 길이만 살짝 줄임
+      const nextDifferent = sorted.find((x,idx)=>idx>i && !used.has(idx) && x.time > n.time + 0.2 && x.time < end && x.lane === n.lane);
       if(duration >= minDuration){
-        const longEnd = Math.min(n.time + maxDuration, end + 0.22);
-        out.push({...n, long:true, endTime:round(longEnd,3), duration:round(longEnd-n.time,3)});
-        for(let k=i+1;k<=lastIndex;k++) used.add(k);
+        out.push({...n, long:true, endTime:round(end,3), duration:round(duration,3)});
+        // 롱노트 몸통 안쪽의 가까운 멜로디 후보 일부는 제거해서 시야를 정리
+        for(let k=i+1;k<=lastIndex;k++){
+          if(sorted[k] && (sorted[k].type === 'melody' || sorted[k].type === 'hat')) used.add(k);
+        }
         continue;
       }
     }
 
     out.push({...n, long:false, endTime:null, duration:0});
+  }
+
+  // 최소 비율 보장: 전체 노트의 약 8~14%는 롱노트가 되게 함
+  let longCount = out.filter(n=>n.long).length;
+  const targetLong = Math.max(3, Math.floor(out.length * (difficulty >= 5 ? 0.14 : 0.09)));
+
+  if(longCount < targetLong){
+    for(let i=2;i<out.length-2 && longCount<targetLong;i+=longEvery){
+      const n = out[i];
+      if(n.long) continue;
+      if(n.type !== 'melody' && n.type !== 'hat') continue;
+
+      const nextSameLane = out.slice(i+1).find(x=>x.lane === n.lane && x.time - n.time > 0.35);
+      const safeEnd = nextSameLane ? Math.min(n.time + maxDuration, nextSameLane.time - 0.12) : n.time + minDuration + 0.22;
+      if(safeEnd - n.time >= minDuration){
+        n.long = true;
+        n.endTime = round(safeEnd,3);
+        n.duration = round(safeEnd-n.time,3);
+        longCount++;
+      }
+    }
   }
 
   return out.sort((a,b)=>a.time-b.time).map((n,i)=>({...n,id:i}));
