@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<title>셀-프 리듬게임 ver.4.4.1.1.1</title>
+<title>셀-프 리듬게임 ver.4.3.1.1</title>
 <style>
 :root{
   --bg:#050712;
@@ -490,7 +490,7 @@ button{cursor:pointer;border:0;color:white}
 }
 
 
-/* ver.4.4.1 모바일 최적화 */
+/* ver.4.3.1 모바일 최적화 */
 @media(max-width:850px){
   body{overscroll-behavior:none}
   .version{top:8px;right:10px;font-size:11px;padding:4px 8px;background:rgba(0,0,0,.28);border-radius:999px}
@@ -628,49 +628,11 @@ html,body{
   user-select:none;
 }
 
-
-/* ver.4.4.1 롱노트 */
-.note.longNote{
-  border-radius:14px !important;
-}
-.note.longNote::before{
-  content:"";
-  position:absolute;
-  left:50%;
-  top:100%;
-  transform:translateX(-50%);
-  width:42%;
-  height:var(--longBody, 80px);
-  border-radius:0 0 999px 999px;
-  background:currentColor;
-  opacity:.9;
-}
-.note.longNote::after{
-  z-index:2;
-}
-.holdGlow{
-  position:absolute;
-  width:54px;
-  height:18px;
-  border-radius:999px;
-  transform:translate(-50%,-50%);
-  background:rgba(255,255,255,.92);
-  border:2px solid currentColor;
-  opacity:.9;
-  pointer-events:none;
-  z-index:31;
-  animation:holdGlowPulse .22s infinite alternate;
-}
-@keyframes holdGlowPulse{
-  from{filter:brightness(.9);transform:translate(-50%,-50%) scaleX(.9)}
-  to{filter:brightness(1.25);transform:translate(-50%,-50%) scaleX(1.08)}
-}
-
 </style>
 </head>
 <body>
 <div class="bg"></div>
-<div class="version">ver.4.4.1</div>
+<div class="version">ver.4.3.1</div>
 <div class="credit">made by. <button id="adminEgg" class="adminEgg" type="button">SIONINZION</button></div>
 <div class="toast" id="toast"></div><div class="adminBadge" id="adminBadge"></div>
 <button class="exit" id="exitBtn">나가기</button>
@@ -694,7 +656,7 @@ html,body{
       <div class="field"><span>게임 제목</span><input id="gameName" placeholder="예: 연습곡 1" /></div>
       <div class="field"><span>MP3 파일</span><input id="mp3File" type="file" accept=".mp3,.m4a,.wav,.aac,audio/mpeg,audio/mp3,audio/mp4,audio/aac,audio/wav,audio/*" /></div>
       <div class="field"><span>난이도</span><div class="row difficulty" id="difficultyBtns"></div></div>
-      <button class="primary" id="makeGame">제작 시작</button><div class="progressOuter"><div class="progressInner"></div></div><div class="analyzeStatus">ver.4.4.1: 멜로디 기반 롱노트 제작 모드 추가</div>
+      <button class="primary" id="makeGame">제작 시작</button><div class="progressOuter"><div class="progressInner"></div></div><div class="analyzeStatus">ver.4.1: 이전 음악 분석 엔진 + 얇은 흰 줄 노트 적용</div>
     </div>
 
     <div class="list" id="list">
@@ -782,7 +744,6 @@ let audioCtx = null;
 let currentGame = null;
 let audioUrl = null;
 let adminMode = false;
-const holdState = {};
 
 const state = {
   running:false,startTime:0,notes:[],laneCount:4,keys:keys4,colors:colors4,
@@ -1030,85 +991,6 @@ function rebalanceRepeatedLanes(notes,cfg,laneCount){
   }
   return sorted;
 }
-
-function addLongNotes(notes, laneCount, difficulty){
-  // ver.4.4.1: 장노트가 너무 적게 나오는 문제 수정
-  // 같은 레인 멜로디만 연결하지 않고, 멜로디/중역 후보 중 일부를 독립 롱노트로도 변환한다.
-  const sorted = [...notes].sort((a,b)=>a.time-b.time);
-  const out = [];
-  const used = new Set();
-
-  const longEvery = difficulty >= 6 ? 5 : difficulty >= 4 ? 6 : 7;
-  const minDuration = difficulty >= 5 ? 0.42 : 0.50;
-  const maxDuration = difficulty >= 6 ? 1.55 : 1.28;
-  const connectGap = difficulty >= 5 ? 0.55 : 0.48;
-
-  for(let i=0;i<sorted.length;i++){
-    if(used.has(i)) continue;
-    const n = sorted[i];
-
-    const melodyLike = n.type === 'melody' || (n.type === 'hat' && difficulty >= 5);
-    const shouldTryLong = melodyLike && (i % longEvery === 0 || (n.power || 0) > 0);
-
-    if(shouldTryLong){
-      let end = n.time + minDuration + ((i % 3) * 0.16);
-      let lastIndex = i;
-
-      for(let j=i+1;j<sorted.length;j++){
-        const next = sorted[j];
-        if(used.has(j)) continue;
-        if(next.time - n.time > maxDuration) break;
-
-        const gap = next.time - sorted[lastIndex].time;
-        const compatible = next.type === 'melody' || next.type === 'hat';
-        if(gap <= connectGap && compatible){
-          end = Math.max(end, next.time + 0.18);
-          lastIndex = j;
-        }
-      }
-
-      end = Math.min(n.time + maxDuration, end);
-      const duration = end - n.time;
-
-      // 너무 가까운 다음 노트와 충돌하면 길이만 살짝 줄임
-      const nextDifferent = sorted.find((x,idx)=>idx>i && !used.has(idx) && x.time > n.time + 0.2 && x.time < end && x.lane === n.lane);
-      if(duration >= minDuration){
-        out.push({...n, long:true, endTime:round(end,3), duration:round(duration,3)});
-        // 롱노트 몸통 안쪽의 가까운 멜로디 후보 일부는 제거해서 시야를 정리
-        for(let k=i+1;k<=lastIndex;k++){
-          if(sorted[k] && (sorted[k].type === 'melody' || sorted[k].type === 'hat')) used.add(k);
-        }
-        continue;
-      }
-    }
-
-    out.push({...n, long:false, endTime:null, duration:0});
-  }
-
-  // 최소 비율 보장: 전체 노트의 약 8~14%는 롱노트가 되게 함
-  let longCount = out.filter(n=>n.long).length;
-  const targetLong = Math.max(3, Math.floor(out.length * (difficulty >= 5 ? 0.14 : 0.09)));
-
-  if(longCount < targetLong){
-    for(let i=2;i<out.length-2 && longCount<targetLong;i+=longEvery){
-      const n = out[i];
-      if(n.long) continue;
-      if(n.type !== 'melody' && n.type !== 'hat') continue;
-
-      const nextSameLane = out.slice(i+1).find(x=>x.lane === n.lane && x.time - n.time > 0.35);
-      const safeEnd = nextSameLane ? Math.min(n.time + maxDuration, nextSameLane.time - 0.12) : n.time + minDuration + 0.22;
-      if(safeEnd - n.time >= minDuration){
-        n.long = true;
-        n.endTime = round(safeEnd,3);
-        n.duration = round(safeEnd-n.time,3);
-        longCount++;
-      }
-    }
-  }
-
-  return out.sort((a,b)=>a.time-b.time).map((n,i)=>({...n,id:i}));
-}
-
 function analyzeMusic(buffer,difficulty,progress){
   const laneCount=getLaneCount(difficulty);
   const sampleRate=buffer.sampleRate;
@@ -1207,18 +1089,8 @@ function analyzeMusic(buffer,difficulty,progress){
   }
   notes=refinePlayablePattern(notes,cfg);
   notes=rebalanceRepeatedLanes(notes,cfg,laneCount);
-  notes = addLongNotes(notes, laneCount, difficulty).map((n,i)=>({
-    id:i,
-    time:round(n.time,3),
-    lane:n.lane,
-    type:n.type,
-    long:!!n.long,
-    endTime:n.endTime ? round(n.endTime,3) : null,
-    duration:n.duration || 0,
-    holding:false,
-    holdDone:false,
-    judged:false,
-    el:null
+  notes=notes.sort((a,b)=>a.time-b.time).map((n,i)=>({
+    id:i,time:round(n.time,3),lane:n.lane,type:n.type,judged:false,el:null
   }));
 
   progress?.(`분석 완료! 노트 ${notes.length}개 생성`,100);
@@ -1275,7 +1147,7 @@ function makeFallbackNotes(duration,diff){
   for(let i=0;i<total;i++){
     const t = 1.4 + (duration-3.2)*(i/(total-1));
     let lane = laneCount===6 ? i%6 : (i*2+Math.floor(i/3))%4;
-    notes.push({id:i,time:t,lane,judged:false,el:null,type:'fallback',long:false,endTime:null,duration:0,holding:false,holdDone:false});
+    notes.push({id:i,time:t,lane,judged:false,el:null,type:'fallback'});
   }
   return {notes,laneCount};
 }
@@ -1313,9 +1185,6 @@ function setupInput(){
     b.className='keyBtn'; b.textContent=k; b.style.color=state.colors[i]; b.dataset.lane=i;
     b.addEventListener('touchstart',(e)=>{e.preventDefault();pressLane(i,k);});
     b.addEventListener('mousedown',()=>pressLane(i,k));
-    b.addEventListener('touchend',(e)=>{e.preventDefault();releaseLane(i);});
-    b.addEventListener('mouseup',()=>releaseLane(i));
-    b.addEventListener('mouseleave',()=>releaseLane(i));
     row.appendChild(b);
   });
 }
@@ -1400,7 +1269,7 @@ function renderNote(note,now){
   if(p<-0.95 || p>1.2){ if(note.el) note.el.style.display='none'; return; }
   if(!note.el){
     note.el=document.createElement('div');
-    note.el.className='note' + (note.long ? ' longNote' : '');
+    note.el.className='note';
     note.el.style.color=state.colors[note.lane];
     $('notesLayer').appendChild(note.el);
   }
@@ -1412,27 +1281,17 @@ function renderNote(note,now){
   note.el.style.top=y+'%';
   note.el.style.width=w+'%';
   note.el.style.height=h+'px';
-  if(note.long){ note.el.style.setProperty('--longBody', Math.max(28, note.duration * 145 * noteSpeed * (0.75 + p)) + 'px'); }
   note.el.style.opacity=p<0?.25:1;
 }
 function loop(){
   if(!state.running)return;
   const now=performance.now()/1000-state.startTime;
   state.notes.forEach(n=>{
-    if(adminMode && !n.judged && now >= (n.long ? (n.endTime || n.time) : n.time)){
+    if(adminMode && !n.judged && now >= n.time){
       applyJudgement(n,'perfect');
       return;
     }
-    if(n.long && n.holding && !n.judged && now >= (n.endTime || n.time)){
-      const h = holdState[n.lane];
-      if(h && h.glow) h.glow.remove();
-      delete holdState[n.lane];
-      n.holdDone = true;
-      applyJudgement(n,'perfect');
-      return;
-    }
-    if(!n.judged && now-n.time>0.22 && !n.long) applyJudgement(n,'miss');
-    if(!n.judged && n.long && !n.holding && now-n.time>0.22) applyJudgement(n,'miss');
+    if(!n.judged && now-n.time>0.22) applyJudgement(n,'miss');
     if(!n.judged) renderNote(n,now);
   });
   const audio=$('audio');
@@ -1451,33 +1310,6 @@ function loop(){
   if(now>=endTime) return finish();
   state.raf=requestAnimationFrame(loop);
 }
-
-function spawnHoldGlow(note){
-  const wrap = document.getElementById('laneWrap');
-  if(!wrap) return null;
-  const glow = document.createElement('div');
-  glow.className = 'holdGlow';
-  glow.style.color = state.colors[note.lane] || '#ffffff';
-  glow.style.left = laneCenter(note.lane, 1.0) + '%';
-  glow.style.top = '84%';
-  wrap.appendChild(glow);
-  return glow;
-}
-function releaseLane(lane){
-  const h = holdState[lane];
-  if(!h || !h.note) return;
-  const now=performance.now()/1000-state.startTime;
-  const note=h.note;
-  if(note.long && !note.holdDone){
-    // 끝까지 버티기 전에 떼면 OK 이하로 처리하고 콤보 끊김 방지용으로 fast 대신 miss 처리
-    if(now < (note.endTime || note.time) - 0.16){
-      if(h.glow) h.glow.remove();
-      delete holdState[lane];
-      applyJudgement(note,'miss');
-    }
-  }
-}
-
 function pressLane(lane,key){
   if(!state.running)return;
   const btn=[...document.querySelectorAll('.keyBtn')][lane];
@@ -1493,15 +1325,6 @@ function pressLane(lane,key){
   else if(Math.abs(dt)<=0.108) j='good';
   else if(Math.abs(dt)<=0.154) j='ok';
   else j='fast';
-  if(n.long && j !== 'fast' && j !== 'miss'){
-    n.holding = true;
-    holdState[lane] = {note:n, glow:spawnHoldGlow(n)};
-    // 시작 판정은 표시하되 최종 처리는 끝 지점에서 PERFECT/GOOD/OK로 계산
-    $('judgeText').textContent=j.toUpperCase();
-    showCenterJudge(j);
-    if(n.el) n.el.style.opacity = .55;
-    return;
-  }
   applyJudgement(n,j);
 }
 
@@ -1545,8 +1368,6 @@ function showCenterJudge(j){
 function applyJudgement(note,j){
   if(note.judged)return;
   note.judged=true; state.judged++;
-  if(holdState[note.lane]?.glow) holdState[note.lane].glow.remove();
-  delete holdState[note.lane];
   if(note.el) note.el.remove();
   spawnHitBurst(note, j);
   state.counts[j]++;
@@ -1657,7 +1478,6 @@ document.addEventListener('keydown',e=>{
   if(idx>=0) pressLane(idx,k);
   if(k==='ESCAPE') resetToMenu();
 });
-document.addEventListener('keyup',e=>{ const idx=state.keys.indexOf(e.key.toUpperCase()); if(idx>=0) releaseLane(idx); });
 
 buildDiff(); buildSpeed(); createPractice(); renderList();
 
