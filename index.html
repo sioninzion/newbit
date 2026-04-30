@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<title>셀-프 리듬게임 ver.5.9</title>
+<title>셀-프 리듬게임 ver.6.2</title>
 <style>
 :root{
   --bg:#050712;
@@ -67,10 +67,18 @@ button{cursor:pointer;border:0;color:white}
 .field{display:flex;flex-direction:column;gap:8px;margin:14px 0;text-align:left;color:rgba(255,255,255,.75);font-weight:700}
 .field input,.field select{width:100%;padding:14px;border-radius:14px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);color:white}
 .row{display:flex;gap:10px;flex-wrap:wrap}
-.difficulty button,.speed button,.mode button{
+.difficulty button,.speed button,.mode button,.soundChoice button{
   flex:1;min-width:70px;padding:12px;border-radius:14px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.16)
 }
-.difficulty button.on,.speed button.on,.mode button.on{background:#2d7dff}
+.difficulty button.on,.speed button.on,.mode button.on,.soundChoice button.on{background:#2d7dff}
+.modeDesc{margin-top:7px;color:rgba(255,255,255,.58);font-size:12px;line-height:1.45;font-weight:800}
+.soundChoice{gap:8px 10px}
+.soundChoice button{flex:1;min-width:72px;padding:12px;border-radius:14px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.16);font-weight:900}
+.soundChoice .soundPreviewBreak{flex-basis:100%;height:8px}
+.soundChoice .preview{flex:0 0 160px;margin-top:4px;background:rgba(255,255,255,.075);border:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.86)}
+.soundChoice .preview:active{transform:scale(.98)}
+@media(max-width:850px){.soundChoice .preview{flex:1 0 100%;}.modeDesc{font-size:11px}}
+
 .exit{position:fixed;right:18px;bottom:24px;background:#ef334d;padding:13px 20px;border-radius:16px;font-weight:900;z-index:30;display:none}
 .exit.show{display:block}
 .toast{position:fixed;left:50%;bottom:64px;transform:translateX(-50%);background:rgba(0,0,0,.72);border:1px solid rgba(255,255,255,.15);padding:12px 18px;border-radius:999px;opacity:0;transition:.25s;z-index:50}
@@ -124,6 +132,8 @@ button{cursor:pointer;border:0;color:white}
   position:absolute;height:22px;border-radius:10px;transform:translate(-50%,-50%);
   box-shadow:0 0 18px currentColor;
   z-index:5;
+  will-change:left,top,width,height,opacity;
+  contain:layout paint style;
 }
 .note:after{content:"";position:absolute;left:10%;right:10%;top:50%;height:6px;transform:translateY(-50%);border-radius:999px;background:rgba(255,255,255,.9)}
 .inputRow{
@@ -881,7 +891,7 @@ body.taikoPlaying:not(.taikoPlayingMobile) .hitBurst{top:42vh!important}
 </head>
 <body>
 <div class="bg"></div>
-<div class="version">ver.5.9</div>
+<div class="version">ver.6.2</div>
 <div class="credit">made by. <button id="adminEgg" class="adminEgg" type="button">SIONINZION</button></div>
 <div class="toast" id="toast"></div><div class="adminBadge" id="adminBadge"></div>
 <div class="rotateOverlay" id="rotateOverlay"><div><div class="rotateIcon"></div><b id="rotateText">가로로 돌려주세요</b></div></div>
@@ -905,9 +915,9 @@ body.taikoPlaying:not(.taikoPlayingMobile) .hitBurst{top:42vh!important}
       <h2>게임 제작</h2>
       <div class="field"><span>게임 제목</span><input id="gameName" placeholder="예: 연습곡 1" /></div>
       <div class="field"><span>MP3 파일</span><input id="mp3File" type="file" accept=".mp3,.m4a,.wav,.aac,audio/mpeg,audio/mp3,audio/mp4,audio/aac,audio/wav,audio/*" /></div>
-      <div class="field"><span>게임 방식</span><div class="row mode" id="modeBtns"></div></div>
+      <div class="field"><span>게임 방식</span><div class="row mode" id="modeBtns"></div><div class="modeDesc" id="modeDesc">4KEY: D F J K로 플레이</div></div>
       <div class="field"><span>난이도</span><div class="row difficulty" id="difficultyBtns"></div></div>
-      <button class="primary" id="makeGame">제작 시작</button><div class="progressOuter"><div class="progressInner"></div></div><div class="analyzeStatus">ver.5.8: 태고 가로모드 강화 · 북 크기/라인 정렬 수정</div>
+      <button class="primary" id="makeGame">제작 시작</button><div class="progressOuter"><div class="progressInner"></div></div><div class="analyzeStatus">ver.6.2: 기본 속도 30%↑ · 키모드 부드러움 · 멜로디 친화 분석</div>
     </div>
 
     <div class="list" id="list">
@@ -917,8 +927,12 @@ body.taikoPlaying:not(.taikoPlayingMobile) .hitBurst{top:42vh!important}
 
     <div class="settings" id="settings">
       <h2>설정</h2>
-      <div class="field"><span>볼륨</span><input id="volume" type="range" min="0" max="1" step=".05" value=".85"></div>
+      <div class="field"><span>음악 볼륨</span><input id="volume" type="range" min="0" max="1" step=".05" value=".85"></div>
+      <div class="field"><span>노트 볼륨</span><input id="noteVolume" type="range" min="0" max="1" step=".05" value=".70"></div>
       <div class="field"><span>노트 속도</span><div class="row speed" id="speedBtns"></div></div>
+      <div class="field"><span>키 모드 인식 소리</span><div class="row soundChoice" id="keySoundBtns"></div></div>
+      <div class="field"><span>OSU'st 인식 소리</span><div class="row soundChoice" id="osuSoundBtns"></div></div>
+      <div class="field"><span>태고 소리</span><div class="row soundChoice" id="taikoSoundBtns"></div></div>
     </div>
   </section>
 
@@ -987,14 +1001,20 @@ const keys6 = ['S','D','F','H','J','K'];
 const keysTaiko = ['D','F','J','K'];
 
 const STORAGE_KEY = 'sionRhythmGamesV53';
-const SETTINGS_KEY = 'sionRhythmSettingsV53';
+const SETTINGS_KEY = 'sionRhythmSettingsV60';
 const DB_NAME = 'sionRhythmAudioDB_v53';
 const DB_STORE = 'audioFiles';
 
 let games = JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]');
 let selectedMode = '4key';
 let selectedDifficulty = 3;
-let noteSpeed = Number((JSON.parse(localStorage.getItem(SETTINGS_KEY)||'{}')).speed || 1.5);
+const savedSettings = JSON.parse(localStorage.getItem(SETTINGS_KEY)||'{}');
+const BASE_SCROLL_BOOST = 1.30; // ver6.2: 표시 속도 1.0x 기준 실제 이동 속도 30% 증가
+let noteSpeed = Number(savedSettings.speed || 1.0);
+let noteVolume = Number(savedSettings.noteVolume ?? .70);
+let selectedKeySound = savedSettings.keySound || 'A';
+let selectedOsuSound = savedSettings.osuSound || 'soft';
+let selectedTaikoSound = savedSettings.taikoSound || 'classic';
 let audioCtx = null;
 let currentGame = null;
 let audioUrl = null;
@@ -1026,9 +1046,10 @@ function showPanel(panel){
   if(panel) $(panel).classList.add('show');
 }
 function saveGames(){localStorage.setItem(STORAGE_KEY,JSON.stringify(games));}
-function saveSettings(){localStorage.setItem(SETTINGS_KEY,JSON.stringify({speed:noteSpeed, volume:Number($('volume').value)}));}
+function saveSettings(){localStorage.setItem(SETTINGS_KEY,JSON.stringify({speed:noteSpeed, volume:Number($('volume')?.value || .85), noteVolume, keySound:selectedKeySound, osuSound:selectedOsuSound, taikoSound:selectedTaikoSound}));}
 function uid(){return 'g_' + Date.now() + '_' + Math.random().toString(36).slice(2,8)}
 function clamp(v,min,max){return Math.max(min,Math.min(max,v))}
+function effectiveNoteSpeed(){return noteSpeed * BASE_SCROLL_BOOST}
 function fmt(n,len=3){return String(n).padStart(len,'0')}
 function round(v,d){const m=10**d;return Math.round(v*m)/m}
 function waitFrame(){return new Promise(r=>requestAnimationFrame(r))}
@@ -1055,6 +1076,84 @@ function setStatus(msg,pct){
   const status=document.querySelector('.creator .analyzeStatus');
   if(status) status.textContent = msg;
   if(fill) fill.style.width = clamp(pct,0,100) + '%';
+}
+
+function ensureAudioCtx(){
+  if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  if(audioCtx.state === 'suspended') audioCtx.resume().catch(()=>{});
+  return audioCtx;
+}
+function playTone({freq=440, duration=.065, type='sine', gain=.35, sweep=0, noise=false, attack=.004}){
+  const ctx=ensureAudioCtx();
+  const t=ctx.currentTime;
+  const out=ctx.createGain();
+  out.gain.setValueAtTime(0,t);
+  out.gain.linearRampToValueAtTime(gain*noteVolume,t+attack);
+  out.gain.exponentialRampToValueAtTime(0.0001,t+duration);
+  out.connect(ctx.destination);
+  if(noise){
+    const len=Math.max(1,Math.floor(ctx.sampleRate*duration));
+    const buf=ctx.createBuffer(1,len,ctx.sampleRate);
+    const data=buf.getChannelData(0);
+    for(let i=0;i<len;i++) data[i]=(Math.random()*2-1)*Math.pow(1-i/len,1.7);
+    const src=ctx.createBufferSource();
+    src.buffer=buf;
+    const filter=ctx.createBiquadFilter();
+    filter.type='highpass'; filter.frequency.value=freq;
+    src.connect(filter); filter.connect(out);
+    src.start(t); src.stop(t+duration);
+    return;
+  }
+  const osc=ctx.createOscillator();
+  osc.type=type;
+  osc.frequency.setValueAtTime(freq,t);
+  if(sweep) osc.frequency.exponentialRampToValueAtTime(Math.max(30,freq+sweep),t+duration*.9);
+  osc.connect(out);
+  osc.start(t); osc.stop(t+duration);
+}
+function playLayeredTones(list){ list.forEach(cfg=>playTone(cfg)); }
+function playNoteSound(note, judgement='perfect'){
+  if(judgement === 'miss') return;
+  if(state.mode === 'taiko' && selectedTaikoSound === 'none') return;
+  if(state.mode === 'osu' && selectedOsuSound === 'none') return;
+  if(state.mode !== 'taiko' && state.mode !== 'osu' && selectedKeySound === 'none') return;
+  const soft = judgement === 'fast' || judgement === 'ok' ? .78 : 1;
+  if(state.mode === 'taiko'){
+    const isDon = (note?.taikoType === 'don') || note?.lane === 0;
+    if(selectedTaikoSound === 'festival'){
+      if(isDon) playLayeredTones([{freq:92,duration:.13,type:'sine',gain:.46*soft,sweep:-42},{freq:58,duration:.16,type:'triangle',gain:.26*soft,sweep:-24}]);
+      else playLayeredTones([{freq:820,duration:.052,type:'square',gain:.23*soft},{freq:2300,duration:.035,noise:true,gain:.20*soft}]);
+    }else if(selectedTaikoSound === 'deep'){
+      if(isDon) playLayeredTones([{freq:72,duration:.16,type:'sine',gain:.52*soft,sweep:-32},{freq:118,duration:.08,type:'triangle',gain:.22*soft,sweep:-28}]);
+      else playLayeredTones([{freq:1150,duration:.045,type:'square',gain:.18*soft},{freq:3200,duration:.04,noise:true,gain:.18*soft}]);
+    }else if(selectedTaikoSound === 'arcade'){
+      if(isDon) playLayeredTones([{freq:105,duration:.09,type:'square',gain:.26*soft,sweep:-50},{freq:70,duration:.12,type:'sine',gain:.28*soft,sweep:-25}]);
+      else playLayeredTones([{freq:1500,duration:.038,type:'square',gain:.22*soft},{freq:4800,duration:.025,noise:true,gain:.12*soft}]);
+    }else{
+      if(isDon) playLayeredTones([{freq:86,duration:.12,type:'sine',gain:.44*soft,sweep:-38},{freq:130,duration:.07,type:'triangle',gain:.18*soft,sweep:-28}]);
+      else playLayeredTones([{freq:920,duration:.05,type:'square',gain:.20*soft},{freq:2800,duration:.04,noise:true,gain:.16*soft}]);
+    }
+    return;
+  }
+  if(state.mode === 'osu'){
+    const table={
+      soft:[{freq:520,duration:.055,type:'sine',gain:.20*soft},{freq:1040,duration:.035,type:'triangle',gain:.09*soft}],
+      click:[{freq:1800,duration:.032,type:'square',gain:.16*soft},{freq:3600,duration:.018,noise:true,gain:.08*soft}],
+      pop:[{freq:360,duration:.06,type:'sine',gain:.16*soft,sweep:180},{freq:900,duration:.035,type:'triangle',gain:.08*soft}],
+      sharp:[{freq:2400,duration:.025,type:'square',gain:.17*soft},{freq:5200,duration:.018,noise:true,gain:.10*soft}]
+    };
+    playLayeredTones(table[selectedOsuSound] || table.soft);
+    return;
+  }
+  const idx = Math.max(0, note?.lane || 0);
+  const base = [330,392,494,587,698,784][idx%6];
+  const table={
+    A:[{freq:base,duration:.055,type:'sine',gain:.18*soft},{freq:base*2,duration:.03,type:'triangle',gain:.06*soft}],
+    B:[{freq:base*.5,duration:.07,type:'square',gain:.13*soft},{freq:base*1.5,duration:.035,type:'triangle',gain:.07*soft}],
+    C:[{freq:base*2,duration:.028,type:'square',gain:.12*soft},{freq:4500,duration:.018,noise:true,gain:.05*soft}],
+    D:[{freq:base,duration:.085,type:'sawtooth',gain:.10*soft,sweep:-80},{freq:base*2.01,duration:.05,type:'triangle',gain:.06*soft}]
+  };
+  playLayeredTones(table[selectedKeySound] || table.A);
 }
 
 /* IndexedDB: 이전 버전처럼 큰 오디오 저장 */
@@ -1109,11 +1208,11 @@ function getLaneCountByMode(mode){if(mode === '6key') return 6; if(mode === 'tai
 function getModeLabel(mode){if(mode === '6key') return '6KEY'; if(mode === 'osu') return "OSU'st"; if(mode === 'taiko') return 'TAIKO'; return '4KEY';}
 function getDifficultyConfig(level){
   const table = {
-    1:{densityMin:1.55,densityMax:2.15,minGap:.22,sameLaneGap:.22,kickGap:.28,snareGap:.30,melodyGap:.30,hatGap:.24,kickPct:72,snarePct:72,melodyPct:70,hatPct:76,kickQ:.25,snareQ:.24,melodyQ:.36,hatQ:.15},
-    2:{densityMin:2.25,densityMax:3.00,minGap:.155,sameLaneGap:.18,kickGap:.21,snareGap:.22,melodyGap:.22,hatGap:.16,kickPct:66,snarePct:65,melodyPct:60,hatPct:66,kickQ:.21,snareQ:.21,melodyQ:.40,hatQ:.18},
-    3:{densityMin:3.20,densityMax:4.25,minGap:.105,sameLaneGap:.135,kickGap:.15,snareGap:.17,melodyGap:.13,hatGap:.11,kickPct:66,snarePct:62,melodyPct:34,hatPct:64,kickQ:.12,snareQ:.16,melodyQ:.58,hatQ:.14},
-    4:{densityMin:4.35,densityMax:5.65,minGap:.075,sameLaneGap:.105,kickGap:.12,snareGap:.13,melodyGap:.085,hatGap:.09,kickPct:60,snarePct:57,melodyPct:26,hatPct:55,kickQ:.10,snareQ:.15,melodyQ:.62,hatQ:.13},
-    5:{densityMin:5.75,densityMax:7.10,minGap:.052,sameLaneGap:.085,kickGap:.09,snareGap:.10,melodyGap:.052,hatGap:.065,kickPct:54,snarePct:50,melodyPct:18,hatPct:48,kickQ:.08,snareQ:.12,melodyQ:.70,hatQ:.10}
+    1:{densityMin:1.70,densityMax:2.25,minGap:.20,sameLaneGap:.21,kickGap:.30,snareGap:.30,melodyGap:.24,hatGap:.24,kickPct:76,snarePct:76,melodyPct:56,hatPct:80,kickQ:.12,snareQ:.12,melodyQ:.62,hatQ:.14},
+    2:{densityMin:2.40,densityMax:3.15,minGap:.145,sameLaneGap:.17,kickGap:.24,snareGap:.24,melodyGap:.17,hatGap:.17,kickPct:72,snarePct:70,melodyPct:45,hatPct:70,kickQ:.10,snareQ:.11,melodyQ:.67,hatQ:.12},
+    3:{densityMin:3.35,densityMax:4.45,minGap:.098,sameLaneGap:.13,kickGap:.18,snareGap:.18,melodyGap:.095,hatGap:.12,kickPct:70,snarePct:68,melodyPct:26,hatPct:66,kickQ:.08,snareQ:.10,melodyQ:.72,hatQ:.10},
+    4:{densityMin:4.55,densityMax:5.85,minGap:.070,sameLaneGap:.10,kickGap:.145,snareGap:.145,melodyGap:.065,hatGap:.095,kickPct:66,snarePct:64,melodyPct:19,hatPct:58,kickQ:.07,snareQ:.09,melodyQ:.76,hatQ:.08},
+    5:{densityMin:5.95,densityMax:7.40,minGap:.048,sameLaneGap:.082,kickGap:.115,snareGap:.115,melodyGap:.044,hatGap:.070,kickPct:60,snarePct:58,melodyPct:13,hatPct:52,kickQ:.06,snareQ:.08,melodyQ:.80,hatQ:.06}
   };
   return table[clamp(Number(level)||3,1,5)] || table[3];
 }
@@ -1296,8 +1395,9 @@ function analyzeMusic(buffer,difficulty,progress,mode='4key'){
 
     const kickScore=bass*clamp(bass/(body+brightness+1e-8),.3,2.8);
     const snareScore=(lowMid*.55+mid*.45+highMid*.80)*clamp(brightness/(bass+1e-8),.45,2.0)*clamp(1-Math.abs(zcr-.12)*2.0,.35,1.2);
-    const melodyBoost=1+Math.max(0,difficulty-3)*.18;
-    const melodyScore=(lowMid*1.05+mid*1.95*melodyBoost+highMid*.44*melodyBoost)*clamp(1-bass/(body+brightness+1e-8)*.035,.78,1.35);
+    const melodyBoost=1.16+Math.max(0,difficulty-2)*.22;
+    const melodyMotion=Math.abs((frames[frames.length-1]?.mid || 0) - mid) + Math.abs((frames[frames.length-1]?.lowMid || 0) - lowMid);
+    const melodyScore=(lowMid*1.20+mid*2.35*melodyBoost+highMid*.62*melodyBoost+melodyMotion*.85)*clamp(1-bass/(body+brightness+1e-8)*.025,.82,1.42);
     const hatScore=(high*1.25+highMid*.65)*clamp(zcr*8.0,.35,2.2)*clamp(1-bass/(brightness+body+1e-8)*.20,.35,1.1);
 
     frames.push({t,total,zcr,kickScore,snareScore,melodyScore,hatScore});
@@ -1377,6 +1477,12 @@ function buildMode(){
   const box=$('modeBtns'); if(!box) return;
   box.innerHTML='';
   const modes=[['4key','4KEY'],['6key','6KEY'],['osu',"OSU'st"],['taiko','TAIKO']];
+  const desc={
+    '4key':'4KEY: D F J K로 플레이',
+    '6key':'6KEY: S D F H J K로 플레이',
+    'osu':"OSU'st: 마우스를 노트 위에 두고 Space로 판정",
+    'taiko':'TAIKO: D/F=쿵, J/K=테 · 모바일은 좌/우 북'
+  };
   modes.forEach(([value,label])=>{
     const b=document.createElement('button');
     b.textContent=label;
@@ -1384,6 +1490,8 @@ function buildMode(){
     b.onclick=()=>{if(isMobile && value==='6key') toast('모바일 6KEY는 화면이 좁을 수 있어. PC 플레이를 추천해.'); selectedMode=value; buildMode();};
     box.appendChild(b);
   });
+  const md=$('modeDesc');
+  if(md) md.textContent=desc[selectedMode] || desc['4key'];
 }
 function buildDiff(){
   $('difficultyBtns').innerHTML='';
@@ -1397,13 +1505,46 @@ function buildDiff(){
 }
 function buildSpeed(){
   $('speedBtns').innerHTML='';
-  for(let v=.5;v<=3.001;v+=.5){
+  for(let v=.5;v<=2.001;v+=.5){
     const b=document.createElement('button');
     b.textContent=v.toFixed(1)+'x';
     b.className=Math.abs(v-noteSpeed)<.01?'on':'';
     b.onclick=()=>{noteSpeed=v;saveSettings();buildSpeed();};
     $('speedBtns').appendChild(b);
   }
+}
+function buildSoundChoices(){
+  const make=(id,items,get,set,previewMode)=>{
+    const box=$(id); if(!box) return; box.innerHTML='';
+    items.forEach(([value,label])=>{
+      const b=document.createElement('button');
+      b.textContent=label;
+      b.className=value===get()?'on':'';
+      b.onclick=()=>{set(value); saveSettings(); buildSoundChoices();};
+      box.appendChild(b);
+    });
+    const gap=document.createElement('div');
+    gap.className='soundPreviewBreak';
+    box.appendChild(gap);
+    const test=document.createElement('button');
+    test.textContent='미리듣기';
+    test.className='preview';
+    test.onclick=()=>{
+      const old=state.mode;
+      state.mode=previewMode;
+      if(previewMode==='taiko'){
+        playNoteSound({lane:0,taikoType:'don'},'perfect');
+        setTimeout(()=>playNoteSound({lane:1,taikoType:'ka'},'perfect'),140);
+      }else{
+        playNoteSound({lane:1},'perfect');
+      }
+      state.mode=old;
+    };
+    box.appendChild(test);
+  };
+  make('keySoundBtns', [['none','없음'],['A','A'],['B','B'],['C','C'],['D','D']], ()=>selectedKeySound, v=>selectedKeySound=v, '4key');
+  make('osuSoundBtns', [['none','없음'],['soft','soft'],['click','click'],['pop','pop'],['sharp','sharp']], ()=>selectedOsuSound, v=>selectedOsuSound=v, 'osu');
+  make('taikoSoundBtns', [['none','없음'],['classic','기본'],['festival','축제'],['deep','묵직'],['arcade','아케이드']], ()=>selectedTaikoSound, v=>selectedTaikoSound=v, 'taiko');
 }
 function renderList(){
   const box=$('gameList'); box.innerHTML='';
@@ -1459,7 +1600,7 @@ function createGuides(){
     wrap.appendChild(cursor);
     const hint=document.createElement('div');
     hint.className='osuHint';
-    hint.textContent='마우스를 다음 원에 올리고 SPACE로 판정 · 숫자/선이 순서';
+    hint.textContent='마우스를 노트 위에 두고 Space로 판정 · 숫자/선이 순서';
     wrap.appendChild(hint);
     return;
   }
@@ -1664,7 +1805,7 @@ function nextOsuNote(){
   return state.notes.find(n=>!n.judged) || null;
 }
 function getUpcomingOsuNotes(now, limit=5){
-  const visibleAhead = Math.max(1.05, 2.2 / noteSpeed);
+  const visibleAhead = Math.max(1.05, 2.2 / effectiveNoteSpeed());
   const timed = state.notes.filter(n=>!n.judged && (n.time-now)<visibleAhead && (n.time-now)>-0.28);
   const guaranteed = state.notes.filter(n=>!n.judged).slice(0,3); // 현재/다음/다다음은 항상 노출
   const merged=[];
@@ -1681,7 +1822,7 @@ function updateOsuTrail(now){
   line.setAttribute('points', upcoming.map(n=>(n.x||50)+','+(n.y||50)).join(' '));
 }
 function renderOsuNote(note,now){
-  const appear = Math.max(.95, 1.95 / noteSpeed);
+  const appear = Math.max(.95, 1.95 / effectiveNoteSpeed());
   const dt = note.time - now;
   const upcoming=getUpcomingOsuNotes(now,6);
   const rank=upcoming.indexOf(note);
@@ -1722,7 +1863,7 @@ function renderOsuNote(note,now){
 }
 
 function renderTaikoNote(note,now){
-  const travel = Math.max(.95, 2.55 / noteSpeed);
+  const travel = Math.max(.95, 2.55 / effectiveNoteSpeed());
   const dt = note.time - now;
   const p = 1 - (dt / travel);
   const hitX = isMobile ? 14 : 16;
@@ -1750,13 +1891,14 @@ function renderTaikoNote(note,now){
 function renderNote(note,now){
   if(state.mode === 'osu') return renderOsuNote(note,now);
   if(state.mode === 'taiko') return renderTaikoNote(note,now);
-  const travel = Math.max(.9, 2.35 / noteSpeed);
+  const travel = Math.max(.9, 2.35 / effectiveNoteSpeed());
   const hitY = 84;
   const p = 1 - ((note.time-now)/travel);
-  if(p<-0.95 || p>1.2){ if(note.el) note.el.style.display='none'; return; }
+  if(p<-1.20 || p>1.28){ if(note.el) note.el.style.display='none'; return; }
   if(!note.el){
     note.el=document.createElement('div');
     note.el.className=state.mode==='taiko' ? 'note taikoNote '+(note.lane===0?'taikoDon':'taikoKa') : 'note';
+    note.el.style.transition='none';
     note.el.style.color=state.colors[note.lane];
     if(state.mode==='taiko') note.el.innerHTML='';
     $('notesLayer').appendChild(note.el);
@@ -1769,7 +1911,7 @@ function renderNote(note,now){
   note.el.style.top=y+'%';
   note.el.style.width=w+'%';
   note.el.style.height=h+'px';
-  note.el.style.opacity=p<0?.25:1;
+  note.el.style.opacity=p<0?.32:1;
 }
 function loop(){
   if(!state.running)return;
@@ -1945,6 +2087,7 @@ function applyJudgement(note,j){
   note.judged=true; state.judged++;
   if(note.el) note.el.remove();
   spawnHitBurst(note, j);
+  playNoteSound(note, j);
   state.counts[j]++;
   if(j==='fast' || j==='miss'){ state.combo=0; if(j==='miss'){ document.body.classList.add('shake'); setTimeout(()=>document.body.classList.remove('shake'),180);} }
   else { state.combo++; state.maxCombo=Math.max(state.maxCombo,state.combo); if(state.combo>0 && state.combo%20===0) spawnComboBackFlash(state.combo); }
@@ -2072,7 +2215,11 @@ document.addEventListener('keydown',e=>{
   if(k==='ESCAPE') resetToMenu();
 });
 
-buildMode(); buildDiff(); buildSpeed(); createPractice(); renderList();
+if($('volume')) $('volume').value = savedSettings.volume ?? .85;
+if($('noteVolume')) $('noteVolume').value = noteVolume;
+$('volume')?.addEventListener('input', saveSettings);
+$('noteVolume')?.addEventListener('input', e=>{noteVolume=Number(e.target.value); saveSettings();});
+buildMode(); buildDiff(); buildSpeed(); buildSoundChoices(); createPractice(); renderList();
 
 let lastTouchEnd = 0;
 document.addEventListener('touchend', function (event) {
