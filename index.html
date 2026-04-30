@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<title>셀-프 리듬게임 ver.5.2</title>
+<title>셀-프 리듬게임 ver.5.9</title>
 <style>
 :root{
   --bg:#050712;
@@ -183,6 +183,65 @@ button{cursor:pointer;border:0;color:white}
 .note.osuNote .osuApproach{position:absolute;left:50%;top:50%;width:100%;height:100%;border-radius:999px;border:4px solid rgba(255,255,255,.72);background:rgba(255,255,255,.055);transform:translate(-50%,-50%) scale(2.6);pointer-events:none;z-index:1;box-shadow:0 0 16px rgba(255,255,255,.32)}
 .note.osuNote:after{left:50% !important;right:auto !important;top:50% !important;width:46% !important;height:46% !important;transform:translate(-50%,-50%) !important;border-radius:999px !important;background:rgba(255,255,255,.22) !important;border:1px solid rgba(255,255,255,.58);z-index:2}
 @media(max-width:850px){.note.osuNote{width:70px !important;height:70px !important;font-size:20px}.note.osuNote .osuApproach{border-width:3px}.osuHint{bottom:18px;font-size:12px}.osuCursor{display:none}}
+
+.laneWrap.taikoMode{
+  clip-path:none;
+  border-radius:28px;
+  background:
+    radial-gradient(circle at 16% 50%,rgba(255,255,255,.13),transparent 16%),
+    linear-gradient(180deg,rgba(20,23,38,.90),rgba(10,13,24,.96));
+  border:1px solid rgba(255,255,255,.16);
+  overflow:hidden;
+}
+.laneWrap.taikoMode .laneGuideSvg,.laneWrap.taikoMode .hitLine{display:none !important}
+.laneWrap.taikoMode:before{
+  display:block;content:"";position:absolute;left:12%;right:4%;top:44%;height:12%;
+  border-radius:999px;
+  background:linear-gradient(90deg,rgba(255,255,255,.18),rgba(255,255,255,.07));
+  border-top:2px solid rgba(255,255,255,.18);
+  border-bottom:2px solid rgba(0,0,0,.18);
+  opacity:.9;pointer-events:none;
+}
+.taikoHitZone{
+  position:absolute;left:14.5%;top:50%;width:92px;height:92px;transform:translate(-50%,-50%);
+  border-radius:999px;background:radial-gradient(circle,#fff 0 18%,#ffecbc 19% 48%,#b24b2c 49% 68%,#53251e 69% 100%);
+  border:5px solid rgba(255,255,255,.92);box-shadow:0 0 24px rgba(255,255,255,.45),0 0 52px rgba(255,70,40,.28);z-index:10;pointer-events:none;
+}
+.taikoHitZone:before{content:"";position:absolute;inset:-17px;border-radius:999px;border:3px solid rgba(255,255,255,.32)}
+.taikoHitZone:after{content:"판정";position:absolute;left:50%;top:110%;transform:translateX(-50%);font-size:12px;font-weight:1000;color:rgba(255,255,255,.72);letter-spacing:.08em}
+.taikoHitZone.hitDon{animation:taikoDonPulse .16s ease-out}
+.taikoHitZone.hitKa{animation:taikoKaPulse .16s ease-out}
+@keyframes taikoDonPulse{0%{filter:brightness(1);transform:translate(-50%,-50%) scale(1)}50%{filter:brightness(1.8);transform:translate(-50%,-50%) scale(1.12)}100%{filter:brightness(1);transform:translate(-50%,-50%) scale(1)}}
+@keyframes taikoKaPulse{0%{box-shadow:0 0 24px rgba(255,255,255,.45),0 0 52px rgba(88,215,255,.28);transform:translate(-50%,-50%) scale(1)}55%{box-shadow:0 0 30px rgba(255,255,255,.8),0 0 72px rgba(88,215,255,.75);transform:translate(-50%,-50%) scale(1.12)}100%{transform:translate(-50%,-50%) scale(1)}}
+.taikoFlowLine{position:absolute;left:14.5%;right:6%;top:50%;height:2px;transform:translateY(-50%);background:linear-gradient(90deg,rgba(255,255,255,.65),rgba(255,255,255,.12));z-index:4;pointer-events:none}
+.taikoHint{position:absolute;left:50%;bottom:94px;transform:translateX(-50%);z-index:20;color:rgba(255,255,255,.72);font-size:13px;font-weight:900;letter-spacing:.04em;pointer-events:none;text-align:center}
+.note.taikoNote{
+  width:54px !important;height:54px !important;
+  border-radius:999px !important;
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;font-weight:1000;color:white;
+  text-shadow:0 2px 8px rgba(0,0,0,.72);
+  border:4px solid rgba(255,255,255,.86) !important;
+  box-shadow:0 0 18px currentColor,0 0 34px rgba(255,255,255,.20) !important;
+  overflow:hidden;
+}
+.note.taikoNote.nextTaiko{filter:brightness(1.25) saturate(1.18);box-shadow:0 0 22px currentColor,0 0 54px rgba(255,255,255,.34) !important}
+.note.taikoNote:after{display:none !important}
+.taikoDon{background:radial-gradient(circle at 35% 30%,#ff8a9a,#ff3454 58%,#a80c26) !important;color:#ff3454 !important}
+.taikoKa{background:radial-gradient(circle at 35% 30%,#b8f2ff,#58d7ff 58%,#077da4) !important;color:#58d7ff !important}
+.taikoText{position:relative;z-index:3;color:white;letter-spacing:.04em}
+.inputRow.taikoInput{height:74px;gap:12px}
+.inputRow.taikoInput .keyBtn{font-size:22px;clip-path:none;border-radius:22px;min-height:74px}
+.inputRow.taikoInput .keyBtn:first-child{background:rgba(255,52,84,.18);border-color:rgba(255,52,84,.38)}
+.inputRow.taikoInput .keyBtn:last-child{background:rgba(88,215,255,.16);border-color:rgba(88,215,255,.38)}
+@media(max-width:850px){
+  .taikoHint{bottom:122px;font-size:12px}
+  .taikoHitZone{width:76px;height:76px;left:17%}
+  .taikoFlowLine{left:17%;right:5%}
+  .inputRow.taikoInput{height:104px}
+  .inputRow.taikoInput .keyBtn{min-height:104px;font-size:24px}
+  .note.taikoNote{width:48px !important;height:48px !important;font-size:15px}
+}
 
 @media(max-width:850px){
   .game{grid-template-columns:1fr;padding:56px 8px 22px}
@@ -657,13 +716,175 @@ html,body{
 .note{height:26px !important;border-radius:12px !important;}
 .note:after{height:11px !important;}
 @media(max-width:850px){.note{height:28px !important}.note:after{height:12px !important}}
+/* ver5.5 taiko landscape/mobile polish */
+.rotateOverlay{
+  position:fixed;inset:0;display:none;align-items:center;justify-content:center;
+  background:#050712;z-index:260;text-align:center;padding:24px;
+}
+.rotateOverlay.show{display:flex}
+.rotateIcon{width:130px;height:84px;border:8px solid #fff;border-radius:24px;box-shadow:0 0 0 6px rgba(255,255,255,.12) inset;animation:rotatePhone 1.2s ease-in-out infinite alternate}
+.rotateOverlay b{display:block;margin-top:24px;font-size:24px;letter-spacing:-.04em}
+@keyframes rotatePhone{from{transform:rotate(0deg)}to{transform:rotate(90deg)}}
+.laneWrap.taikoMode .taikoHint{display:none !important}
+.taikoHitZone{border:8px solid #070707 !important;box-shadow:none !important;background:radial-gradient(circle at 50% 4%,#fff 0 3px,transparent 3.5px),radial-gradient(circle at 74% 8%,#fff 0 3px,transparent 3.5px),radial-gradient(circle at 92% 26%,#fff 0 3px,transparent 3.5px),radial-gradient(circle at 96% 50%,#fff 0 3px,transparent 3.5px),radial-gradient(circle at 88% 76%,#fff 0 3px,transparent 3.5px),radial-gradient(circle at 66% 94%,#fff 0 3px,transparent 3.5px),radial-gradient(circle at 50% 98%,#fff 0 3px,transparent 3.5px),radial-gradient(circle at 34% 94%,#fff 0 3px,transparent 3.5px),radial-gradient(circle at 12% 76%,#fff 0 3px,transparent 3.5px),radial-gradient(circle at 4% 50%,#fff 0 3px,transparent 3.5px),radial-gradient(circle at 8% 26%,#fff 0 3px,transparent 3.5px),radial-gradient(circle,#fff 0 18%,#ffecbc 19% 48%,#b24b2c 49% 68%,#53251e 69% 100%) !important}
+.taikoHitZone:after{content:"" !important}
+.note.taikoNote{width:66px !important;height:66px !important;border:7px solid #070707 !important;box-shadow:none !important;text-shadow:none !important}
+.note.taikoNote:before{content:"";position:absolute;inset:0;border-radius:999px;background:radial-gradient(circle at 50% 4%,#fff 0 3px,transparent 3.5px),radial-gradient(circle at 74% 8%,#fff 0 3px,transparent 3.5px),radial-gradient(circle at 92% 26%,#fff 0 3px,transparent 3.5px),radial-gradient(circle at 96% 50%,#fff 0 3px,transparent 3.5px),radial-gradient(circle at 88% 76%,#fff 0 3px,transparent 3.5px),radial-gradient(circle at 66% 94%,#fff 0 3px,transparent 3.5px),radial-gradient(circle at 50% 98%,#fff 0 3px,transparent 3.5px),radial-gradient(circle at 34% 94%,#fff 0 3px,transparent 3.5px),radial-gradient(circle at 12% 76%,#fff 0 3px,transparent 3.5px),radial-gradient(circle at 4% 50%,#fff 0 3px,transparent 3.5px),radial-gradient(circle at 8% 26%,#fff 0 3px,transparent 3.5px);pointer-events:none;z-index:2}
+.taikoText{display:none !important}
+.inputRow.taikoInput{display:grid !important;grid-template-columns:1fr .72fr 1fr;gap:14px;height:96px}
+.inputRow.taikoInput .keyBtn{min-height:96px;border-radius:999px !important;clip-path:none !important;border:8px solid #050505 !important;box-shadow:none !important;color:white !important;font-size:0 !important;position:relative;overflow:hidden}
+.inputRow.taikoInput .keyBtn::before{content:"";position:absolute;inset:0;border-radius:999px;background:radial-gradient(circle at 50% 4%,#fff 0 4px,transparent 4.6px),radial-gradient(circle at 74% 8%,#fff 0 4px,transparent 4.6px),radial-gradient(circle at 92% 26%,#fff 0 4px,transparent 4.6px),radial-gradient(circle at 96% 50%,#fff 0 4px,transparent 4.6px),radial-gradient(circle at 88% 76%,#fff 0 4px,transparent 4.6px),radial-gradient(circle at 66% 94%,#fff 0 4px,transparent 4.6px),radial-gradient(circle at 50% 98%,#fff 0 4px,transparent 4.6px),radial-gradient(circle at 34% 94%,#fff 0 4px,transparent 4.6px),radial-gradient(circle at 12% 76%,#fff 0 4px,transparent 4.6px),radial-gradient(circle at 4% 50%,#fff 0 4px,transparent 4.6px),radial-gradient(circle at 8% 26%,#fff 0 4px,transparent 4.6px);z-index:2;pointer-events:none}
+.inputRow.taikoInput .taikoDonBtn{background:#ff3454 !important}
+.inputRow.taikoInput .taikoKaBtn{background:#58d7ff !important}
+.inputRow.taikoInput .taikoExitKey{border-radius:20px !important;border:5px solid #050505 !important;background:#f7f7f7 !important;color:#050505 !important;font-size:18px !important;font-weight:1000}
+.inputRow.taikoInput .taikoExitKey::before{display:none}
+.inputRow.taikoInput .keyBtn b,.inputRow.taikoInput .keyBtn small{display:none !important}
+body.taikoPlayingMobile .exit.show{display:none !important}
+body.taikoPlayingMobile .game{padding:12px 8px 116px}
+body.taikoPlayingMobile .topProgress{top:10px;height:10px;width:68vw}
+body.taikoPlayingMobile .stage{height:calc(100vh - 126px)}
+@media(max-width:850px){.note.taikoNote{width:58px !important;height:58px !important}.inputRow.taikoInput{height:96px;bottom:10px;grid-template-columns:1fr .64fr 1fr}.inputRow.taikoInput .keyBtn{min-height:96px}}
+
+
+
+/* ver5.6 taiko full-space UI */
+body.taikoPlayingMobile .credit{bottom:6px!important;z-index:75}
+body.taikoPlayingMobile .exit.show{display:block!important;left:50%!important;right:auto!important;bottom:28px!important;transform:translateX(-50%)!important;padding:6px 14px!important;border-radius:8px!important;background:#d92b38!important;border:2px solid rgba(255,255,255,.38)!important;font-size:12px!important;line-height:1!important;font-weight:1000!important;z-index:80!important;box-shadow:0 6px 18px rgba(0,0,0,.34)!important}
+body.taikoPlayingMobile .game{display:block!important;padding:0!important;height:100dvh!important}
+body.taikoPlayingMobile .stage{position:fixed!important;inset:0!important;width:100vw!important;height:100dvh!important;min-height:0!important;display:block!important;perspective:none!important;z-index:5!important}
+body.taikoPlayingMobile .laneWrap.taikoMode{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;clip-path:none!important;border:0!important;border-radius:0!important;box-shadow:none!important;background:radial-gradient(circle at 18% 78%,rgba(255,52,84,.28),transparent 28%),radial-gradient(circle at 82% 78%,rgba(88,215,255,.26),transparent 28%),linear-gradient(180deg,rgba(8,12,28,.94),rgba(4,6,14,.98))!important}
+body.taikoPlayingMobile .laneWrap.taikoMode:before{display:none!important}
+body.taikoPlayingMobile .topProgress{top:8px!important;width:62vw!important;height:9px!important;z-index:72!important}
+body.taikoPlayingMobile .progressPct{right:-38px!important;font-size:11px!important}
+body.taikoPlayingMobile .taikoFlowLine{left:14vw!important;right:5vw!important;top:40vh!important;height:58px!important;border-radius:999px!important;background:linear-gradient(90deg,rgba(255,255,255,.34),rgba(255,255,255,.15),rgba(255,255,255,.08))!important;border-top:2px solid rgba(255,255,255,.28);border-bottom:2px solid rgba(255,255,255,.12);box-shadow:0 0 28px rgba(255,255,255,.13) inset}
+body.taikoPlayingMobile .taikoHitZone{width:92px!important;height:92px!important;left:14vw!important;top:40vh!important;border:0!important;box-shadow:0 0 0 4px rgba(255,255,255,.22),0 0 22px rgba(255,70,50,.38)!important;background:#050505!important;overflow:hidden!important}
+body.taikoPlayingMobile .taikoHitZone:before{content:""!important;position:absolute!important;inset:0!important;border:0!important;border-radius:999px!important;background:radial-gradient(circle at 50% 5%,#fff 0 3.3px,transparent 3.9px),radial-gradient(circle at 75% 9%,#fff 0 3.3px,transparent 3.9px),radial-gradient(circle at 93% 29%,#fff 0 3.3px,transparent 3.9px),radial-gradient(circle at 95% 55%,#fff 0 3.3px,transparent 3.9px),radial-gradient(circle at 80% 83%,#fff 0 3.3px,transparent 3.9px),radial-gradient(circle at 56% 96%,#fff 0 3.3px,transparent 3.9px),radial-gradient(circle at 30% 91%,#fff 0 3.3px,transparent 3.9px),radial-gradient(circle at 10% 72%,#fff 0 3.3px,transparent 3.9px),radial-gradient(circle at 5% 45%,#fff 0 3.3px,transparent 3.9px),radial-gradient(circle at 16% 19%,#fff 0 3.3px,transparent 3.9px),radial-gradient(circle at 38% 6%,#fff 0 3.3px,transparent 3.9px);z-index:2!important}
+body.taikoPlayingMobile .taikoHitZone:after{content:""!important;position:absolute!important;inset:18px!important;border-radius:999px!important;transform:none!important;background:radial-gradient(circle,#fff 0 21%,#ffe7b0 22% 58%,#b64b2b 59% 100%)!important;box-shadow:inset 0 0 0 4px #fff3d4!important;z-index:1!important}
+body.taikoPlayingMobile .inputRow.taikoInput{position:fixed!important;left:6vw!important;right:6vw!important;bottom:38px!important;height:auto!important;display:flex!important;align-items:flex-end!important;justify-content:space-between!important;gap:0!important;z-index:70!important}
+body.taikoPlayingMobile .inputRow.taikoInput .keyBtn{flex:0 0 auto!important;width:clamp(118px,25vw,176px)!important;height:clamp(118px,25vw,176px)!important;min-height:0!important;aspect-ratio:1/1!important;border-radius:999px!important;clip-path:none!important;border:0!important;background:#050505!important;box-shadow:0 12px 26px rgba(0,0,0,.42)!important;font-size:0!important;position:relative!important;overflow:hidden!important}
+body.taikoPlayingMobile .inputRow.taikoInput .keyBtn::before{content:""!important;position:absolute!important;inset:0!important;border-radius:999px!important;z-index:3!important;background:radial-gradient(circle at 50% 5%,#fff 0 4px,transparent 4.7px),radial-gradient(circle at 75% 9%,#fff 0 4px,transparent 4.7px),radial-gradient(circle at 93% 29%,#fff 0 4px,transparent 4.7px),radial-gradient(circle at 95% 55%,#fff 0 4px,transparent 4.7px),radial-gradient(circle at 80% 83%,#fff 0 4px,transparent 4.7px),radial-gradient(circle at 56% 96%,#fff 0 4px,transparent 4.7px),radial-gradient(circle at 30% 91%,#fff 0 4px,transparent 4.7px),radial-gradient(circle at 10% 72%,#fff 0 4px,transparent 4.7px),radial-gradient(circle at 5% 45%,#fff 0 4px,transparent 4.7px),radial-gradient(circle at 16% 19%,#fff 0 4px,transparent 4.7px),radial-gradient(circle at 38% 6%,#fff 0 4px,transparent 4.7px)!important;pointer-events:none!important}
+body.taikoPlayingMobile .inputRow.taikoInput .keyBtn::after{content:""!important;position:absolute!important;inset:20px!important;border-radius:999px!important;z-index:1!important;box-shadow:inset 0 0 0 6px #fff3d4!important}
+body.taikoPlayingMobile .inputRow.taikoInput .taikoDonBtn::after{background:#ff304e!important}
+body.taikoPlayingMobile .inputRow.taikoInput .taikoKaBtn::after{background:#53d5ff!important}
+body.taikoPlayingMobile .note.taikoNote{width:58px!important;height:58px!important;border:6px solid #f6f2e8!important;box-shadow:0 5px 16px rgba(0,0,0,.42)!important}
+body.taikoPlayingMobile .note.taikoNote:before{display:none!important}
+
+
+
+/* ver5.7 taiko fixes: forced landscape cue, smaller drums, upper aligned lane, no white dots */
+body.taikoPlayingMobile .rotateOverlay.show{display:flex!important;z-index:9999!important}
+body.taikoPlayingMobile .taikoFlowLine{
+  left:14vw!important;right:5vw!important;top:32vh!important;height:48px!important;
+  border-radius:999px!important;
+  background:linear-gradient(90deg,rgba(255,255,255,.38),rgba(255,255,255,.16),rgba(255,255,255,.08))!important;
+  border-top:2px solid rgba(255,255,255,.28)!important;
+  border-bottom:2px solid rgba(255,255,255,.12)!important;
+}
+body.taikoPlayingMobile .taikoHitZone{
+  width:74px!important;height:74px!important;left:14vw!important;top:32vh!important;
+  border:8px solid #050505!important;box-shadow:0 0 0 4px rgba(255,255,255,.20)!important;
+  background:radial-gradient(circle,#fff 0 21%,#ffe7b0 22% 58%,#b64b2b 59% 100%)!important;
+}
+body.taikoPlayingMobile .taikoHitZone:before{display:none!important}
+body.taikoPlayingMobile .taikoHitZone:after{display:none!important}
+body.taikoPlayingMobile .inputRow.taikoInput{
+  left:8vw!important;right:8vw!important;bottom:34px!important;
+}
+body.taikoPlayingMobile .inputRow.taikoInput .keyBtn{
+  width:clamp(86px,18vw,126px)!important;height:clamp(86px,18vw,126px)!important;
+  border:8px solid #050505!important;background:transparent!important;box-shadow:0 10px 22px rgba(0,0,0,.42)!important;
+}
+body.taikoPlayingMobile .inputRow.taikoInput .keyBtn::before{display:none!important}
+body.taikoPlayingMobile .inputRow.taikoInput .keyBtn::after{inset:9px!important;box-shadow:inset 0 0 0 5px #fff3d4!important}
+body.taikoPlayingMobile .note.taikoNote{
+  width:50px!important;height:50px!important;border:5px solid #f6f2e8!important;top:32%!important;
+}
+.note.taikoNote:before{display:none!important}
+body.taikoPlayingMobile .exit.show{bottom:24px!important}
+body.taikoPlayingMobile .credit{bottom:5px!important}
+@media(max-height:430px){
+  body.taikoPlayingMobile .taikoFlowLine{top:30vh!important}
+  body.taikoPlayingMobile .taikoHitZone{top:30vh!important}
+  body.taikoPlayingMobile .note.taikoNote{top:30%!important}
+  body.taikoPlayingMobile .inputRow.taikoInput .keyBtn{width:88px!important;height:88px!important}
+}
+
+
+
+/* ver5.8 fixes: taiko lane alignment + mobile key hitbox */
+body.taikoPlayingMobile .taikoFlowLine{
+  top:30vh!important;
+  left:14vw!important;
+  right:5vw!important;
+}
+body.taikoPlayingMobile .taikoHitZone{
+  top:30vh!important;
+  left:14vw!important;
+}
+body.taikoPlayingMobile .note.taikoNote{
+  top:30vh!important;
+}
+body.taikoPlayingMobile .hitBurst{
+  top:30vh!important;
+}
+@media(max-width:850px){
+  .inputRow:not(.taikoInput){
+    bottom:12px!important;
+    height:98px!important;
+    gap:8px!important;
+  }
+  .inputRow:not(.taikoInput) .keyBtn{
+    clip-path:none!important;
+    border-radius:20px!important;
+    min-height:98px!important;
+    height:98px!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    font-size:24px!important;
+    position:relative!important;
+    z-index:20!important;
+    pointer-events:auto!important;
+  }
+  .inputRow:not(.taikoInput) .keyBtn::before{
+    pointer-events:none!important;
+  }
+}
+
+
+/* ver5.9 PC Taiko full-wide redesign + difficulty label */
+.difficultyNow{font-size:13px;color:rgba(255,255,255,.62);font-weight:900;margin-top:6px;letter-spacing:.04em}
+body.taikoPlaying:not(.taikoPlayingMobile) .game{display:block!important;padding:0!important;height:100vh!important}
+body.taikoPlaying:not(.taikoPlayingMobile) .stage{position:fixed!important;inset:0!important;width:100vw!important;height:100vh!important;min-height:0!important;display:block!important;perspective:none!important;z-index:4!important}
+body.taikoPlaying:not(.taikoPlayingMobile) .laneWrap.taikoMode{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;clip-path:none!important;border:0!important;border-radius:0!important;background:radial-gradient(circle at 18% 68%,rgba(255,52,84,.20),transparent 28%),radial-gradient(circle at 52% 46%,rgba(255,255,255,.06),transparent 24%),radial-gradient(circle at 78% 68%,rgba(88,215,255,.18),transparent 28%),linear-gradient(180deg,rgba(8,12,26,.96),rgba(3,5,12,.99))!important;box-shadow:none!important;overflow:hidden!important}
+body.taikoPlaying:not(.taikoPlayingMobile) .laneWrap.taikoMode:before{display:none!important}
+body.taikoPlaying:not(.taikoPlayingMobile) .leftPanel{display:block!important;position:fixed!important;left:24px!important;top:78px!important;width:230px!important;min-height:auto!important;margin:0!important;padding:16px 18px!important;border-radius:22px!important;background:rgba(0,0,0,.22)!important;border:1px solid rgba(255,255,255,.08)!important;backdrop-filter:blur(10px)!important;z-index:40!important}
+body.taikoPlaying:not(.taikoPlayingMobile) .rightPanel{display:block!important;position:fixed!important;right:24px!important;top:78px!important;width:210px!important;min-height:auto!important;margin:0!important;padding:16px!important;border-radius:22px!important;background:rgba(0,0,0,.22)!important;border:1px solid rgba(255,255,255,.08)!important;backdrop-filter:blur(10px)!important;z-index:40!important}
+body.taikoPlaying:not(.taikoPlayingMobile) .topProgress{top:24px!important;right:26px!important;left:auto!important;transform:none!important;width:min(620px,42vw)!important;height:12px!important;z-index:45!important}
+body.taikoPlaying:not(.taikoPlayingMobile) .taikoFlowLine{left:16vw!important;right:5vw!important;top:42vh!important;height:74px!important;transform:translateY(-50%)!important;border-radius:999px!important;background:linear-gradient(90deg,rgba(255,255,255,.34),rgba(255,255,255,.14),rgba(255,255,255,.055))!important;border-top:2px solid rgba(255,255,255,.26)!important;border-bottom:2px solid rgba(255,255,255,.09)!important;box-shadow:0 0 34px rgba(255,255,255,.10) inset!important;z-index:5!important}
+body.taikoPlaying:not(.taikoPlayingMobile) .taikoHitZone{left:16vw!important;top:42vh!important;width:132px!important;height:132px!important;border-radius:999px!important;border:13px solid #050505!important;background:radial-gradient(circle,#fff7d8 0 25%,#ffd88f 26% 58%,#a84227 59% 100%)!important;box-shadow:0 0 44px rgba(255,60,45,.38),0 0 95px rgba(255,30,20,.22),inset 0 0 18px rgba(0,0,0,.28)!important;z-index:18!important}
+body.taikoPlaying:not(.taikoPlayingMobile) .taikoHitZone:before,body.taikoPlaying:not(.taikoPlayingMobile) .taikoHitZone:after{display:none!important}
+body.taikoPlaying:not(.taikoPlayingMobile) .note.taikoNote{width:72px!important;height:72px!important;top:42vh!important;border:7px solid #f6f2e8!important;border-radius:999px!important;box-shadow:0 8px 20px rgba(0,0,0,.45)!important;z-index:12!important}
+body.taikoPlaying:not(.taikoPlayingMobile) .note.taikoNote.taikoDon{background:radial-gradient(circle at 35% 30%,#ff9aaa,#ff3454 60%,#9d0e24)!important}
+body.taikoPlaying:not(.taikoPlayingMobile) .note.taikoNote.taikoKa{background:radial-gradient(circle at 35% 30%,#d7f8ff,#58d7ff 60%,#087da5)!important}
+body.taikoPlaying:not(.taikoPlayingMobile) .inputRow.taikoInput{position:fixed!important;left:50%!important;right:auto!important;bottom:48px!important;transform:translateX(-50%)!important;width:min(520px,46vw)!important;height:auto!important;display:flex!important;justify-content:center!important;align-items:center!important;gap:76px!important;z-index:50!important}
+body.taikoPlaying:not(.taikoPlayingMobile) .inputRow.taikoInput .keyBtn{flex:0 0 auto!important;width:132px!important;height:132px!important;min-height:0!important;aspect-ratio:1/1!important;border-radius:999px!important;clip-path:none!important;border:13px solid #050505!important;font-size:0!important;position:relative!important;overflow:hidden!important;background:transparent!important}
+body.taikoPlaying:not(.taikoPlayingMobile) .inputRow.taikoInput .keyBtn::before{display:none!important}
+body.taikoPlaying:not(.taikoPlayingMobile) .inputRow.taikoInput .keyBtn::after{content:""!important;position:absolute!important;inset:9px!important;border-radius:999px!important;box-shadow:inset 0 0 0 6px #fff3d4!important}
+body.taikoPlaying:not(.taikoPlayingMobile) .inputRow.taikoInput .taikoDonBtn{box-shadow:0 0 46px rgba(255,52,84,.44),0 0 94px rgba(255,52,84,.24)!important}
+body.taikoPlaying:not(.taikoPlayingMobile) .inputRow.taikoInput .taikoKaBtn{box-shadow:0 0 46px rgba(88,215,255,.42),0 0 94px rgba(88,215,255,.22)!important}
+body.taikoPlaying:not(.taikoPlayingMobile) .inputRow.taikoInput .taikoDonBtn::after{background:#ff3454!important}
+body.taikoPlaying:not(.taikoPlayingMobile) .inputRow.taikoInput .taikoKaBtn::after{background:#58d7ff!important}
+body.taikoPlaying:not(.taikoPlayingMobile) .hitBurst{top:42vh!important}
+
 </style>
 </head>
 <body>
 <div class="bg"></div>
-<div class="version">ver.5.2</div>
+<div class="version">ver.5.9</div>
 <div class="credit">made by. <button id="adminEgg" class="adminEgg" type="button">SIONINZION</button></div>
 <div class="toast" id="toast"></div><div class="adminBadge" id="adminBadge"></div>
+<div class="rotateOverlay" id="rotateOverlay"><div><div class="rotateIcon"></div><b id="rotateText">가로로 돌려주세요</b></div></div>
 <button class="exit" id="exitBtn">나가기</button>
 
 <div class="app">
@@ -686,7 +907,7 @@ html,body{
       <div class="field"><span>MP3 파일</span><input id="mp3File" type="file" accept=".mp3,.m4a,.wav,.aac,audio/mpeg,audio/mp3,audio/mp4,audio/aac,audio/wav,audio/*" /></div>
       <div class="field"><span>게임 방식</span><div class="row mode" id="modeBtns"></div></div>
       <div class="field"><span>난이도</span><div class="row difficulty" id="difficultyBtns"></div></div>
-      <button class="primary" id="makeGame">제작 시작</button><div class="progressOuter"><div class="progressInner"></div></div><div class="analyzeStatus">ver.5: 게임 방식 4KEY/6KEY/OSU'st + 난이도 1~5 분리</div>
+      <button class="primary" id="makeGame">제작 시작</button><div class="progressOuter"><div class="progressInner"></div></div><div class="analyzeStatus">ver.5.8: 태고 가로모드 강화 · 북 크기/라인 정렬 수정</div>
     </div>
 
     <div class="list" id="list">
@@ -715,6 +936,7 @@ html,body{
         </div>
         <div class="score" id="scoreText">0000000</div>
         <div class="accuracy" id="accuracyText">Accuracy 100.00%</div>
+        <div class="difficultyNow" id="difficultyNow">Difficulty 3</div>
       </aside>
 
       <main class="stage">
@@ -755,16 +977,18 @@ html,body{
 
 <script>
 const $=id=>document.getElementById(id);
-const isMobile = /iPhone|iPad|iPod|Android|Mobile/i.test(navigator.userAgent) || innerWidth < 850;
+const isMobile = /iPhone|iPad|iPod|Android|Mobile/i.test(navigator.userAgent) || navigator.maxTouchPoints > 1 || innerWidth < 850;
 
 const colors4 = ['#ff0038','#ff7400','#00e64d','#007cff'];
 const colors6 = ['#ff0038','#ff7400','#ffd000','#00e64d','#007cff','#9b00ff'];
+const colorsTaiko = ['#ff3454','#58d7ff'];
 const keys4 = ['D','F','J','K'];
 const keys6 = ['S','D','F','H','J','K'];
+const keysTaiko = ['D','F','J','K'];
 
-const STORAGE_KEY = 'sionRhythmGamesV5';
-const SETTINGS_KEY = 'sionRhythmSettingsV5';
-const DB_NAME = 'sionRhythmAudioDB_v5';
+const STORAGE_KEY = 'sionRhythmGamesV53';
+const SETTINGS_KEY = 'sionRhythmSettingsV53';
+const DB_NAME = 'sionRhythmAudioDB_v53';
 const DB_STORE = 'audioFiles';
 
 let games = JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]');
@@ -881,8 +1105,8 @@ async function decodeAudioFile(file){
 }
 
 /* 이전 버전 기반 음악 분석 엔진 */
-function getLaneCountByMode(mode){return mode === '6key' ? 6 : 4;}
-function getModeLabel(mode){if(mode === '6key') return '6KEY'; if(mode === 'osu') return "OSU'st"; return '4KEY';}
+function getLaneCountByMode(mode){if(mode === '6key') return 6; if(mode === 'taiko') return 2; return 4;}
+function getModeLabel(mode){if(mode === '6key') return '6KEY'; if(mode === 'osu') return "OSU'st"; if(mode === 'taiko') return 'TAIKO'; return '4KEY';}
 function getDifficultyConfig(level){
   const table = {
     1:{densityMin:1.55,densityMax:2.15,minGap:.22,sameLaneGap:.22,kickGap:.28,snareGap:.30,melodyGap:.30,hatGap:.24,kickPct:72,snarePct:72,melodyPct:70,hatPct:76,kickQ:.25,snareQ:.24,melodyQ:.36,hatQ:.15},
@@ -1104,12 +1328,21 @@ function analyzeMusic(buffer,difficulty,progress,mode='4key'){
 
   progress?.(`후보: 킥 ${kickCandidates.length}, 스네어 ${snareCandidates.length}, 멜로디 ${melodyCandidates.length}, 하이햇 ${hatCandidates.length}`,68);
 
-  let selected=[
-    ...pickTopDistributed(kickCandidates,quota.kick,cfg.kickGap),
-    ...pickTopDistributed(snareCandidates,quota.snare,cfg.snareGap),
-    ...pickTopDistributed(melodyCandidates,quota.melody,cfg.melodyGap),
-    ...pickTopDistributed(hatCandidates,quota.hat,cfg.hatGap)
-  ];
+  let selected;
+  if(mode === 'taiko'){
+    const taikoTarget=Math.floor(targetMid*.92);
+    selected=[
+      ...pickTopDistributed(kickCandidates.map(c=>({...c,lane:0,type:'kick',weight:c.weight*1.18})),Math.floor(taikoTarget*.48),cfg.kickGap),
+      ...pickTopDistributed(melodyCandidates.map(c=>({...c,lane:1,type:'melody',weight:c.weight*1.08})),Math.floor(taikoTarget*.52),cfg.melodyGap)
+    ];
+  }else{
+    selected=[
+      ...pickTopDistributed(kickCandidates,quota.kick,cfg.kickGap),
+      ...pickTopDistributed(snareCandidates,quota.snare,cfg.snareGap),
+      ...pickTopDistributed(melodyCandidates,quota.melody,cfg.melodyGap),
+      ...pickTopDistributed(hatCandidates,quota.hat,cfg.hatGap)
+    ];
+  }
 
   let notes=mergeClassifiedNotes(selected,cfg.minGap);
 
@@ -1133,6 +1366,7 @@ function analyzeMusic(buffer,difficulty,progress,mode='4key'){
     id:i,time:round(n.time,3),lane:n.lane,type:n.type,judged:false,el:null
   }));
 
+  if(mode === 'taiko') notes = notes.map((n,i)=>({...n,id:i,lane:n.type==='kick'?0:1,taikoType:n.type==='kick'?'don':'ka'}));
   if(mode === 'osu') notes = decorateOsuNotes(notes,difficulty);
   progress?.(`분석 완료! 노트 ${notes.length}개 생성`,100);
   return {notes,laneCount,mode};
@@ -1142,7 +1376,7 @@ function analyzeMusic(buffer,difficulty,progress,mode='4key'){
 function buildMode(){
   const box=$('modeBtns'); if(!box) return;
   box.innerHTML='';
-  const modes=[['4key','4KEY'],['6key','6KEY'],['osu',"OSU'st"]];
+  const modes=[['4key','4KEY'],['6key','6KEY'],['osu',"OSU'st"],['taiko','TAIKO']];
   modes.forEach(([value,label])=>{
     const b=document.createElement('button');
     b.textContent=label;
@@ -1196,8 +1430,9 @@ function makeFallbackNotes(duration,diff,mode='4key'){
   const notes=[];
   for(let i=0;i<total;i++){
     const t = 1.4 + (duration-3.2)*(i/(total-1));
-    let lane = laneCount===6 ? i%6 : (i*2+Math.floor(i/3))%4;
-    notes.push({id:i,time:t,lane,judged:false,el:null,type:'fallback'});
+    let lane = mode==='taiko' ? (i%3===0?0:1) : (laneCount===6 ? i%6 : (i*2+Math.floor(i/3))%4);
+    const type = mode==='taiko' ? (lane===0?'kick':'melody') : 'fallback';
+    notes.push({id:i,time:t,lane,judged:false,el:null,type});
   }
   const finalNotes = mode === 'osu' ? decorateOsuNotes(notes,diff) : notes;
   return {notes:finalNotes,laneCount,mode};
@@ -1205,8 +1440,9 @@ function makeFallbackNotes(duration,diff,mode='4key'){
 
 function createGuides(){
   const wrap = document.getElementById('laneWrap');
-  wrap.querySelectorAll('.laneGuideSvg,.osuHint').forEach(e=>e.remove());
+  wrap.querySelectorAll('.laneGuideSvg,.osuHint,.taikoHint,.taikoFlowLine,.taikoHitZone,.osuCursor,.osuTrailSvg').forEach(e=>e.remove());
   wrap.classList.toggle('osuMode', state.mode === 'osu');
+  wrap.classList.toggle('taikoMode', state.mode === 'taiko');
   if(state.mode === 'osu'){
     const trail=document.createElementNS('http://www.w3.org/2000/svg','svg');
     trail.setAttribute('class','osuTrailSvg');
@@ -1225,6 +1461,16 @@ function createGuides(){
     hint.className='osuHint';
     hint.textContent='마우스를 다음 원에 올리고 SPACE로 판정 · 숫자/선이 순서';
     wrap.appendChild(hint);
+    return;
+  }
+  if(state.mode === 'taiko'){
+    const flow=document.createElement('div');
+    flow.className='taikoFlowLine';
+    wrap.appendChild(flow);
+    const hit=document.createElement('div');
+    hit.className='taikoHitZone';
+    hit.id='taikoHitZone';
+    wrap.appendChild(hit);
     return;
   }
 
@@ -1251,8 +1497,27 @@ function createGuides(){
 }
 
 function setupInput(){
-  const row=$('inputRow'); row.innerHTML='';
+  const row=$('inputRow'); row.innerHTML=''; row.className='inputRow';
   if(state.mode === 'osu') return;
+  if(state.mode === 'taiko'){
+    row.classList.add('taikoInput');
+    const don=document.createElement('button');
+    don.className='keyBtn taikoDonBtn';
+    don.dataset.lane=0;
+    don.addEventListener('touchstart',(e)=>{e.preventDefault();pressLane(0,'DON');});
+    don.addEventListener('mousedown',()=>pressLane(0,'DON'));
+
+    const ka=document.createElement('button');
+    ka.className='keyBtn taikoKaBtn';
+    ka.dataset.lane=1;
+    ka.addEventListener('touchstart',(e)=>{e.preventDefault();pressLane(1,'KA');});
+    ka.addEventListener('mousedown',()=>pressLane(1,'KA'));
+
+    row.appendChild(don);
+    row.appendChild(ka);
+    return;
+  }
+
   state.keys.forEach((k,i)=>{
     const b=document.createElement('button');
     b.className='keyBtn'; b.textContent=k; b.style.color=state.colors[i]; b.dataset.lane=i;
@@ -1260,9 +1525,59 @@ function setupInput(){
     b.addEventListener('mousedown',()=>pressLane(i,k));
     row.appendChild(b);
   });
+
+  // 모바일에서는 글자/상자 영역 전체가 판정 버튼처럼 동작하도록 보강
+  row.onpointerdown = (e)=>{
+    if(state.mode === 'osu' || state.mode === 'taiko') return;
+    if(e.pointerType === 'mouse') return;
+    const rect=row.getBoundingClientRect();
+    const x=clamp((e.clientX-rect.left)/rect.width,0,0.999);
+    const lane=Math.floor(x*state.laneCount);
+    if(lane>=0 && lane<state.laneCount){
+      e.preventDefault();
+      pressLane(lane,state.keys[lane]);
+    }
+  };
 }
 
 /* game start/play */
+function isLandscapeNow(){return window.innerWidth > window.innerHeight;}
+function showRotateOverlay(text){
+  const o=$('rotateOverlay');
+  if(!o) return;
+  $('rotateText').textContent=text || '가로로 돌려주세요';
+  o.classList.add('show');
+}
+function hideRotateOverlay(){const o=$('rotateOverlay'); if(o) o.classList.remove('show');}
+async function tryLockOrientation(type){
+  try{
+    if(type === 'landscape' && document.documentElement.requestFullscreen && !document.fullscreenElement){
+      await document.documentElement.requestFullscreen().catch(()=>{});
+    }
+    if(screen.orientation && screen.orientation.lock) await screen.orientation.lock(type);
+  }catch(e){}
+}
+function waitForLandscapeThenStart(g){
+  showRotateOverlay('가로로 돌려주세요');
+  let started=false;
+  const startWhenReady=()=>{
+    if(started) return;
+    if(!isLandscapeNow()){
+      showRotateOverlay('가로로 돌려주세요');
+      return;
+    }
+    started=true;
+    window.removeEventListener('resize', startWhenReady);
+    window.removeEventListener('orientationchange', startWhenReady);
+    hideRotateOverlay();
+    beginRun(g,true);
+  };
+  window.addEventListener('resize', startWhenReady);
+  window.addEventListener('orientationchange', startWhenReady);
+  const guard=setInterval(()=>{ if(started) clearInterval(guard); else startWhenReady(); },300);
+  startWhenReady();
+}
+
 async function startGame(g){
   currentGame=g; showPanel(null); $('menu').classList.remove('show'); $('smallTitle').classList.remove('show'); setScreen('game'); $('exitBtn').classList.add('show');
 
@@ -1270,8 +1585,8 @@ async function startGame(g){
   Object.assign(state,{
     running:false,notes,laneCount:g.laneCount || getLaneCountByMode(g.mode || '4key'),
     mode:g.mode || ((g.laneCount||4)===6?'6key':'4key'),
-    keys:(g.mode==='osu')?[]:((g.laneCount||4)===6?keys6:keys4),
-    colors:(g.laneCount||4)===6?colors6:colors4,
+    keys:(g.mode==='osu')?[]:(g.mode==='taiko'?keysTaiko:((g.laneCount||4)===6?keys6:keys4)),
+    colors:g.mode==='taiko'?colorsTaiko:((g.laneCount||4)===6?colors6:colors4),
     score:0,combo:0,maxCombo:0,counts:{perfect:0,good:0,ok:0,fast:0,miss:0},judged:0
   });
   state.totalWeight=calcTotalWeight(state.notes.length);
@@ -1279,10 +1594,18 @@ async function startGame(g){
   $('songTitle').textContent=g.name;
   $('modeText').textContent=getModeLabel(state.mode);
   $('totalNotes').textContent=state.notes.length;
+  if($('difficultyNow')) $('difficultyNow').textContent='Difficulty '+(g.difficulty || 3);
   $('notesLayer').innerHTML='';
   $('result').style.display='none';
   setupInput(); createGuides(); updateHUD();
-  beginRun(g, true);
+  document.body.classList.toggle('taikoPlaying', state.mode === 'taiko');
+  document.body.classList.toggle('taikoPlayingMobile', isMobile && state.mode === 'taiko');
+  if(isMobile && state.mode === 'taiko'){
+    tryLockOrientation('landscape');
+    waitForLandscapeThenStart(g);
+  }else{
+    beginRun(g, true);
+  }
 }
 function countdown(done){
   const c=$('countdown'); c.style.display='flex';
@@ -1326,12 +1649,14 @@ async function beginRun(g, withCountdown=false){
 }
 function laneCenter(lane,p){
   const n=state.laneCount;
+  if(state.mode === 'taiko') return lane===0 ? 30 : 70;
   const topLeft=.26, topRight=.74, botLeft=.04, botRight=.96;
   const left=topLeft+(botLeft-topLeft)*p;
   const right=topRight+(botRight-topRight)*p;
   return (left + (right-left)*((lane+.5)/n))*100;
 }
 function laneWidth(p){
+  if(state.mode === 'taiko') return 32;
   const top=.48, bot=.92;
   return (top+(bot-top)*p)*100/state.laneCount;
 }
@@ -1396,22 +1721,50 @@ function renderOsuNote(note,now){
   note.el.style.opacity=dt<-.18?.48:(forcePreview && dt>appear?.52:1);
 }
 
+function renderTaikoNote(note,now){
+  const travel = Math.max(.95, 2.55 / noteSpeed);
+  const dt = note.time - now;
+  const p = 1 - (dt / travel);
+  const hitX = isMobile ? 14 : 16;
+  const startX = 104;
+  const endX = -8;
+  const x = startX + (hitX - startX) * p;
+  if(p < -0.15 || x < endX || dt < -0.26){ if(note.el) note.el.style.display='none'; return; }
+  if(!note.el){
+    note.el=document.createElement('div');
+    note.el.className='note taikoNote '+(note.lane===0?'taikoDon':'taikoKa');
+    note.el.style.color=state.colors[note.lane];
+    note.el.innerHTML='';
+    $('notesLayer').appendChild(note.el);
+  }
+  note.el.style.display='flex';
+  note.el.classList.toggle('nextTaiko', state.notes.find(n=>!n.judged) === note);
+  const size = (isMobile ? 58 : 72) + Math.max(0, Math.min(1, p)) * 10;
+  note.el.style.left=x+'%';
+  note.el.style.top=(isMobile ? '30vh' : '42vh');
+  note.el.style.width=size+'px';
+  note.el.style.height=size+'px';
+  note.el.style.opacity=p<0 ? .45 : 1;
+}
+
 function renderNote(note,now){
   if(state.mode === 'osu') return renderOsuNote(note,now);
+  if(state.mode === 'taiko') return renderTaikoNote(note,now);
   const travel = Math.max(.9, 2.35 / noteSpeed);
   const hitY = 84;
   const p = 1 - ((note.time-now)/travel);
   if(p<-0.95 || p>1.2){ if(note.el) note.el.style.display='none'; return; }
   if(!note.el){
     note.el=document.createElement('div');
-    note.el.className='note';
+    note.el.className=state.mode==='taiko' ? 'note taikoNote '+(note.lane===0?'taikoDon':'taikoKa') : 'note';
     note.el.style.color=state.colors[note.lane];
+    if(state.mode==='taiko') note.el.innerHTML='';
     $('notesLayer').appendChild(note.el);
   }
   note.el.style.display='block';
   const y=p*hitY;
-  const w=laneWidth(clamp(p,0,1))*.90;
-  const h=7 + p*13;
+  const w=state.mode==='taiko' ? laneWidth(clamp(p,0,1))*.72 : laneWidth(clamp(p,0,1))*.90;
+  const h=state.mode==='taiko' ? 22 + p*18 : 7 + p*13;
   note.el.style.left=laneCenter(note.lane,clamp(p,0,1))+'%';
   note.el.style.top=y+'%';
   note.el.style.width=w+'%';
@@ -1537,6 +1890,23 @@ function spawnHitBurst(note, judgement){
   else if(judgement === 'ok') lengthScale = 0.36;
   if(lengthScale <= 0.15) return;
 
+  if(state.mode === 'taiko'){
+    const hit=$('taikoHitZone');
+    if(hit){
+      hit.classList.remove('hitDon','hitKa');
+      void hit.offsetWidth;
+      hit.classList.add(note.lane===0?'hitDon':'hitKa');
+    }
+    const burst=document.createElement('div');
+    burst.className='hitBurst';
+    burst.style.color=state.colors[note.lane] || '#fff';
+    burst.style.left=(isMobile ? 14 : 16)+'%';
+    burst.style.top=(isMobile ? '30vh' : '42vh');
+    wrap.appendChild(burst);
+    setTimeout(()=>burst.remove(),320);
+    return;
+  }
+
   if(state.mode === 'osu'){
     const burst=document.createElement('div');
     burst.className='hitBurst';
@@ -1616,7 +1986,13 @@ function updateHUD(pop=false){
   $('cMax').textContent=state.maxCombo;
 }
 function finish(){
+  const wasMobileTaiko = isMobile && state.mode === 'taiko';
   state.running=false; cancelAnimationFrame(state.raf); $('audio').pause();
+  if(state.mode === 'taiko' && !wasMobileTaiko) document.body.classList.remove('taikoPlaying');
+  if(wasMobileTaiko){
+    document.body.classList.remove('taikoPlaying','taikoPlayingMobile');
+    tryLockOrientation('portrait');
+  }
   const finalScore=Math.min(1000000,Math.round(state.score));
   $('resultScore').textContent=finalScore.toLocaleString();
   $('resultDetail').innerHTML=`MAX COMBO ${state.maxCombo} / ${state.notes.length}<br>PERFECT ${state.counts.perfect} · GOOD ${state.counts.good} · OK ${state.counts.ok} · FAST ${state.counts.fast} · MISS ${state.counts.miss}`;
@@ -1624,6 +2000,7 @@ function finish(){
 }
 function resetToMenu(){
   state.running=false; cancelAnimationFrame(state.raf); $('audio').pause();
+  document.body.classList.remove('taikoPlaying','taikoPlayingMobile'); hideRotateOverlay(); if(isMobile) tryLockOrientation('portrait');
   $('exitBtn').classList.remove('show'); setScreen('home'); $('smallTitle').classList.add('show'); $('menu').classList.add('show'); renderList();
 }
 
@@ -1685,8 +2062,13 @@ document.addEventListener('keydown',e=>{
     if(state.mode === 'osu') pressOsuWithPointer();
     return;
   }
-  const idx=state.keys.indexOf(k);
-  if(idx>=0) pressLane(idx,k);
+  if(state.mode === 'taiko'){
+    if(k==='D' || k==='F') pressLane(0,k);
+    else if(k==='J' || k==='K') pressLane(1,k);
+  }else{
+    const idx=state.keys.indexOf(k);
+    if(idx>=0) pressLane(idx,k);
+  }
   if(k==='ESCAPE') resetToMenu();
 });
 
