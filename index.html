@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<title>셀-프 리듬게임 ver.4.3.1.1</title>
+<title>셀-프 리듬게임 ver.5.2</title>
 <style>
 :root{
   --bg:#050712;
@@ -67,10 +67,10 @@ button{cursor:pointer;border:0;color:white}
 .field{display:flex;flex-direction:column;gap:8px;margin:14px 0;text-align:left;color:rgba(255,255,255,.75);font-weight:700}
 .field input,.field select{width:100%;padding:14px;border-radius:14px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);color:white}
 .row{display:flex;gap:10px;flex-wrap:wrap}
-.difficulty button,.speed button{
+.difficulty button,.speed button,.mode button{
   flex:1;min-width:70px;padding:12px;border-radius:14px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.16)
 }
-.difficulty button.on,.speed button.on{background:#2d7dff}
+.difficulty button.on,.speed button.on,.mode button.on{background:#2d7dff}
 .exit{position:fixed;right:18px;bottom:24px;background:#ef334d;padding:13px 20px;border-radius:16px;font-weight:900;z-index:30;display:none}
 .exit.show{display:block}
 .toast{position:fixed;left:50%;bottom:64px;transform:translateX(-50%);background:rgba(0,0,0,.72);border:1px solid rgba(255,255,255,.15);padding:12px 18px;border-radius:999px;opacity:0;transition:.25s;z-index:50}
@@ -160,6 +160,30 @@ button{cursor:pointer;border:0;color:white}
 }
 .resultBox{width:min(520px,92vw);padding:28px;border-radius:28px;background:rgba(12,18,34,.94);border:1px solid rgba(255,255,255,.16);text-align:center}
 .resultScore{font-size:54px;font-weight:1000}
+
+.laneWrap.osuMode{
+  clip-path:none;
+  border-radius:30px;
+  background:
+    radial-gradient(circle at 25% 20%,rgba(58,167,255,.12),transparent 28%),
+    radial-gradient(circle at 75% 75%,rgba(179,92,255,.12),transparent 30%),
+    rgba(255,255,255,.055);
+  border:1px solid rgba(255,255,255,.16);
+}
+.laneWrap.osuMode .hitLine,.laneWrap.osuMode .inputRow,.laneWrap.osuMode .laneGuideSvg{display:none !important}
+.osuHint{position:absolute;left:50%;bottom:24px;transform:translateX(-50%);color:rgba(255,255,255,.68);font-size:13px;font-weight:900;letter-spacing:.04em;z-index:20;pointer-events:none;text-align:center}
+.osuTrailSvg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:4;overflow:visible}
+.osuTrailLine{stroke:rgba(255,255,255,.32);stroke-width:3;stroke-linecap:round;stroke-linejoin:round;fill:none;filter:drop-shadow(0 0 8px rgba(58,167,255,.42))}
+.osuCursor{position:absolute;width:28px;height:28px;border-radius:999px;border:2px solid rgba(255,255,255,.85);box-shadow:0 0 16px rgba(255,255,255,.65),0 0 28px rgba(58,167,255,.55);transform:translate(-50%,-50%);z-index:35;pointer-events:none;opacity:0;transition:opacity .12s}
+.laneWrap.osuMode:hover .osuCursor{opacity:1}
+.note.osuNote{width:78px !important;height:78px !important;border-radius:999px !important;background:currentColor !important;box-shadow:0 0 18px currentColor,0 0 42px rgba(255,255,255,.25) !important;border:4px solid rgba(255,255,255,.86) !important;display:flex;align-items:center;justify-content:center;font-size:23px;font-weight:1000;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.5);overflow:visible !important}
+.note.osuNote.next{filter:brightness(1.42) saturate(1.22);box-shadow:0 0 24px currentColor,0 0 72px rgba(255,255,255,.55) !important}
+.note.osuNote.preview{filter:saturate(.9) brightness(.88);opacity:.52}
+.note.osuNote .osuOrder{position:relative;z-index:4;color:#fff;text-shadow:0 2px 10px rgba(0,0,0,.72)}
+.note.osuNote .osuApproach{position:absolute;left:50%;top:50%;width:100%;height:100%;border-radius:999px;border:4px solid rgba(255,255,255,.72);background:rgba(255,255,255,.055);transform:translate(-50%,-50%) scale(2.6);pointer-events:none;z-index:1;box-shadow:0 0 16px rgba(255,255,255,.32)}
+.note.osuNote:after{left:50% !important;right:auto !important;top:50% !important;width:46% !important;height:46% !important;transform:translate(-50%,-50%) !important;border-radius:999px !important;background:rgba(255,255,255,.22) !important;border:1px solid rgba(255,255,255,.58);z-index:2}
+@media(max-width:850px){.note.osuNote{width:70px !important;height:70px !important;font-size:20px}.note.osuNote .osuApproach{border-width:3px}.osuHint{bottom:18px;font-size:12px}.osuCursor{display:none}}
+
 @media(max-width:850px){
   .game{grid-template-columns:1fr;padding:56px 8px 22px}
   .leftPanel,.rightPanel{display:none}
@@ -269,7 +293,7 @@ button{cursor:pointer;border:0;color:white}
   filter:drop-shadow(0 0 3px rgba(255,255,255,.45)) !important;
 }
 .note{
-  height:20px !important;
+  height:24px !important;
   border:0 !important;
   background:currentColor !important;
   box-shadow:none !important;
@@ -288,7 +312,7 @@ button{cursor:pointer;border:0;color:white}
   left:7% !important;
   right:7% !important;
   top:18% !important;
-  height:45% !important;
+  height:48% !important;
   transform:none !important;
   border-radius:999px !important;
   background:rgba(255,255,255,.86) !important;
@@ -573,10 +597,10 @@ button{cursor:pointer;border:0;color:white}
   }
 
   .note{
-    height:22px !important;
+    height:26px !important;
   }
   .note:after{
-    height:9px !important;
+    height:11px !important;
   }
 
   .centerJudge{
@@ -628,11 +652,16 @@ html,body{
   user-select:none;
 }
 
+
+/* ver.5.1: 노트 크기 살짝 더 확대 */
+.note{height:26px !important;border-radius:12px !important;}
+.note:after{height:11px !important;}
+@media(max-width:850px){.note{height:28px !important}.note:after{height:12px !important}}
 </style>
 </head>
 <body>
 <div class="bg"></div>
-<div class="version">ver.4.3.1</div>
+<div class="version">ver.5.2</div>
 <div class="credit">made by. <button id="adminEgg" class="adminEgg" type="button">SIONINZION</button></div>
 <div class="toast" id="toast"></div><div class="adminBadge" id="adminBadge"></div>
 <button class="exit" id="exitBtn">나가기</button>
@@ -655,8 +684,9 @@ html,body{
       <h2>게임 제작</h2>
       <div class="field"><span>게임 제목</span><input id="gameName" placeholder="예: 연습곡 1" /></div>
       <div class="field"><span>MP3 파일</span><input id="mp3File" type="file" accept=".mp3,.m4a,.wav,.aac,audio/mpeg,audio/mp3,audio/mp4,audio/aac,audio/wav,audio/*" /></div>
+      <div class="field"><span>게임 방식</span><div class="row mode" id="modeBtns"></div></div>
       <div class="field"><span>난이도</span><div class="row difficulty" id="difficultyBtns"></div></div>
-      <button class="primary" id="makeGame">제작 시작</button><div class="progressOuter"><div class="progressInner"></div></div><div class="analyzeStatus">ver.4.1: 이전 음악 분석 엔진 + 얇은 흰 줄 노트 적용</div>
+      <button class="primary" id="makeGame">제작 시작</button><div class="progressOuter"><div class="progressInner"></div></div><div class="analyzeStatus">ver.5: 게임 방식 4KEY/6KEY/OSU'st + 난이도 1~5 분리</div>
     </div>
 
     <div class="list" id="list">
@@ -732,12 +762,13 @@ const colors6 = ['#ff0038','#ff7400','#ffd000','#00e64d','#007cff','#9b00ff'];
 const keys4 = ['D','F','J','K'];
 const keys6 = ['S','D','F','H','J','K'];
 
-const STORAGE_KEY = 'sionRhythmGamesV41';
-const SETTINGS_KEY = 'sionRhythmSettingsV41';
-const DB_NAME = 'sionRhythmAudioDB_v41';
+const STORAGE_KEY = 'sionRhythmGamesV5';
+const SETTINGS_KEY = 'sionRhythmSettingsV5';
+const DB_NAME = 'sionRhythmAudioDB_v5';
 const DB_STORE = 'audioFiles';
 
 let games = JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]');
+let selectedMode = '4key';
 let selectedDifficulty = 3;
 let noteSpeed = Number((JSON.parse(localStorage.getItem(SETTINGS_KEY)||'{}')).speed || 1.5);
 let audioCtx = null;
@@ -746,10 +777,11 @@ let audioUrl = null;
 let adminMode = false;
 
 const state = {
-  running:false,startTime:0,notes:[],laneCount:4,keys:keys4,colors:colors4,
+  running:false,startTime:0,notes:[],laneCount:4,keys:keys4,colors:colors4,mode:'4key',
   score:0,combo:0,maxCombo:0,totalWeight:1,baseScore:1,
   counts:{perfect:0,good:0,ok:0,fast:0,miss:0}, judged:0, raf:0
 };
+const osuPointer = {x:null,y:null,inside:false};
 
 
 function showAdminBadge(text){
@@ -849,18 +881,26 @@ async function decodeAudioFile(file){
 }
 
 /* 이전 버전 기반 음악 분석 엔진 */
-function getLaneCount(level){return Number(level) >= 6 ? 6 : 4}
+function getLaneCountByMode(mode){return mode === '6key' ? 6 : 4;}
+function getModeLabel(mode){if(mode === '6key') return '6KEY'; if(mode === 'osu') return "OSU'st"; return '4KEY';}
 function getDifficultyConfig(level){
   const table = {
     1:{densityMin:1.55,densityMax:2.15,minGap:.22,sameLaneGap:.22,kickGap:.28,snareGap:.30,melodyGap:.30,hatGap:.24,kickPct:72,snarePct:72,melodyPct:70,hatPct:76,kickQ:.25,snareQ:.24,melodyQ:.36,hatQ:.15},
     2:{densityMin:2.25,densityMax:3.00,minGap:.155,sameLaneGap:.18,kickGap:.21,snareGap:.22,melodyGap:.22,hatGap:.16,kickPct:66,snarePct:65,melodyPct:60,hatPct:66,kickQ:.21,snareQ:.21,melodyQ:.40,hatQ:.18},
     3:{densityMin:3.20,densityMax:4.25,minGap:.105,sameLaneGap:.135,kickGap:.15,snareGap:.17,melodyGap:.13,hatGap:.11,kickPct:66,snarePct:62,melodyPct:34,hatPct:64,kickQ:.12,snareQ:.16,melodyQ:.58,hatQ:.14},
     4:{densityMin:4.35,densityMax:5.65,minGap:.075,sameLaneGap:.105,kickGap:.12,snareGap:.13,melodyGap:.085,hatGap:.09,kickPct:60,snarePct:57,melodyPct:26,hatPct:55,kickQ:.10,snareQ:.15,melodyQ:.62,hatQ:.13},
-    5:{densityMin:5.75,densityMax:7.10,minGap:.052,sameLaneGap:.085,kickGap:.09,snareGap:.10,melodyGap:.052,hatGap:.065,kickPct:54,snarePct:50,melodyPct:18,hatPct:48,kickQ:.08,snareQ:.12,melodyQ:.70,hatQ:.10},
-    6:{densityMin:5.75,densityMax:7.10,minGap:.052,sameLaneGap:.078,kickGap:.09,snareGap:.10,melodyGap:.052,hatGap:.065,kickPct:54,snarePct:50,melodyPct:18,hatPct:48,kickQ:.08,snareQ:.12,melodyQ:.70,hatQ:.10},
-    7:{densityMin:7.30,densityMax:9.10,minGap:.040,sameLaneGap:.060,kickGap:.072,snareGap:.078,melodyGap:.040,hatGap:.052,kickPct:48,snarePct:44,melodyPct:14,hatPct:40,kickQ:.07,snareQ:.11,melodyQ:.74,hatQ:.08}
+    5:{densityMin:5.75,densityMax:7.10,minGap:.052,sameLaneGap:.085,kickGap:.09,snareGap:.10,melodyGap:.052,hatGap:.065,kickPct:54,snarePct:50,melodyPct:18,hatPct:48,kickQ:.08,snareQ:.12,melodyQ:.70,hatQ:.10}
   };
-  return table[level] || table[3];
+  return table[clamp(Number(level)||3,1,5)] || table[3];
+}
+function decorateOsuNotes(notes,difficulty){
+  const points=[[20,22],[47,18],[75,25],[68,48],[38,42],[18,64],[50,72],[80,68],[30,30],[60,28],[72,56],[42,60],[22,46],[55,80],[84,38],[16,78]];
+  const size = difficulty>=5 ? 58 : difficulty>=4 ? 62 : 66;
+  return notes.map((n,i)=>{
+    const base=points[i%points.length];
+    const drift=Math.floor(i/points.length)%4;
+    return {...n,lane:0,x:clamp(base[0]+(drift-1.5)*3,10,90),y:clamp(base[1]+((i%3)-1)*4,12,82),size,osu:true};
+  });
 }
 function mixToMono(buffer){
   const len=buffer.length, chs=buffer.numberOfChannels;
@@ -991,8 +1031,8 @@ function rebalanceRepeatedLanes(notes,cfg,laneCount){
   }
   return sorted;
 }
-function analyzeMusic(buffer,difficulty,progress){
-  const laneCount=getLaneCount(difficulty);
+function analyzeMusic(buffer,difficulty,progress,mode='4key'){
+  const laneCount=getLaneCountByMode(mode);
   const sampleRate=buffer.sampleRate;
   const raw=mixToMono(buffer);
   const frameSize=Math.round(sampleRate*.038);
@@ -1005,7 +1045,7 @@ function analyzeMusic(buffer,difficulty,progress){
   const targetMid=Math.floor((targetMin+targetMax)/2);
   const cfg={minGap:diff.minGap,sameLaneGap:diff.sameLaneGap,kickGap:diff.kickGap,snareGap:diff.snareGap,melodyGap:diff.melodyGap,hatGap:diff.hatGap};
 
-  progress?.(`난이도 ${difficulty}: 음악을 킥/스네어/멜로디/하이햇으로 분석 중...`,22);
+  progress?.(`${getModeLabel(mode)} · 난이도 ${difficulty}: 음악을 킥/스네어/멜로디/하이햇으로 분석 중...`,22);
 
   for(let start=0; start+frameSize<raw.length; start+=hop){
     const t=start/sampleRate;
@@ -1093,21 +1133,31 @@ function analyzeMusic(buffer,difficulty,progress){
     id:i,time:round(n.time,3),lane:n.lane,type:n.type,judged:false,el:null
   }));
 
+  if(mode === 'osu') notes = decorateOsuNotes(notes,difficulty);
   progress?.(`분석 완료! 노트 ${notes.length}개 생성`,100);
-  return {notes,laneCount};
+  return {notes,laneCount,mode};
 }
 
 /* UI construction */
+function buildMode(){
+  const box=$('modeBtns'); if(!box) return;
+  box.innerHTML='';
+  const modes=[['4key','4KEY'],['6key','6KEY'],['osu',"OSU'st"]];
+  modes.forEach(([value,label])=>{
+    const b=document.createElement('button');
+    b.textContent=label;
+    b.className=value===selectedMode?'on':'';
+    b.onclick=()=>{if(isMobile && value==='6key') toast('모바일 6KEY는 화면이 좁을 수 있어. PC 플레이를 추천해.'); selectedMode=value; buildMode();};
+    box.appendChild(b);
+  });
+}
 function buildDiff(){
   $('difficultyBtns').innerHTML='';
-  for(let i=1;i<=7;i++){
+  for(let i=1;i<=5;i++){
     const b=document.createElement('button');
-    b.textContent=i===6?'6단계 · 6키':i===7?'7단계 · HELL':i+'단계';
+    b.textContent=i+'단계';
     b.className=i===selectedDifficulty?'on':'';
-    b.onclick=()=>{
-      if(isMobile && i>=6){toast('모바일에서는 6키/헬모드를 사용할 수 없습니다.');return;}
-      selectedDifficulty=i;buildDiff();
-    };
+    b.onclick=()=>{selectedDifficulty=i;buildDiff();};
     $('difficultyBtns').appendChild(b);
   }
 }
@@ -1127,7 +1177,7 @@ function renderList(){
   games.forEach((g,i)=>{
     const row=document.createElement('div');
     row.style.cssText='display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px;border:1px solid rgba(255,255,255,.12);border-radius:16px;margin:8px 0;background:rgba(255,255,255,.06)';
-    row.innerHTML=`<div><b>${escapeHtml(g.name)}</b><div style="font-size:12px;color:rgba(255,255,255,.58);margin-top:3px">${g.noteCount||0} notes · ${g.laneCount||4}KEY · 난이도 ${g.difficulty||3}</div></div><span style="display:flex;gap:6px"><button class="ghost play">플레이</button><button class="ghost del">삭제</button></span>`;
+    row.innerHTML=`<div><b>${escapeHtml(g.name)}</b><div style="font-size:12px;color:rgba(255,255,255,.58);margin-top:3px">${g.noteCount||0} notes · ${getModeLabel(g.mode || ((g.laneCount||4)===6?'6key':'4key'))} · 난이도 ${g.difficulty||3}</div></div><span style="display:flex;gap:6px"><button class="ghost play">플레이</button><button class="ghost del">삭제</button></span>`;
     row.querySelector('.play').onclick=()=>startGame(g);
     row.querySelector('.del').onclick=async()=>{await deleteAudioBlob(g.id);games.splice(i,1);saveGames();renderList();};
     box.appendChild(row);
@@ -1136,12 +1186,12 @@ function renderList(){
 function escapeHtml(str){return String(str).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
 function createPractice(){
   if(games.some(g=>g.practice)) return;
-  const duration=80, difficulty=3, made=makeFallbackNotes(duration,difficulty);
-  games.push({id:'practice',name:'연습 게임',difficulty,duration,laneCount:4,noteCount:made.notes.length,notes:made.notes,practice:true,created:Date.now()});
+  const duration=80, difficulty=3, mode='4key', made=makeFallbackNotes(duration,difficulty,mode);
+  games.push({id:'practice',name:'연습 게임',mode,difficulty,duration,laneCount:4,noteCount:made.notes.length,notes:made.notes,practice:true,created:Date.now()});
   saveGames();
 }
-function makeFallbackNotes(duration,diff){
-  const laneCount = diff>=6 ? 6 : 4;
+function makeFallbackNotes(duration,diff,mode='4key'){
+  const laneCount = getLaneCountByMode(mode);
   const total = Math.max(60, Math.round(duration * (diff>=7?3.2:diff>=6?2.5:1.25+diff*.34)));
   const notes=[];
   for(let i=0;i<total;i++){
@@ -1149,12 +1199,34 @@ function makeFallbackNotes(duration,diff){
     let lane = laneCount===6 ? i%6 : (i*2+Math.floor(i/3))%4;
     notes.push({id:i,time:t,lane,judged:false,el:null,type:'fallback'});
   }
-  return {notes,laneCount};
+  const finalNotes = mode === 'osu' ? decorateOsuNotes(notes,diff) : notes;
+  return {notes:finalNotes,laneCount,mode};
 }
 
 function createGuides(){
   const wrap = document.getElementById('laneWrap');
-  wrap.querySelectorAll('.laneGuideSvg').forEach(e=>e.remove());
+  wrap.querySelectorAll('.laneGuideSvg,.osuHint').forEach(e=>e.remove());
+  wrap.classList.toggle('osuMode', state.mode === 'osu');
+  if(state.mode === 'osu'){
+    const trail=document.createElementNS('http://www.w3.org/2000/svg','svg');
+    trail.setAttribute('class','osuTrailSvg');
+    trail.setAttribute('viewBox','0 0 100 100');
+    trail.setAttribute('preserveAspectRatio','none');
+    const line=document.createElementNS('http://www.w3.org/2000/svg','polyline');
+    line.setAttribute('class','osuTrailLine');
+    line.setAttribute('id','osuTrailLine');
+    trail.appendChild(line);
+    wrap.appendChild(trail);
+    const cursor=document.createElement('div');
+    cursor.className='osuCursor';
+    cursor.id='osuCursor';
+    wrap.appendChild(cursor);
+    const hint=document.createElement('div');
+    hint.className='osuHint';
+    hint.textContent='마우스를 다음 원에 올리고 SPACE로 판정 · 숫자/선이 순서';
+    wrap.appendChild(hint);
+    return;
+  }
 
   const svg = document.createElementNS('http://www.w3.org/2000/svg','svg');
   svg.setAttribute('class','laneGuideSvg');
@@ -1180,6 +1252,7 @@ function createGuides(){
 
 function setupInput(){
   const row=$('inputRow'); row.innerHTML='';
+  if(state.mode === 'osu') return;
   state.keys.forEach((k,i)=>{
     const b=document.createElement('button');
     b.className='keyBtn'; b.textContent=k; b.style.color=state.colors[i]; b.dataset.lane=i;
@@ -1191,20 +1264,20 @@ function setupInput(){
 
 /* game start/play */
 async function startGame(g){
-  if(isMobile && (g.difficulty>=6 || g.laneCount>=6)){toast('모바일에서는 6키 모드를 사용할 수 없습니다.');return;}
   currentGame=g; showPanel(null); $('menu').classList.remove('show'); $('smallTitle').classList.remove('show'); setScreen('game'); $('exitBtn').classList.add('show');
 
   const notes=(g.notes||[]).map((n,i)=>({...n,id:i,judged:false,el:null}));
   Object.assign(state,{
-    running:false,notes,laneCount:g.laneCount || getLaneCount(g.difficulty||3),
-    keys:(g.laneCount||4)===6?keys6:keys4,
+    running:false,notes,laneCount:g.laneCount || getLaneCountByMode(g.mode || '4key'),
+    mode:g.mode || ((g.laneCount||4)===6?'6key':'4key'),
+    keys:(g.mode==='osu')?[]:((g.laneCount||4)===6?keys6:keys4),
     colors:(g.laneCount||4)===6?colors6:colors4,
     score:0,combo:0,maxCombo:0,counts:{perfect:0,good:0,ok:0,fast:0,miss:0},judged:0
   });
   state.totalWeight=calcTotalWeight(state.notes.length);
   state.baseScore=1000000/state.totalWeight;
   $('songTitle').textContent=g.name;
-  $('modeText').textContent=state.laneCount+' KEY';
+  $('modeText').textContent=getModeLabel(state.mode);
   $('totalNotes').textContent=state.notes.length;
   $('notesLayer').innerHTML='';
   $('result').style.display='none';
@@ -1262,7 +1335,69 @@ function laneWidth(p){
   const top=.48, bot=.92;
   return (top+(bot-top)*p)*100/state.laneCount;
 }
+function nextOsuNote(){
+  return state.notes.find(n=>!n.judged) || null;
+}
+function getUpcomingOsuNotes(now, limit=5){
+  const visibleAhead = Math.max(1.05, 2.2 / noteSpeed);
+  const timed = state.notes.filter(n=>!n.judged && (n.time-now)<visibleAhead && (n.time-now)>-0.28);
+  const guaranteed = state.notes.filter(n=>!n.judged).slice(0,3); // 현재/다음/다다음은 항상 노출
+  const merged=[];
+  [...guaranteed,...timed].sort((a,b)=>a.time-b.time).forEach(n=>{
+    if(!merged.includes(n)) merged.push(n);
+  });
+  return merged.slice(0,limit);
+}
+function updateOsuTrail(now){
+  if(state.mode !== 'osu') return;
+  const line=$('osuTrailLine');
+  if(!line) return;
+  const upcoming=getUpcomingOsuNotes(now,6);
+  line.setAttribute('points', upcoming.map(n=>(n.x||50)+','+(n.y||50)).join(' '));
+}
+function renderOsuNote(note,now){
+  const appear = Math.max(.95, 1.95 / noteSpeed);
+  const dt = note.time - now;
+  const upcoming=getUpcomingOsuNotes(now,6);
+  const rank=upcoming.indexOf(note);
+  const forcePreview = rank >= 0 && rank < 3;
+  if((dt>appear && !forcePreview) || dt<-0.28){ if(note.el) note.el.style.display='none'; return; }
+  if(!note.el){
+    note.el=document.createElement('div');
+    note.el.className='note osuNote';
+    note.el.style.color=state.colors[note.id % state.colors.length] || '#3aa7ff';
+    const approach=document.createElement('span');
+    approach.className='osuApproach';
+    note.el.appendChild(approach);
+    const label=document.createElement('span');
+    label.className='osuOrder';
+    note.el.appendChild(label);
+    $('notesLayer').appendChild(note.el);
+  }
+  const p=clamp(1 - dt/appear,0,1);
+  const size=(note.size||66) + p*18;
+  const next=nextOsuNote();
+  note.el.classList.toggle('next', next && next.id===note.id);
+  note.el.classList.toggle('preview', forcePreview && dt>appear);
+  const label=note.el.querySelector('.osuOrder');
+  if(label) label.textContent=(note.id+1);
+  const approach=note.el.querySelector('.osuApproach');
+  if(approach){
+    const scale = dt>appear ? 2.75 : 1 + clamp(dt/appear,0,1)*1.75;
+    const opacity = dt>appear ? .20 : (.88 - p*.10);
+    approach.style.transform=`translate(-50%,-50%) scale(${scale})`;
+    approach.style.opacity=opacity;
+  }
+  note.el.style.display='flex';
+  note.el.style.left=(note.x||50)+'%';
+  note.el.style.top=(note.y||50)+'%';
+  note.el.style.width=size+'px';
+  note.el.style.height=size+'px';
+  note.el.style.opacity=dt<-.18?.48:(forcePreview && dt>appear?.52:1);
+}
+
 function renderNote(note,now){
+  if(state.mode === 'osu') return renderOsuNote(note,now);
   const travel = Math.max(.9, 2.35 / noteSpeed);
   const hitY = 84;
   const p = 1 - ((note.time-now)/travel);
@@ -1275,8 +1410,8 @@ function renderNote(note,now){
   }
   note.el.style.display='block';
   const y=p*hitY;
-  const w=laneWidth(clamp(p,0,1))*.70;
-  const h=4 + p*7;
+  const w=laneWidth(clamp(p,0,1))*.90;
+  const h=7 + p*13;
   note.el.style.left=laneCenter(note.lane,clamp(p,0,1))+'%';
   note.el.style.top=y+'%';
   note.el.style.width=w+'%';
@@ -1286,6 +1421,8 @@ function renderNote(note,now){
 function loop(){
   if(!state.running)return;
   const now=performance.now()/1000-state.startTime;
+  updateOsuTrail(now);
+  updateOsuCursor();
   state.notes.forEach(n=>{
     if(adminMode && !n.judged && now >= n.time){
       applyJudgement(n,'perfect');
@@ -1310,6 +1447,63 @@ function loop(){
   if(now>=endTime) return finish();
   state.raf=requestAnimationFrame(loop);
 }
+function updateOsuCursor(){
+  if(state.mode !== 'osu') return;
+  const cur=$('osuCursor');
+  if(!cur || osuPointer.x==null || osuPointer.y==null) return;
+  cur.style.left=osuPointer.x+'%';
+  cur.style.top=osuPointer.y+'%';
+  cur.style.opacity=osuPointer.inside?1:0;
+}
+function pressOsuAt(clientX,clientY){
+  if(!state.running || state.mode !== 'osu') return;
+  const wrap=$('laneWrap');
+  const rect=wrap.getBoundingClientRect();
+  const x=(clientX-rect.left)/rect.width*100;
+  const y=(clientY-rect.top)/rect.height*100;
+  const now=performance.now()/1000-state.startTime;
+  const n=nextOsuNote();
+  if(!n) return;
+  const dx=(x-(n.x||50))*rect.width/100;
+  const dy=(y-(n.y||50))*rect.height/100;
+  const dist=Math.hypot(dx,dy);
+  const dt=now-n.time;
+  const limit=(n.size||64)*.95;
+  if(!(dt>-0.24 && dt<0.22 && dist<=limit)) return;
+  let j;
+  if(dt < -0.135) j='fast';
+  else if(Math.abs(dt)<=0.045) j='perfect';
+  else if(Math.abs(dt)<=0.108) j='good';
+  else if(Math.abs(dt)<=0.154) j='ok';
+  else j='fast';
+  applyJudgement(n,j);
+}
+function pressOsuWithPointer(){
+  if(osuPointer.x==null || osuPointer.y==null) return;
+  const wrap=$('laneWrap');
+  const rect=wrap.getBoundingClientRect();
+  pressOsuAt(rect.left + rect.width*osuPointer.x/100, rect.top + rect.height*osuPointer.y/100);
+}
+$('laneWrap').addEventListener('pointermove',e=>{
+  if(state.mode !== 'osu') return;
+  const rect=$('laneWrap').getBoundingClientRect();
+  osuPointer.x=clamp((e.clientX-rect.left)/rect.width*100,0,100);
+  osuPointer.y=clamp((e.clientY-rect.top)/rect.height*100,0,100);
+  osuPointer.inside=true;
+  updateOsuCursor();
+});
+$('laneWrap').addEventListener('pointerleave',()=>{osuPointer.inside=false;updateOsuCursor();});
+$('laneWrap').addEventListener('pointerdown',e=>{
+  if(state.mode === 'osu'){
+    e.preventDefault();
+    const rect=$('laneWrap').getBoundingClientRect();
+    osuPointer.x=clamp((e.clientX-rect.left)/rect.width*100,0,100);
+    osuPointer.y=clamp((e.clientY-rect.top)/rect.height*100,0,100);
+    osuPointer.inside=true;
+    pressOsuAt(e.clientX,e.clientY);
+  }
+});
+
 function pressLane(lane,key){
   if(!state.running)return;
   const btn=[...document.querySelectorAll('.keyBtn')][lane];
@@ -1342,6 +1536,17 @@ function spawnHitBurst(note, judgement){
   else if(judgement === 'good') lengthScale = 0.62;
   else if(judgement === 'ok') lengthScale = 0.36;
   if(lengthScale <= 0.15) return;
+
+  if(state.mode === 'osu'){
+    const burst=document.createElement('div');
+    burst.className='hitBurst';
+    burst.style.color=state.colors[note.id % state.colors.length] || '#fff';
+    burst.style.left=(note.x||50)+'%';
+    burst.style.top=(note.y||50)+'%';
+    wrap.appendChild(burst);
+    setTimeout(()=>burst.remove(),320);
+    return;
+  }
 
   const fixedP = 1.0; // 인식선과 완전히 겹치게
   const slice = document.createElement('div');
@@ -1445,18 +1650,18 @@ $('makeGame').onclick=async()=>{
     setStatus('MP3를 읽는 중...',8);
     await waitFrame();
     const audioBuffer=await decodeAudioFile(file);
-    if(isMobile && selectedDifficulty>=6){toast('모바일에서는 6키 모드를 사용할 수 없습니다.');selectedDifficulty=3;buildDiff();}
+    if(isMobile && selectedMode === '6key'){toast('모바일 6KEY는 화면이 좁을 수 있어. PC 플레이를 추천해.');}
 
-    setStatus(`난이도 ${selectedDifficulty} 분석 준비 중...`,16);
+    setStatus(`${getModeLabel(selectedMode)} · 난이도 ${selectedDifficulty} 분석 준비 중...`,16);
     await waitFrame();
-    const made=analyzeMusic(audioBuffer,selectedDifficulty,setStatus);
+    const made=analyzeMusic(audioBuffer,selectedDifficulty,setStatus,selectedMode);
 
     setStatus('오디오 저장 중... IndexedDB를 사용합니다.',88);
     const id=uid();
     await saveAudioBlob(id,file);
 
     const game={
-      id,name,difficulty:selectedDifficulty,created:Date.now(),
+      id,name,mode:selectedMode,difficulty:selectedDifficulty,created:Date.now(),
       duration:audioBuffer.duration,laneCount:made.laneCount,
       noteCount:made.notes.length,notes:made.notes
     };
@@ -1474,12 +1679,18 @@ $('makeGame').onclick=async()=>{
 };
 document.addEventListener('keydown',e=>{
   const k=e.key.toUpperCase();
+  if(e.code === 'Space'){
+    e.preventDefault();
+    e.stopPropagation();
+    if(state.mode === 'osu') pressOsuWithPointer();
+    return;
+  }
   const idx=state.keys.indexOf(k);
   if(idx>=0) pressLane(idx,k);
   if(k==='ESCAPE') resetToMenu();
 });
 
-buildDiff(); buildSpeed(); createPractice(); renderList();
+buildMode(); buildDiff(); buildSpeed(); createPractice(); renderList();
 
 let lastTouchEnd = 0;
 document.addEventListener('touchend', function (event) {
