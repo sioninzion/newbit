@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<title>셀-프 리듬게임 ver.6.3</title>
+<title>셀-프 리듬게임 ver.7.4.0 event notes</title>
 <style>
 :root{
   --bg:#050712;
@@ -166,28 +166,6 @@ button{cursor:pointer;border:0;color:white}
 .resultBox{width:min(520px,92vw);padding:28px;border-radius:28px;background:rgba(12,18,34,.94);border:1px solid rgba(255,255,255,.16);text-align:center}
 .resultScore{font-size:54px;font-weight:1000}
 
-.laneWrap.osuMode{
-  clip-path:none;
-  border-radius:30px;
-  background:
-    radial-gradient(circle at 25% 20%,rgba(58,167,255,.12),transparent 28%),
-    radial-gradient(circle at 75% 75%,rgba(179,92,255,.12),transparent 30%),
-    rgba(255,255,255,.055);
-  border:1px solid rgba(255,255,255,.16);
-}
-.laneWrap.osuMode .hitLine,.laneWrap.osuMode .inputRow,.laneWrap.osuMode .laneGuideSvg{display:none !important}
-.osuHint{position:absolute;left:50%;bottom:24px;transform:translateX(-50%);color:rgba(255,255,255,.68);font-size:13px;font-weight:900;letter-spacing:.04em;z-index:20;pointer-events:none;text-align:center}
-.osuTrailSvg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:4;overflow:visible}
-.osuTrailLine{stroke:rgba(255,255,255,.32);stroke-width:3;stroke-linecap:round;stroke-linejoin:round;fill:none;filter:drop-shadow(0 0 8px rgba(58,167,255,.42))}
-.osuCursor{position:absolute;width:28px;height:28px;border-radius:999px;border:2px solid rgba(255,255,255,.85);box-shadow:0 0 16px rgba(255,255,255,.65),0 0 28px rgba(58,167,255,.55);transform:translate(-50%,-50%);z-index:35;pointer-events:none;opacity:0;transition:opacity .12s}
-.laneWrap.osuMode:hover .osuCursor{opacity:1}
-.note.osuNote{width:78px !important;height:78px !important;border-radius:999px !important;background:currentColor !important;box-shadow:0 0 18px currentColor,0 0 42px rgba(255,255,255,.25) !important;border:4px solid rgba(255,255,255,.86) !important;display:flex;align-items:center;justify-content:center;font-size:23px;font-weight:1000;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.5);overflow:visible !important}
-.note.osuNote.next{filter:brightness(1.42) saturate(1.22);box-shadow:0 0 24px currentColor,0 0 72px rgba(255,255,255,.55) !important}
-.note.osuNote.preview{filter:saturate(.9) brightness(.88);opacity:.52}
-.note.osuNote .osuOrder{position:relative;z-index:4;color:#fff;text-shadow:0 2px 10px rgba(0,0,0,.72)}
-.note.osuNote .osuApproach{position:absolute;left:50%;top:50%;width:100%;height:100%;border-radius:999px;border:4px solid rgba(255,255,255,.72);background:rgba(255,255,255,.055);transform:translate(-50%,-50%) scale(2.6);pointer-events:none;z-index:1;box-shadow:0 0 16px rgba(255,255,255,.32)}
-.note.osuNote:after{left:50% !important;right:auto !important;top:50% !important;width:46% !important;height:46% !important;transform:translate(-50%,-50%) !important;border-radius:999px !important;background:rgba(255,255,255,.22) !important;border:1px solid rgba(255,255,255,.58);z-index:2}
-@media(max-width:850px){.note.osuNote{width:70px !important;height:70px !important;font-size:20px}.note.osuNote .osuApproach{border-width:3px}.osuHint{bottom:18px;font-size:12px}.osuCursor{display:none}}
 
 .laneWrap.taikoMode{
   clip-path:none;
@@ -213,7 +191,7 @@ button{cursor:pointer;border:0;color:white}
   border:5px solid rgba(255,255,255,.92);box-shadow:0 0 24px rgba(255,255,255,.45),0 0 52px rgba(255,70,40,.28);z-index:10;pointer-events:none;
 }
 .taikoHitZone:before{content:"";position:absolute;inset:-17px;border-radius:999px;border:3px solid rgba(255,255,255,.32)}
-.taikoHitZone:after{content:"판정";position:absolute;left:50%;top:110%;transform:translateX(-50%);font-size:12px;font-weight:1000;color:rgba(255,255,255,.72);letter-spacing:.08em}
+.taikoHitZone:after{content:"?먯젙";position:absolute;left:50%;top:110%;transform:translateX(-50%);font-size:12px;font-weight:1000;color:rgba(255,255,255,.72);letter-spacing:.08em}
 .taikoHitZone.hitDon{animation:taikoDonPulse .16s ease-out}
 .taikoHitZone.hitKa{animation:taikoKaPulse .16s ease-out}
 @keyframes taikoDonPulse{0%{filter:brightness(1);transform:translate(-50%,-50%) scale(1)}50%{filter:brightness(1.8);transform:translate(-50%,-50%) scale(1.12)}100%{filter:brightness(1);transform:translate(-50%,-50%) scale(1)}}
@@ -689,7 +667,7 @@ button{cursor:pointer;border:0;color:white}
   }
 }
 
-/* iOS에서 file input이 더 잘 눌리도록 */
+/* iOS?먯꽌 file input???????뚮━?꾨줉 */
 #mp3File{
   cursor:pointer;
 }
@@ -886,7 +864,7 @@ body.taikoPlaying:not(.taikoPlayingMobile) .hitBurst{top:42vh!important}
 </head>
 <body>
 <div class="bg"></div>
-<div class="version">ver.6.3</div>
+<div class="version">ver.7.4.0</div>
 <div class="credit">made by. <button id="adminEgg" class="adminEgg" type="button">SIONINZION</button></div>
 <div class="toast" id="toast"></div><div class="adminBadge" id="adminBadge"></div>
 <div class="rotateOverlay" id="rotateOverlay"><div><div class="rotateIcon"></div><b id="rotateText">가로로 돌려주세요</b></div></div>
@@ -912,7 +890,7 @@ body.taikoPlaying:not(.taikoPlayingMobile) .hitBurst{top:42vh!important}
       <div class="field"><span>MP3 파일</span><input id="mp3File" type="file" accept=".mp3,.m4a,.wav,.aac,audio/mpeg,audio/mp3,audio/mp4,audio/aac,audio/wav,audio/*" /></div>
       <div class="field"><span>게임 방식</span><div class="row mode" id="modeBtns"></div><div class="modeDesc" id="modeDesc">4KEY: D F J K로 플레이</div></div>
       <div class="field"><span>난이도</span><div class="row difficulty" id="difficultyBtns"></div></div>
-      <button class="primary" id="makeGame">제작 시작</button><div class="progressOuter"><div class="progressInner"></div></div><div class="analyzeStatus">ver.6.4: 음악 시간 기준 싱크 · 인식음 제거 · 결과창 다시 플레이</div>
+      <button class="primary" id="makeGame">제작 시작</button><div class="progressOuter"><div class="progressInner"></div></div><div class="analyzeStatus">ver.7.4.0: 중요 멜로디/이벤트 우선 배치 · 약한 로컬 스냅</div>
     </div>
 
     <div class="list" id="list">
@@ -1012,7 +990,6 @@ const state = {
   score:0,combo:0,maxCombo:0,totalWeight:1,baseScore:1,
   counts:{perfect:0,good:0,ok:0,fast:0,miss:0}, judged:0, raf:0
 };
-const osuPointer = {x:null,y:null,inside:false};
 
 
 function showAdminBadge(text){
@@ -1109,7 +1086,7 @@ function playNoteSound(note, judgement='perfect'){
   return;
 }
 
-/* IndexedDB: 이전 버전처럼 큰 오디오 저장 */
+/* IndexedDB: ?댁쟾 踰꾩쟾泥섎읆 ???ㅻ뵒?????*/
 function openAudioDB(){
   return new Promise((resolve,reject)=>{
     const req = indexedDB.open(DB_NAME,1);
@@ -1158,7 +1135,7 @@ async function decodeAudioFile(file){
 
 /* 이전 버전 기반 음악 분석 엔진 */
 function getLaneCountByMode(mode){if(mode === '6key') return 6; if(mode === 'taiko') return 2; return 4;}
-function getModeLabel(mode){if(mode === '6key') return '6KEY'; if(mode === 'osu') return "OSU'st"; if(mode === 'taiko') return 'TAIKO'; return '4KEY';}
+function getModeLabel(mode){if(mode === '6key') return '6KEY'; if(mode === 'taiko') return 'TAIKO'; return '4KEY';}
 function getDifficultyConfig(level){
   const table = {
     1:{densityMin:1.70,densityMax:2.25,minGap:.20,sameLaneGap:.21,kickGap:.30,snareGap:.30,melodyGap:.24,hatGap:.24,kickPct:76,snarePct:76,melodyPct:56,hatPct:80,kickQ:.12,snareQ:.12,melodyQ:.62,hatQ:.14},
@@ -1168,15 +1145,6 @@ function getDifficultyConfig(level){
     5:{densityMin:5.95,densityMax:7.40,minGap:.048,sameLaneGap:.082,kickGap:.115,snareGap:.115,melodyGap:.044,hatGap:.070,kickPct:60,snarePct:58,melodyPct:13,hatPct:52,kickQ:.06,snareQ:.08,melodyQ:.80,hatQ:.06}
   };
   return table[clamp(Number(level)||3,1,5)] || table[3];
-}
-function decorateOsuNotes(notes,difficulty){
-  const points=[[20,22],[47,18],[75,25],[68,48],[38,42],[18,64],[50,72],[80,68],[30,30],[60,28],[72,56],[42,60],[22,46],[55,80],[84,38],[16,78]];
-  const size = difficulty>=5 ? 58 : difficulty>=4 ? 62 : 66;
-  return notes.map((n,i)=>{
-    const base=points[i%points.length];
-    const drift=Math.floor(i/points.length)%4;
-    return {...n,lane:0,x:clamp(base[0]+(drift-1.5)*3,10,90),y:clamp(base[1]+((i%3)-1)*4,12,82),size,osu:true};
-  });
 }
 function mixToMono(buffer){
   const len=buffer.length, chs=buffer.numberOfChannels;
@@ -1244,7 +1212,16 @@ function chooseMelodyLane(i,laneCount){
   return p[i%p.length];
 }
 function candidateToNote(c){
-  return {time:c.t,lane:c.lane??0,type:c.type,power:c.weight||c.value||0};
+  return {
+    time:c.t,
+    rawTime:c.t,
+    lane:c.lane??0,
+    type:c.type,
+    power:c.weight||c.value||0,
+    importance:c.importance||c.weight||c.value||0,
+    essential:!!c.essential,
+    eventType:c.eventType||null
+  };
 }
 function priority(type){return type==='kick'?4:type==='snare'?3:type==='melody'?2:type==='hat'?1:0}
 function pickTopDistributed(candidates,count,minGap){
@@ -1255,29 +1232,111 @@ function pickTopDistributed(candidates,count,minGap){
   }
   return picked.sort((a,b)=>a.t-b.t);
 }
+function buildEssentialEventCandidates(frames, melodyCandidates, laneCount, cfg, difficulty, duration){
+  const out=[];
+  if(!frames.length) return out;
+  const melodyFluxCut=percentile(frames.map(f=>f.melodyFluxLocal), difficulty>=4 ? 88 : 91);
+  const totalFluxCut=percentile(frames.map(f=>(f.kickFluxLocal||0)+(f.snareFluxLocal||0)+(f.melodyFluxLocal||0)*1.15), difficulty>=4 ? 90 : 93);
+  const slopeCut=percentile(frames.map(f=>Math.abs(f.melodySlope||0)), 88);
+  let lastT=-999, prevLane=null;
+  for(let i=2;i<frames.length-2;i++){
+    const f=frames[i];
+    if(f.t<.22 || (duration && f.t>duration-.22)) continue;
+    const melodyFlux=f.melodyFluxLocal||0;
+    const totalFlux=(f.kickFluxLocal||0)+(f.snareFluxLocal||0)+melodyFlux*1.15+(f.hatFluxLocal||0)*.35;
+    const slope=Math.abs(f.melodySlope||0);
+    const localPeak=melodyFlux>=(frames[i-1].melodyFluxLocal||0)*.96 && melodyFlux>=(frames[i+1].melodyFluxLocal||0)*.92;
+    const melodyEvent = melodyFlux>melodyFluxCut && (localPeak || slope>slopeCut*.92);
+    const bigEvent = totalFlux>totalFluxCut && melodyFlux>melodyFluxCut*.62;
+    if(!(melodyEvent || bigEvent) || f.t-lastT<Math.max(.16,cfg.minGap*1.45)) continue;
+    const lane=chooseFrequencyLane(f,i,laneCount,'melody',prevLane);
+    prevLane=lane;
+    const importance=melodyFlux*1.35 + totalFlux*.38 + slope*5.2 + (localPeak?.35:0) + (bigEvent?.42:0);
+    out.push({t:f.t,value:melodyFlux,index:i,lane,type:'melody',weight:importance*1.22,importance,essential:true,eventType:bigEvent?'big_event':'melody_event'});
+    lastT=f.t;
+  }
+  const protectedMelody=[...melodyCandidates]
+    .sort((a,b)=>(b.importance||b.weight||0)-(a.importance||a.weight||0))
+    .slice(0,Math.max(4,Math.floor((duration||60)*(difficulty>=4?.22:.14))))
+    .map(c=>({...c,essential:true,eventType:c.eventType||'top_melody',weight:(c.weight||c.value||0)*1.18,importance:(c.importance||c.weight||c.value||0)*1.25}));
+  return mergeEventCandidates([...out,...protectedMelody], Math.max(.14,cfg.minGap*1.18));
+}
+function mergeEventCandidates(candidates,gap){
+  const sorted=[...candidates].sort((a,b)=>(b.importance||b.weight||0)-(a.importance||a.weight||0));
+  const out=[];
+  for(const c of sorted){
+    if(!out.some(o=>Math.abs(o.t-c.t)<gap && o.lane===c.lane)) out.push(c);
+  }
+  return out.sort((a,b)=>a.t-b.t);
+}
+function seedEssentialNotes(candidates,targetMax,cfg,laneCount){
+  const cap=Math.max(3,Math.floor(targetMax*.24));
+  const notes=[];
+  const sorted=[...candidates].sort((a,b)=>(b.importance||b.weight||0)-(a.importance||a.weight||0));
+  for(const c of sorted){
+    if(notes.length>=cap) break;
+    const n=candidateToNote(c);
+    const near=notes.filter(o=>Math.abs(o.time-n.time)<Math.max(.075,cfg.minGap*.78));
+    if(near.some(o=>o.lane===n.lane)) continue;
+    if(near.length>=1) continue;
+    notes.push(n);
+  }
+  return notes.sort((a,b)=>a.time-b.time || a.lane-b.lane);
+}
+function fillNotesFromCandidates(seed,candidates,targetMin,targetMax,cfg){
+  const notes=[...seed];
+  const sorted=[...candidates].sort((a,b)=>(b.importance||b.weight||0)-(a.importance||a.weight||0));
+  for(const c of sorted){
+    if(notes.length>=targetMax) break;
+    const n=candidateToNote(c);
+    const gap=n.essential ? Math.max(.13,cfg.minGap*1.12) : Math.max(cfg.minGap, .09);
+    const near=notes.filter(o=>Math.abs(o.time-n.time)<gap);
+    if(near.some(o=>o.lane===n.lane)) continue;
+    if(near.length>=1) continue;
+    if(notes.length<targetMin || (n.essential && localDensity(notes,n.time,.42)<=0) || candidateKeepScore(n)>.72) notes.push(n);
+  }
+  return notes.sort((a,b)=>a.time-b.time || a.lane-b.lane);
+}
+function candidateKeepScore(n){
+  const essentialBoost = n.essential ? 2.35 : 1;
+  const typeBoost = n.type==='melody' ? 1.18 : n.type==='kick' ? 1.10 : n.type==='snare' ? 1.05 : .88;
+  return ((n.importance||n.power||0) + (n.power||0)*.35) * essentialBoost * typeBoost;
+}
+function localDensity(notes,t,window=.42){
+  return notes.filter(n=>Math.abs(n.time-t)<window).length;
+}
+function canShareMoment(a,b,minGap,context=[]){
+  if(Math.abs(a.time-b.time)>=minGap) return false;
+  if(a.lane===b.lane) return false;
+  if(!(a.essential || b.essential)) return false;
+  const t=(a.time+b.time)/2;
+  return localDensity(context,t,.42)<=1;
+}
 function mergeClassifiedNotes(candidates,minGap){
-  const sorted=candidates.map(candidateToNote).sort((a,b)=>a.time-b.time || priority(b.type)-priority(a.type));
+  const sorted=candidates.map(candidateToNote).sort((a,b)=>a.time-b.time || candidateKeepScore(b)-candidateKeepScore(a));
   const out=[];
   for(const n of sorted){
-    const near=out.find(o=>Math.abs(o.time-n.time)<minGap);
-    if(!near) out.push({...n});
-    else{
-      const ns=(n.power||0)*(1+priority(n.type)*.08);
-      const os=(near.power||0)*(1+priority(near.type)*.08);
-      if(ns>os) Object.assign(near,n);
-    }
+    const near=out.filter(o=>Math.abs(o.time-n.time)<minGap);
+    const sameLane=near.find(o=>o.lane===n.lane);
+    if(!near.length){ out.push({...n}); continue; }
+    if(!sameLane && near.length<2 && near.some(o=>canShareMoment(o,n,minGap,out))){ out.push({...n}); continue; }
+    const replaceTarget=sameLane || near.reduce((weak,o)=>candidateKeepScore(o)<candidateKeepScore(weak)?o:weak, near[0]);
+    if(candidateKeepScore(n)>candidateKeepScore(replaceTarget)) Object.assign(replaceTarget,n);
   }
-  return out.sort((a,b)=>a.time-b.time);
+  return out.sort((a,b)=>a.time-b.time || a.lane-b.lane);
 }
 function nearAny(notes,t,gap){return notes.some(n=>Math.abs(n.time-t)<gap)}
 function refinePlayablePattern(notes,cfg){
-  const sorted=[...notes].sort((a,b)=>a.time-b.time), out=[];
+  const sorted=[...notes].sort((a,b)=>a.time-b.time || candidateKeepScore(b)-candidateKeepScore(a)), out=[];
   for(const n of sorted){
-    const last=out[out.length-1];
-    if(!last || n.time-last.time>=cfg.minGap) out.push(n);
-    else if((n.power||0)*(1+priority(n.type)*.08) > (last.power||0)*(1+priority(last.type)*.08)) out[out.length-1]=n;
+    const near=out.filter(o=>Math.abs(o.time-n.time)<cfg.minGap);
+    const sameLane=near.find(o=>o.lane===n.lane);
+    if(!near.length){ out.push(n); continue; }
+    if(!sameLane && near.length<2 && near.some(o=>canShareMoment(o,n,cfg.minGap,out))){ out.push(n); continue; }
+    const target=sameLane || near.reduce((weak,o)=>candidateKeepScore(o)<candidateKeepScore(weak)?o:weak, near[0]);
+    if(candidateKeepScore(n)>candidateKeepScore(target)) Object.assign(target,n);
   }
-  return out;
+  return out.sort((a,b)=>a.time-b.time || a.lane-b.lane);
 }
 function chooseLeastRecentLane(recent,type,i,laneCount){
   const all=Array.from({length:laneCount},(_,x)=>x);
@@ -1342,56 +1401,14 @@ function addKeyModeTechniques(notes,difficulty,duration){
     });
   }
 
-  // 60% 전후의 상/하향 멜로디 파트 전용: DDFFJJKK / KKJJFFDD 계단 패턴
-  // 곡마다 길이가 달라도 진행률 기준으로 잡아서, 사용자가 말한 “60% 정도 부분”에만 집중한다.
-  const highlightFrom=Math.max(safeStart, dur*.55);
-  const highlightTo=Math.min(safeEnd, dur*.72);
-  const highlightNotes=sorted.filter(n=>n.time>=highlightFrom && n.time<=highlightTo);
-  if(highlightNotes.length>=6){
-    const windowLen=clamp(dur*.065,5.2,8.4);
-    const candidates=[];
-    for(const n of highlightNotes){
-      const from=n.time, to=Math.min(highlightTo, from+windowLen);
-      if(to-from<3.2) continue;
-      const inside=highlightNotes.filter(x=>x.time>=from && x.time<=to);
-      const melody=inside.filter(x=>x.type==='melody').length;
-      const power=inside.reduce((a,x)=>a+(x.power||0),0);
-      const center=(from+to)/2;
-      const centerBonus=1-Math.min(1,Math.abs(center-dur*.62)/(dur*.10 || 1));
-      candidates.push({from,to,inside,score:inside.length + melody*.9 + power*.08 + centerBonus*4});
-    }
-    candidates.sort((a,b)=>b.score-a.score);
-    const best=candidates[0];
-    if(best){
-      const step=localStep(best.inside);
-      const localBpm=Math.round(60/(step*2));
-      const asc=[0,0,1,1,2,2,3,3];      // DDFFJJKK
-      const desc=[3,3,2,2,1,1,0,0];     // KKJJFFDD
-      const bounce=[0,0,1,1,2,2,3,3,3,3,2,2,1,1,0,0];
-      const blockLen=(asc.length-1)*step;
-      const gap=step*1.15;
-      const start=round(best.from,3);
-      const maxEnd=Math.min(best.to, start + Math.max(3.8, windowLen));
-      removeRange(start-.05,maxEnd+.08);
-      let t=start;
-      let block=0;
-      while(t+blockLen<=maxEnd+.03 && block<5){
-        const pattern = block===0 ? asc : block===1 ? desc : block%2===0 ? bounce : asc;
-        const len=(pattern.length-1)*step;
-        if(t+len>maxEnd+.03) break;
-        pushPattern(t, pattern, step, '60pct_step_'+localBpm+'bpm');
-        t=round(t+len+gap,3);
-        block++;
-      }
-    }
-  }
+  // ver7.2.1: 60% 怨좎젙 怨꾨떒 ?⑦꽩? ?쒓굅.
+  // 실제 강한 피크 기반 동시타와 일반 보정만 유지한다.
 
-  // 동시타는 강한 피크에만 적당히 추가: DF / JK / DJ / FK
+  // ?숈떆???媛뺥븳 ?쇳겕?먮쭔 ?곷떦??異붽?: DF / JK / DJ / FK
   const chordPairs=[[0,1],[2,3],[0,2],[1,3]];
   const chordMax = difficulty>=5 ? 12 : difficulty>=4 ? 8 : 5;
   const strong=[...sorted]
     .filter(n=>n.time>safeStart && n.time<safeEnd)
-    .filter(n=>!result.some(x=>Math.abs(x.time-n.time)<.05 && String(x.tech||'').startsWith('60pct_step')))
     .sort((a,b)=>(b.power||0)-(a.power||0));
   let chordCount=0;
   for(const n of strong){
@@ -1416,71 +1433,185 @@ function estimateBeatGrid(notes,duration){
     .filter(n=>Number.isFinite(n.time) && n.time>0.65 && n.time<(duration||9999)-0.35)
     .sort((a,b)=>(b.power||1)-(a.power||1))
     .slice(0,120);
-  if(usable.length<10) return null;
+  if(usable.length<12) return null;
   let best=null;
-  for(let bpm=82;bpm<=188;bpm+=1){
-    const beat=60/bpm;
-    const grid=beat/4;
-    const phaseSteps=16;
-    for(let pi=0;pi<phaseSteps;pi++){
-      const phase=grid*pi/phaseSteps;
+  for(let bpm=78;bpm<=192;bpm+=1){
+    const beat=60/bpm, grid=beat/4;
+    if(grid<.078 || grid>.195) continue;
+    for(let pi=0;pi<16;pi++){
+      const phase=grid*pi/16;
       let score=0, snapped=0;
       for(const n of usable){
         const nearest=Math.round((n.time-phase)/grid);
-        const d=Math.abs(n.time-(phase+nearest*grid));
-        const limit=Math.min(.065,grid*.34);
-        if(d<=limit){
-          const w=1+(n.power||0)*.12;
-          score += w*(1-d/limit);
-          snapped++;
-        }
+        const q=phase+nearest*grid;
+        const d=Math.abs(n.time-q);
+        const limit=Math.min(.045, Math.max(.022, grid*.18));
+        if(d<=limit){ score+=(1+(n.power||0)*.10)*(1-d/limit); snapped++; }
       }
-      const centerPenalty = 1 - Math.min(.18, Math.abs(bpm-128)/360);
-      score = score*centerPenalty + snapped*.18;
+      score=(score*(1-Math.min(.12,Math.abs(bpm-128)/430)))+snapped*.10;
       if(!best || score>best.score) best={bpm,beat,grid,phase,score,snapped};
     }
   }
-  return best && best.snapped>=Math.max(7,usable.length*.16) ? best : null;
+  return best && best.snapped>=Math.max(9,usable.length*.22) ? best : null;
 }
 function quantizeNotesToBeat(notes,cfg,duration){
-  if(!Array.isArray(notes) || notes.length<10) return notes;
+  if(!Array.isArray(notes) || notes.length<12) return notes;
   const gridInfo=estimateBeatGrid(notes,duration);
   if(!gridInfo) return notes;
-  const snapLimit=Math.min(.078, Math.max(.040,(cfg?.minGap||.08)*.82, gridInfo.grid*.30));
+  const snapLimit=Math.min(.038, Math.max(.020,(cfg?.minGap||.08)*.26, gridInfo.grid*.15));
   const snapped=notes.map(n=>{
-    const nearest=Math.round((n.time-gridInfo.phase)/gridInfo.grid);
+    const rawTime=Number.isFinite(n.rawTime) ? n.rawTime : n.time;
+    const nearest=Math.round((rawTime-gridInfo.phase)/gridInfo.grid);
     const q=round(gridInfo.phase + nearest*gridInfo.grid,3);
-    const d=Math.abs(q-n.time);
-    if(d<=snapLimit && q>0.08 && (!duration || q<duration-.08)) return {...n,time:q,quantized:true,estimatedBpm:gridInfo.bpm};
-    return {...n,estimatedBpm:gridInfo.bpm};
+    const d=Math.abs(q-rawTime);
+    if(d<=snapLimit && q>0.08 && (!duration || q<duration-.08)) return {...n,rawTime,time:q,quantized:true,estimatedBpm:gridInfo.bpm,snapDelta:round(q-rawTime,3)};
+    return {...n,rawTime,time:rawTime,estimatedBpm:gridInfo.bpm,quantized:false};
   }).sort((a,b)=>a.time-b.time || priority(b.type)-priority(a.type));
   const cleaned=[];
   for(const n of snapped){
-    const near=cleaned.find(o=>Math.abs(o.time-n.time)<(cfg?.minGap||.08)*.62 && o.lane===n.lane);
-    if(!near) cleaned.push(n);
-    else if((n.power||0)>(near.power||0)) Object.assign(near,n);
+    const near=cleaned.find(o=>Math.abs(o.time-n.time)<(cfg?.minGap||.08)*.55 && o.lane===n.lane);
+    if(!near) cleaned.push(n); else if((n.power||0)>(near.power||0)) Object.assign(near,n);
   }
   return cleaned.sort((a,b)=>a.time-b.time || a.lane-b.lane);
 }
+function sectionTimingStability(section){
+  const arr=(section||[]).map(n=>n.time).sort((a,b)=>a-b), gaps=[];
+  for(let i=1;i<arr.length;i++){ const g=arr[i]-arr[i-1]; if(g>=.07 && g<=.8) gaps.push(g); }
+  if(gaps.length<4) return 0;
+  const mean=gaps.reduce((a,b)=>a+b,0)/gaps.length;
+  const variance=gaps.reduce((a,b)=>a+(b-mean)*(b-mean),0)/gaps.length;
+  return clamp(1-(Math.sqrt(variance)/(mean||1))*1.6,0,1);
+}
+function estimateLocalBeatGrid(notes,duration,cfg){
+  const anchors=[], window=8, step=4;
+  for(let from=.35; from<duration-1; from+=step){
+    const to=Math.min(duration, from+window);
+    const section=(notes||[]).filter(n=>n.time>=from && n.time<=to).sort((a,b)=>(b.power||1)-(a.power||1)).slice(0,70);
+    if(section.length<7) continue;
+    const stability=sectionTimingStability(section);
+    let best=null;
+    for(let bpm=78;bpm<=192;bpm+=1){
+      const grid=(60/bpm)/4;
+      if(grid<.078 || grid>.195) continue;
+      for(let pi=0;pi<16;pi++){
+        const phase=from + grid*pi/16;
+        let score=0, snapped=0;
+        for(const n of section){
+          const rawTime=Number.isFinite(n.rawTime) ? n.rawTime : n.time;
+          const k=Math.round((rawTime-phase)/grid), q=phase+k*grid;
+          const d=Math.abs(rawTime-q), limit=Math.min(.044, Math.max(.020, grid*.17));
+          if(d<=limit){ score+=(1+(n.power||0)*.08)*(1-d/limit); snapped++; }
+        }
+        score=score*(.72+stability*.28)+snapped*.10;
+        if(!best || score>best.score) best={from,to,bpm,grid,phase,score,snapped,stability};
+      }
+    }
+    if(best && best.stability>.34 && best.snapped>=Math.max(5,section.length*.20)) anchors.push(best);
+  }
+  return anchors;
+}
+function quantizeNotesToLocalBeat(notes,cfg,duration){
+  if(!Array.isArray(notes) || notes.length<12) return notes;
+  const rawNotes=notes.map(n=>({...n,rawTime:Number.isFinite(n.rawTime)?n.rawTime:n.time}));
+  const anchors=estimateLocalBeatGrid(rawNotes,duration,cfg);
+  if(!anchors.length) return quantizeNotesToBeat(rawNotes,cfg,duration);
+  const out=rawNotes.map(n=>{
+    const rawTime=n.rawTime;
+    const a=(anchors.filter(x=>rawTime>=x.from-.12 && rawTime<=x.to+.12)[0] || anchors.reduce((best,x)=>Math.abs((x.from+x.to)/2-rawTime)<Math.abs((best.from+best.to)/2-rawTime)?x:best, anchors[0]));
+    const k=Math.round((rawTime-a.phase)/a.grid), q=round(a.phase+k*a.grid,3), d=Math.abs(q-rawTime);
+    const stabilityFactor=clamp(a.stability||0,0,1);
+    const limit=Math.min(.040, Math.max(.020, a.grid*(.11 + stabilityFactor*.06), (cfg?.minGap||.08)*(.22 + stabilityFactor*.08)));
+    if(d<=limit && q>.08 && q<duration-.08) return {...n,time:q,quantized:true,estimatedBpm:a.bpm,snapDelta:round(q-rawTime,3)};
+    return {...n,time:rawTime,quantized:false,estimatedBpm:a.bpm,snapDelta:0};
+  }).sort((a,b)=>a.time-b.time || priority(b.type)-priority(a.type));
+  const cleaned=[];
+  for(const n of out){
+    const near=cleaned.find(o=>Math.abs(o.time-n.time)<(cfg?.minGap||.08)*.54 && o.lane===n.lane);
+    if(!near) cleaned.push(n); else if((n.power||0)>(near.power||0)) Object.assign(near,n);
+  }
+  return cleaned.sort((a,b)=>a.time-b.time || a.lane-b.lane);
+}
+function normalizeFluxBySections(frames, fields, windowSec=10){
+  if(!frames.length) return;
+  const duration = frames[frames.length-1].t || 0;
+  for(const field of fields){
+    for(let from=0; from<=duration+.001; from+=windowSec){
+      const to=from+windowSec;
+      const idx=[];
+      for(let i=0;i<frames.length;i++) if(frames[i].t>=from && frames[i].t<to) idx.push(i);
+      if(!idx.length) continue;
+      const vals=idx.map(i=>frames[i][field]||0).sort((a,b)=>a-b);
+      const med=vals[Math.floor(vals.length*.50)] || 0;
+      const hi=vals[Math.floor(vals.length*.92)] || med + 1e-9;
+      const scale=Math.max(hi-med,1e-12);
+      for(const i of idx){
+        const v=(frames[i][field]||0);
+        frames[i][field+'Local']=clamp((v-med)/scale,0,3.5);
+      }
+    }
+  }
+}
+function melodyLaneFromFrame(frame, prevLane, laneCount){
+  const pos=clamp(frame.melodyPos ?? frame.centroidPos ?? .5,0,1);
+  let lane=Math.round(pos*(laneCount-1));
+  if(Number.isFinite(prevLane)){
+    if(Math.abs(lane-prevLane)>2) lane = prevLane + Math.sign(lane-prevLane)*2;
+    if(lane===prevLane && Math.abs((frame.melodySlope||0))>.10){
+      lane=clamp(lane + Math.sign(frame.melodySlope),0,laneCount-1);
+    }
+  }
+  return clamp(lane,0,laneCount-1);
+}
+function chooseFrequencyLane(frame,i,laneCount,type,prevMelodyLane=null){
+  if(type==='kick') return laneCount===6 ? 1 : 0;
+  if(type==='snare') return laneCount===6 ? 3 : 2;
+  if(type==='hat') return laneCount===6 ? 5 : 3;
+  return melodyLaneFromFrame(frame, prevMelodyLane, laneCount);
+}
 
+
+function pruneMusicalAccuracy(notes,cfg,duration,mode){
+  if(!Array.isArray(notes) || notes.length<2) return notes || [];
+  const minGlobal = mode==='taiko' ? Math.max(.090,(cfg?.minGap||.08)*.86) : Math.max(.070,(cfg?.minGap||.08)*.74);
+  const sorted=[...notes].sort((a,b)=>a.time-b.time || candidateKeepScore(b)-candidateKeepScore(a));
+  const out=[];
+  for(const n of sorted){
+    if(!Number.isFinite(n.time) || n.time<.18 || (duration && n.time>duration-.18)) continue;
+    const near=out.filter(o=>Math.abs(o.time-n.time)<minGlobal);
+    const sameLane=near.find(o=>o.lane===n.lane);
+    if(sameLane){
+      if(candidateKeepScore(n)>candidateKeepScore(sameLane)) Object.assign(sameLane,n);
+      continue;
+    }
+    // 필수 멜로디/이벤트 후보는 같은 순간 2개까지 보존해 동시타로 살린다.
+    if(near.length>=2){
+      const weakest=near.reduce((a,b)=>candidateKeepScore(a)<candidateKeepScore(b)?a:b);
+      if(candidateKeepScore(n)>candidateKeepScore(weakest)) Object.assign(weakest,n);
+      continue;
+    }
+    out.push({...n});
+  }
+  return out.sort((a,b)=>a.time-b.time || a.lane-b.lane);
+}
 function analyzeMusic(buffer,difficulty,progress,mode='4key'){
   const laneCount=getLaneCountByMode(mode);
   const sampleRate=buffer.sampleRate;
   const raw=mixToMono(buffer);
-  const frameSize=Math.round(sampleRate*.038);
-  const hop=Math.round(sampleRate*.019);
+  const frameSize=Math.round(sampleRate*.032);
+  const hop=Math.round(sampleRate*.0115); // ver7: 절대시간 기반 고해상도 onset 분석
   const frames=[];
   const duration=buffer.duration;
   const diff=getDifficultyConfig(difficulty);
-  const targetMin=Math.max(24,Math.floor(duration*diff.densityMin));
-  const targetMax=Math.max(targetMin+8,Math.floor(duration*diff.densityMax));
+  const densityScale = mode==='taiko' ? 1 : .82;
+  const targetMin=Math.max(18,Math.floor(duration*diff.densityMin*densityScale));
+  const targetMax=Math.max(targetMin+6,Math.floor(duration*diff.densityMax*densityScale));
   const targetMid=Math.floor((targetMin+targetMax)/2);
   const cfg={minGap:diff.minGap,sameLaneGap:diff.sameLaneGap,kickGap:diff.kickGap,snareGap:diff.snareGap,melodyGap:diff.melodyGap,hatGap:diff.hatGap};
 
-  progress?.(`${getModeLabel(mode)} · 난이도 ${difficulty}: 음악을 킥/스네어/멜로디/하이햇으로 분석 중...`,22);
+  progress?.(`${getModeLabel(mode)} · ver7.4.0: 중요 멜로디/이벤트 후보를 보호하며 분석하는 중...`,22);
 
   for(let start=0; start+frameSize<raw.length; start+=hop){
-    const t=start/sampleRate;
+    const t=start/sampleRate; // 누적 오차 방지: 샘플 위치에서 직접 계산
     let total=0, zc=0, prev=raw[start];
     let sub=0,low=0,lowMid=0,mid=0,highMid=0,high=0;
     let lp1=0,lp2=0,lp3=0,lp4=0,last=raw[start];
@@ -1502,14 +1633,24 @@ function analyzeMusic(buffer,difficulty,progress,mode='4key'){
     total*=inv; sub*=inv; low*=inv; lowMid*=inv; mid*=inv; highMid*=inv; high*=inv;
     const zcr=zc/frameSize, bass=sub+low, body=lowMid+mid, brightness=highMid+high;
 
+    const bandSum=sub+low+lowMid+mid+highMid+high+1e-12;
+    const centroid=(sub*55 + low*140 + lowMid*360 + mid*950 + highMid*2400 + high*5200)/bandSum;
+    const centroidPos=clamp((Math.log2(Math.max(80,centroid))-Math.log2(90))/(Math.log2(5200)-Math.log2(90)),0,1);
+    const melodyEnergy=lowMid*1.35 + mid*2.55 + highMid*.92;
+    const melodyBandSum=lowMid+mid+highMid+1e-12;
+    const melodyCentroid=(lowMid*320 + mid*980 + highMid*2500)/melodyBandSum;
+    const melodyPos=clamp((Math.log2(Math.max(140,melodyCentroid))-Math.log2(160))/(Math.log2(3000)-Math.log2(160)),0,1);
+    const prevFrame=frames[frames.length-1];
+    const melodySlope=prevFrame ? melodyPos-prevFrame.melodyPos : 0;
+
     const kickScore=bass*clamp(bass/(body+brightness+1e-8),.3,2.8);
     const snareScore=(lowMid*.55+mid*.45+highMid*.80)*clamp(brightness/(bass+1e-8),.45,2.0)*clamp(1-Math.abs(zcr-.12)*2.0,.35,1.2);
-    const melodyBoost=1.16+Math.max(0,difficulty-2)*.22;
-    const melodyMotion=Math.abs((frames[frames.length-1]?.mid || 0) - mid) + Math.abs((frames[frames.length-1]?.lowMid || 0) - lowMid);
-    const melodyScore=(lowMid*1.20+mid*2.35*melodyBoost+highMid*.62*melodyBoost+melodyMotion*.85)*clamp(1-bass/(body+brightness+1e-8)*.025,.82,1.42);
+    const melodyBoost=1.20+Math.max(0,difficulty-2)*.24;
+    const melodyMotion=Math.abs(melodySlope)*melodyEnergy*2.8 + Math.abs((prevFrame?.mid || 0) - mid) + Math.abs((prevFrame?.lowMid || 0) - lowMid);
+    const melodyScore=(melodyEnergy*melodyBoost + melodyMotion*.95)*clamp(1-bass/(body+brightness+1e-8)*.035,.78,1.48);
     const hatScore=(high*1.25+highMid*.65)*clamp(zcr*8.0,.35,2.2)*clamp(1-bass/(brightness+body+1e-8)*.20,.35,1.1);
 
-    frames.push({t,total,zcr,kickScore,snareScore,melodyScore,hatScore});
+    frames.push({t,total,zcr,sub,low,lowMid,mid,highMid,high,centroid,centroidPos,melodyPos,melodySlope,kickScore,snareScore,melodyScore,hatScore});
   }
 
   progress?.('피크 후보를 계산하는 중...',40);
@@ -1518,24 +1659,35 @@ function analyzeMusic(buffer,difficulty,progress,mode='4key'){
   addFlux(frames,'snareScoreSm','snareFlux',.66);
   addFlux(frames,'melodyScoreSm','melodyFlux',.70);
   addFlux(frames,'hatScoreSm','hatFlux',.58);
+  normalizeFluxBySections(frames,['kickFlux','snareFlux','melodyFlux','hatFlux'],10);
 
   const energyGate=percentile(frames.map(f=>f.total),42);
   const quota=buildQuotas(duration,targetMid,diff);
 
-  const kickCandidates=detectPeaks(frames,'kickFlux',percentile(frames.map(f=>f.kickFlux),diff.kickPct),cfg.kickGap)
+  const kickCandidates=detectPeaks(frames,'kickFluxLocal',percentile(frames.map(f=>f.kickFluxLocal),Math.min(94,diff.kickPct+2)),cfg.kickGap)
     .filter(p=>frames[p.index].total>energyGate*.6)
-    .map(p=>({...p,lane:laneCount===6?2:2,type:'kick',weight:p.value*1.25}));
-  const snareCandidates=detectPeaks(frames,'snareFlux',percentile(frames.map(f=>f.snareFlux),diff.snarePct),cfg.snareGap)
+    .map(p=>({...p,lane:chooseFrequencyLane(frames[p.index],p.index,laneCount,'kick'),type:'kick',weight:p.value*1.30}));
+  const snareCandidates=detectPeaks(frames,'snareFluxLocal',percentile(frames.map(f=>f.snareFluxLocal),Math.min(95,diff.snarePct+2)),cfg.snareGap)
     .filter(p=>frames[p.index].total>energyGate*.55)
-    .map(p=>({...p,lane:1,type:'snare',weight:p.value*1.10}));
-  const melodyCandidates=detectPeaks(frames,'melodyFlux',percentile(frames.map(f=>f.melodyFlux),diff.melodyPct),cfg.melodyGap)
-    .filter(p=>frames[p.index].total>energyGate*.48)
-    .map((p,i)=>({...p,lane:chooseMelodyLane(i,laneCount),type:'melody',weight:p.value}));
-  const hatCandidates=detectPeaks(frames,'hatFlux',percentile(frames.map(f=>f.hatFlux),diff.hatPct),cfg.hatGap)
+    .map(p=>({...p,lane:chooseFrequencyLane(frames[p.index],p.index,laneCount,'snare'),type:'snare',weight:p.value*1.12}));
+  const melodyPeaks=detectPeaks(frames,'melodyFluxLocal',percentile(frames.map(f=>f.melodyFluxLocal),Math.min(94,diff.melodyPct+1)),cfg.melodyGap)
+    .filter(p=>frames[p.index].total>energyGate*.48);
+  let prevMelodyLane=null;
+  const melodyCandidates=melodyPeaks.map((p,i)=>{
+    const lane=chooseFrequencyLane(frames[p.index],i,laneCount,'melody',prevMelodyLane);
+    prevMelodyLane=lane;
+    const frame=frames[p.index];
+    const motionBonus=1+Math.min(.85,Math.abs(frame.melodySlope||0)*4.8);
+    const contourBonus=1+Math.min(.45,Math.abs((frames[p.index+1]?.melodyPos||frame.melodyPos)-(frames[p.index-1]?.melodyPos||frame.melodyPos))*2.8);
+    const importance=p.value*1.22*motionBonus*contourBonus + Math.abs(frame.melodySlope||0)*4.5;
+    return {...p,lane,type:'melody',weight:p.value*1.18*motionBonus*contourBonus,importance,melodyPos:frame.melodyPos,essential:importance>2.75,eventType:'melody_peak'};
+  });
+  const hatCandidates=detectPeaks(frames,'hatFluxLocal',percentile(frames.map(f=>f.hatFluxLocal),Math.min(96,diff.hatPct+3)),cfg.hatGap)
     .filter(p=>frames[p.index].total>energyGate*.42)
-    .map(p=>({...p,lane:laneCount===6?5:3,type:'hat',weight:p.value*.88}));
+    .map(p=>({...p,lane:chooseFrequencyLane(frames[p.index],p.index,laneCount,'hat'),type:'hat',weight:p.value*.88}));
 
-  progress?.(`후보: 킥 ${kickCandidates.length}, 스네어 ${snareCandidates.length}, 멜로디 ${melodyCandidates.length}, 하이햇 ${hatCandidates.length}`,68);
+  const essentialCandidates = mode==='taiko' ? [] : buildEssentialEventCandidates(frames, melodyCandidates, laneCount, cfg, difficulty, duration);
+  progress?.(`후보: 킥 ${kickCandidates.length}, 스네어 ${snareCandidates.length}, 멜로디 ${melodyCandidates.length}, 필수 이벤트 ${essentialCandidates.length}, 하이햇 ${hatCandidates.length}`,68);
 
   let selected;
   if(mode === 'taiko'){
@@ -1545,42 +1697,40 @@ function analyzeMusic(buffer,difficulty,progress,mode='4key'){
       ...pickTopDistributed(melodyCandidates.map(c=>({...c,lane:1,type:'melody',weight:c.weight*1.08})),Math.floor(taikoTarget*.52),cfg.melodyGap)
     ];
   }else{
+    const essentialSeed=seedEssentialNotes(essentialCandidates,targetMax,cfg,laneCount);
     selected=[
+      ...essentialCandidates,
       ...pickTopDistributed(kickCandidates,quota.kick,cfg.kickGap),
       ...pickTopDistributed(snareCandidates,quota.snare,cfg.snareGap),
       ...pickTopDistributed(melodyCandidates,quota.melody,cfg.melodyGap),
       ...pickTopDistributed(hatCandidates,quota.hat,cfg.hatGap)
     ];
+    selected=fillNotesFromCandidates(essentialSeed, selected, targetMin, targetMax, cfg);
   }
 
-  let notes=mergeClassifiedNotes(selected,cfg.minGap);
+  let notes=Array.isArray(selected) && selected[0]?.time!==undefined ? selected : mergeClassifiedNotes(selected,cfg.minGap);
 
   if(notes.length<targetMin){
-    const all=[...kickCandidates,...snareCandidates,...melodyCandidates,...hatCandidates].sort((a,b)=>b.weight-a.weight);
-    for(const c of all){
-      if(notes.length>=targetMin) break;
-      if(!nearAny(notes,c.t,cfg.minGap)){
-        notes.push(candidateToNote(c));
-        notes=notes.sort((a,b)=>a.time-b.time);
-      }
-    }
+    const all=[...essentialCandidates,...kickCandidates,...snareCandidates,...melodyCandidates,...hatCandidates].sort((a,b)=>(b.importance||b.weight||0)-(a.importance||a.weight||0));
+    notes=fillNotesFromCandidates(notes, all, targetMin, targetMax, cfg);
   }
   if(notes.length>targetMax){
-    notes=notes.map(n=>({...n,keepScore:n.power*(n.type==='kick'?1.25:n.type==='snare'?1.1:n.type==='melody'?1.0:.82)}))
+    notes=notes.map(n=>({...n,keepScore:candidateKeepScore(n)}))
       .sort((a,b)=>b.keepScore-a.keepScore).slice(0,targetMax).sort((a,b)=>a.time-b.time);
   }
   notes=refinePlayablePattern(notes,cfg);
   notes=rebalanceRepeatedLanes(notes,cfg,laneCount);
-  // ver.6.7: 기교 패턴은 제거하고, 분석된 노트를 추정 BPM 격자에 가까울 때만 정렬한다.
-  if(mode === '4key' || mode === '6key') notes = quantizeNotesToBeat(notes,cfg,duration);
+  // ver7.3.1: 실제 onset 후보를 먼저 정제한 뒤, 가까운 경우에만 박자 격자에 스냅한다.
+  notes=pruneMusicalAccuracy(notes,cfg,duration,mode);
+  if(mode === '4key' || mode === '6key') notes = quantizeNotesToLocalBeat(notes,cfg,duration);
+  notes=pruneMusicalAccuracy(notes,cfg,duration,mode);
   notes=refinePlayablePattern(notes,cfg);
   notes=rebalanceRepeatedLanes(notes,cfg,laneCount);
   notes=notes.sort((a,b)=>a.time-b.time || a.lane-b.lane).map((n,i)=>({
-    id:i,time:round(n.time,3),lane:n.lane,type:n.type,tech:'',judged:false,el:null
+    id:i,time:round(n.time,3),lane:n.lane,type:n.type,tech:n.essential?'v7_4_0_essential_event':'v7_4_0_event_priority_snap',judged:false,el:null
   }));
 
   if(mode === 'taiko') notes = notes.map((n,i)=>({...n,id:i,lane:n.type==='kick'?0:1,taikoType:n.type==='kick'?'don':'ka'}));
-  if(mode === 'osu') notes = decorateOsuNotes(notes,difficulty);
   progress?.(`분석 완료! 노트 ${notes.length}개 생성`,100);
   return {notes,laneCount,mode};
 }
@@ -1589,11 +1739,10 @@ function analyzeMusic(buffer,difficulty,progress,mode='4key'){
 function buildMode(){
   const box=$('modeBtns'); if(!box) return;
   box.innerHTML='';
-  const modes=[['4key','4KEY'],['6key','6KEY'],['osu',"OSU'st"],['taiko','TAIKO']];
+  const modes=[['4key','4KEY'],['6key','6KEY'],['taiko','TAIKO']];
   const desc={
-    '4key':'4KEY: D F J K로 플레이',
-    '6key':'6KEY: S D F H J K로 플레이',
-    'osu':"OSU'st: 마우스를 노트 위에 두고 Space로 판정",
+    '4key':'4KEY: D F J K로 플레이 · ver7.4.0 이벤트 우선 분석',
+    '6key':'6KEY: S D F H J K로 플레이 · 멜로디 대역을 더 넓게 분산',
     'taiko':'TAIKO: D/F=쿵, J/K=테 · 모바일은 좌/우 북'
   };
   modes.forEach(([value,label])=>{
@@ -1656,36 +1805,14 @@ function makeFallbackNotes(duration,diff,mode='4key'){
     notes.push({id:i,time:t,lane,judged:false,el:null,type});
   }
   let finalNotes = notes;
-  if(mode === '4key' && diff >= 3) finalNotes = addKeyModeTechniques(finalNotes,diff,duration).map((n,i)=>({...n,id:i}));
-  finalNotes = mode === 'osu' ? decorateOsuNotes(finalNotes,diff) : finalNotes;
+  // ver7.1: fallback?먯꽌??媛뺤젣 湲곌탳 ?⑦꽩? ?ｌ? ?딅뒗??
   return {notes:finalNotes,laneCount,mode};
 }
 
 function createGuides(){
   const wrap = document.getElementById('laneWrap');
-  wrap.querySelectorAll('.laneGuideSvg,.osuHint,.taikoHint,.taikoFlowLine,.taikoHitZone,.osuCursor,.osuTrailSvg').forEach(e=>e.remove());
-  wrap.classList.toggle('osuMode', state.mode === 'osu');
+  wrap.querySelectorAll('.laneGuideSvg,.taikoHint,.taikoFlowLine,.taikoHitZone').forEach(e=>e.remove());
   wrap.classList.toggle('taikoMode', state.mode === 'taiko');
-  if(state.mode === 'osu'){
-    const trail=document.createElementNS('http://www.w3.org/2000/svg','svg');
-    trail.setAttribute('class','osuTrailSvg');
-    trail.setAttribute('viewBox','0 0 100 100');
-    trail.setAttribute('preserveAspectRatio','none');
-    const line=document.createElementNS('http://www.w3.org/2000/svg','polyline');
-    line.setAttribute('class','osuTrailLine');
-    line.setAttribute('id','osuTrailLine');
-    trail.appendChild(line);
-    wrap.appendChild(trail);
-    const cursor=document.createElement('div');
-    cursor.className='osuCursor';
-    cursor.id='osuCursor';
-    wrap.appendChild(cursor);
-    const hint=document.createElement('div');
-    hint.className='osuHint';
-    hint.textContent='마우스를 노트 위에 두고 Space로 판정 · 숫자/선이 순서';
-    wrap.appendChild(hint);
-    return;
-  }
   if(state.mode === 'taiko'){
     const flow=document.createElement('div');
     flow.className='taikoFlowLine';
@@ -1721,7 +1848,6 @@ function createGuides(){
 
 function setupInput(){
   const row=$('inputRow'); row.innerHTML=''; row.className='inputRow';
-  if(state.mode === 'osu') return;
   if(state.mode === 'taiko'){
     row.classList.add('taikoInput');
     const don=document.createElement('button');
@@ -1751,7 +1877,7 @@ function setupInput(){
 
   // 모바일에서는 글자/상자 영역 전체가 판정 버튼처럼 동작하도록 보강
   row.onpointerdown = (e)=>{
-    if(state.mode === 'osu' || state.mode === 'taiko') return;
+    if(state.mode === 'taiko') return;
     if(e.pointerType === 'mouse') return;
     const rect=row.getBoundingClientRect();
     const x=clamp((e.clientX-rect.left)/rect.width,0,0.999);
@@ -1768,7 +1894,7 @@ function isLandscapeNow(){return window.innerWidth > window.innerHeight;}
 function showRotateOverlay(text){
   const o=$('rotateOverlay');
   if(!o) return;
-  $('rotateText').textContent=text || '가로로 돌려주세요';
+  document.getElementById('rotateText').textContent=text || '가로로 돌려주세요';
   o.classList.add('show');
 }
 function hideRotateOverlay(){const o=$('rotateOverlay'); if(o) o.classList.remove('show');}
@@ -1807,8 +1933,8 @@ async function startGame(g){
   const notes=(g.notes||[]).map((n,i)=>({...n,id:i,judged:false,el:null}));
   Object.assign(state,{
     running:false,notes,laneCount:g.laneCount || getLaneCountByMode(g.mode || '4key'),
-    mode:g.mode || ((g.laneCount||4)===6?'6key':'4key'),
-    keys:(g.mode==='osu')?[]:(g.mode==='taiko'?keysTaiko:((g.laneCount||4)===6?keys6:keys4)),
+    mode:(g.mode || ((g.laneCount||4)===6?'6key':'4key')),
+    keys:(g.mode==='taiko'?keysTaiko:((g.laneCount||4)===6?keys6:keys4)),
     colors:g.mode==='taiko'?colorsTaiko:((g.laneCount||4)===6?colors6:colors4),
     score:0,combo:0,maxCombo:0,counts:{perfect:0,good:0,ok:0,fast:0,miss:0},judged:0
   });
@@ -1900,67 +2026,6 @@ function laneWidth(p){
   const top=.48, bot=.92;
   return (top+(bot-top)*p)*100/state.laneCount;
 }
-function nextOsuNote(){
-  return state.notes.find(n=>!n.judged) || null;
-}
-function getUpcomingOsuNotes(now, limit=5){
-  const visibleAhead = Math.max(1.05, 2.2 / effectiveNoteSpeed());
-  const timed = state.notes.filter(n=>!n.judged && (n.time-now)<visibleAhead && (n.time-now)>-0.28);
-  const guaranteed = state.notes.filter(n=>!n.judged).slice(0,3); // 현재/다음/다다음은 항상 노출
-  const merged=[];
-  [...guaranteed,...timed].sort((a,b)=>a.time-b.time).forEach(n=>{
-    if(!merged.includes(n)) merged.push(n);
-  });
-  return merged.slice(0,limit);
-}
-function updateOsuTrail(now){
-  if(state.mode !== 'osu') return;
-  const line=$('osuTrailLine');
-  if(!line) return;
-  const upcoming=getUpcomingOsuNotes(now,6);
-  line.setAttribute('points', upcoming.map(n=>(n.x||50)+','+(n.y||50)).join(' '));
-}
-function renderOsuNote(note,now){
-  const appear = Math.max(.95, 1.95 / effectiveNoteSpeed());
-  const dt = note.time - now;
-  const upcoming=getUpcomingOsuNotes(now,6);
-  const rank=upcoming.indexOf(note);
-  const forcePreview = rank >= 0 && rank < 3;
-  if((dt>appear && !forcePreview) || dt<-0.28){ if(note.el) note.el.style.display='none'; return; }
-  if(!note.el){
-    note.el=document.createElement('div');
-    note.el.className='note osuNote';
-    note.el.style.color=state.colors[note.id % state.colors.length] || '#3aa7ff';
-    const approach=document.createElement('span');
-    approach.className='osuApproach';
-    note.el.appendChild(approach);
-    const label=document.createElement('span');
-    label.className='osuOrder';
-    note.el.appendChild(label);
-    $('notesLayer').appendChild(note.el);
-  }
-  const p=clamp(1 - dt/appear,0,1);
-  const size=(note.size||66) + p*18;
-  const next=nextOsuNote();
-  note.el.classList.toggle('next', next && next.id===note.id);
-  note.el.classList.toggle('preview', forcePreview && dt>appear);
-  const label=note.el.querySelector('.osuOrder');
-  if(label) label.textContent=(note.id+1);
-  const approach=note.el.querySelector('.osuApproach');
-  if(approach){
-    const scale = dt>appear ? 2.75 : 1 + clamp(dt/appear,0,1)*1.75;
-    const opacity = dt>appear ? .20 : (.88 - p*.10);
-    approach.style.transform=`translate(-50%,-50%) scale(${scale})`;
-    approach.style.opacity=opacity;
-  }
-  note.el.style.display='flex';
-  note.el.style.left=(note.x||50)+'%';
-  note.el.style.top=(note.y||50)+'%';
-  note.el.style.width=size+'px';
-  note.el.style.height=size+'px';
-  note.el.style.opacity=dt<-.18?.48:(forcePreview && dt>appear?.52:1);
-}
-
 function renderTaikoNote(note,now){
   const travel = Math.max(.95, 2.55 / effectiveNoteSpeed());
   const dt = note.time - now;
@@ -1988,7 +2053,7 @@ function renderTaikoNote(note,now){
 }
 
 function renderNote(note,now){
-  if(state.mode === 'osu') return renderOsuNote(note,now);
+  
   if(state.mode === 'taiko') return renderTaikoNote(note,now);
   const travel = Math.max(.9, 2.35 / effectiveNoteSpeed());
   const hitY = 84;
@@ -2015,8 +2080,6 @@ function renderNote(note,now){
 function loop(){
   if(!state.running)return;
   const now=songNow();
-  updateOsuTrail(now);
-  updateOsuCursor();
   state.notes.forEach(n=>{
     if(adminMode && !n.judged && now >= n.time){
       applyJudgement(n,'perfect');
@@ -2041,62 +2104,6 @@ function loop(){
   if(now>=endTime) return finish();
   state.raf=requestAnimationFrame(loop);
 }
-function updateOsuCursor(){
-  if(state.mode !== 'osu') return;
-  const cur=$('osuCursor');
-  if(!cur || osuPointer.x==null || osuPointer.y==null) return;
-  cur.style.left=osuPointer.x+'%';
-  cur.style.top=osuPointer.y+'%';
-  cur.style.opacity=osuPointer.inside?1:0;
-}
-function pressOsuAt(clientX,clientY){
-  if(!state.running || state.mode !== 'osu') return;
-  const wrap=$('laneWrap');
-  const rect=wrap.getBoundingClientRect();
-  const x=(clientX-rect.left)/rect.width*100;
-  const y=(clientY-rect.top)/rect.height*100;
-  const now=songNow();
-  const n=nextOsuNote();
-  if(!n) return;
-  const dx=(x-(n.x||50))*rect.width/100;
-  const dy=(y-(n.y||50))*rect.height/100;
-  const dist=Math.hypot(dx,dy);
-  const dt=now-n.time;
-  const limit=(n.size||64)*.95;
-  if(!(dt>-0.24 && dt<0.22 && dist<=limit)) return;
-  let j;
-  if(dt < -0.135) j='fast';
-  else if(Math.abs(dt)<=0.045) j='perfect';
-  else if(Math.abs(dt)<=0.108) j='good';
-  else if(Math.abs(dt)<=0.154) j='ok';
-  else j='fast';
-  applyJudgement(n,j);
-}
-function pressOsuWithPointer(){
-  if(osuPointer.x==null || osuPointer.y==null) return;
-  const wrap=$('laneWrap');
-  const rect=wrap.getBoundingClientRect();
-  pressOsuAt(rect.left + rect.width*osuPointer.x/100, rect.top + rect.height*osuPointer.y/100);
-}
-$('laneWrap').addEventListener('pointermove',e=>{
-  if(state.mode !== 'osu') return;
-  const rect=$('laneWrap').getBoundingClientRect();
-  osuPointer.x=clamp((e.clientX-rect.left)/rect.width*100,0,100);
-  osuPointer.y=clamp((e.clientY-rect.top)/rect.height*100,0,100);
-  osuPointer.inside=true;
-  updateOsuCursor();
-});
-$('laneWrap').addEventListener('pointerleave',()=>{osuPointer.inside=false;updateOsuCursor();});
-$('laneWrap').addEventListener('pointerdown',e=>{
-  if(state.mode === 'osu'){
-    e.preventDefault();
-    const rect=$('laneWrap').getBoundingClientRect();
-    osuPointer.x=clamp((e.clientX-rect.left)/rect.width*100,0,100);
-    osuPointer.y=clamp((e.clientY-rect.top)/rect.height*100,0,100);
-    osuPointer.inside=true;
-    pressOsuAt(e.clientX,e.clientY);
-  }
-});
 
 function pressLane(lane,key){
   if(!state.running)return;
@@ -2143,17 +2150,6 @@ function spawnHitBurst(note, judgement){
     burst.style.color=state.colors[note.lane] || '#fff';
     burst.style.left=(isMobile ? 14 : 16)+'%';
     burst.style.top=(isMobile ? '30vh' : '42vh');
-    wrap.appendChild(burst);
-    setTimeout(()=>burst.remove(),320);
-    return;
-  }
-
-  if(state.mode === 'osu'){
-    const burst=document.createElement('div');
-    burst.className='hitBurst';
-    burst.style.color=state.colors[note.id % state.colors.length] || '#fff';
-    burst.style.left=(note.x||50)+'%';
-    burst.style.top=(note.y||50)+'%';
     wrap.appendChild(burst);
     setTimeout(()=>burst.remove(),320);
     return;
@@ -2237,7 +2233,7 @@ function finish(){
   }
   const finalScore=Math.min(1000000,Math.round(state.score));
   $('resultScore').textContent=finalScore.toLocaleString();
-  $('resultDetail').innerHTML=`MAX COMBO ${state.maxCombo} / ${state.notes.length}<br>PERFECT ${state.counts.perfect} · GOOD ${state.counts.good} · OK ${state.counts.ok} · FAST ${state.counts.fast} · MISS ${state.counts.miss}`;
+  document.getElementById('resultDetail').innerHTML='MAX COMBO '+state.maxCombo+' / '+state.notes.length+'<br>PERFECT '+state.counts.perfect+' · GOOD '+state.counts.good+' · OK '+state.counts.ok+' · FAST '+state.counts.fast+' · MISS '+state.counts.miss;
   $('result').style.display='flex';
 }
 function resetToMenu(){
@@ -2260,7 +2256,7 @@ $('exitBtn').onclick=resetToMenu;
 $('backMenu').onclick=resetToMenu;
 $('replayBtn').onclick=()=>{ if(currentGame) startGame(currentGame); };
 $('makeGame').onclick=async()=>{
-  const name=$('gameName').value.trim() || '새 게임';
+  const name=document.getElementById('gameName').value.trim() || '새 게임';
   const file=$('mp3File').files[0];
   if(!file){toast('MP3 파일을 먼저 넣어줘.');return;}
   const okExt = /\.(mp3|m4a|wav|aac)$/i.test(file.name) || /^audio\//i.test(file.type || '');
@@ -2287,7 +2283,7 @@ $('makeGame').onclick=async()=>{
     };
     games.unshift(game); saveGames(); renderList();
     setStatus(`제작 완료! 노트 ${made.notes.length}개 생성됨`,100);
-    toast('🔥 제작 완료! 🔥');
+    toast('제작 완료!');
     setTimeout(()=>showPanel('list'),900);
   }catch(err){
     console.error(err);
@@ -2299,12 +2295,6 @@ $('makeGame').onclick=async()=>{
 };
 document.addEventListener('keydown',e=>{
   const k=e.key.toUpperCase();
-  if(e.code === 'Space'){
-    e.preventDefault();
-    e.stopPropagation();
-    if(state.mode === 'osu') pressOsuWithPointer();
-    return;
-  }
   if(state.mode === 'taiko'){
     if(k==='D' || k==='F') pressLane(0,k);
     else if(k==='J' || k==='K') pressLane(1,k);
